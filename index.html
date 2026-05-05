@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zoovy — Discover Ontario's Wildlife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #1a3a2a;
+    --moss: #2d5a3d;
+    --sage: #4a7c59;
+    --mint: #7fb896;
+    --cream: #f5f0e8;
+    --sand: #ede7d9;
+    --bark: #8b6b4a;
+    --ink: #1c1c1c;
+    --mist: #f9f7f3;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--mist);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(249,247,243,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(74,124,89,0.12);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--forest);
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--sage); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  nav ul a:hover { opacity: 1; }
+  .nav-cta {
+    background: var(--forest);
+    color: var(--cream) !important;
+    opacity: 1 !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 500 !important;
+    font-size: 0.875rem !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--moss) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 7rem 2.5rem 4rem;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(74,124,89,0.1);
+    color: var(--moss);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.375rem 0.875rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--sage);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--forest);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--sage);
+    position: relative;
+  }
+  .hero h1 em::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--mint);
+    border-radius: 2px;
+  }
+  .hero p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(28,28,28,0.65);
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--forest);
+    color: var(--cream);
+    padding: 0.875rem 2rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .btn-primary:hover { background: var(--moss); transform: translateY(-2px); }
+  .btn-ghost {
+    border: 1.5px solid rgba(26,58,42,0.25);
+    color: var(--forest);
+    padding: 0.875rem 2rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 400;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--sage); transform: translateY(-2px); }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    position: relative;
+    height: 520px;
+  }
+  .hero-map-card {
+    position: absolute;
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 40px rgba(26,58,42,0.12);
+    width: 320px;
+  }
+  .hero-map-card.main { top: 0; right: 0; width: 340px; }
+  .hero-map-card.small { bottom: 60px; left: 0; width: 220px; }
+  .card-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sage);
+    margin-bottom: 0.75rem;
+  }
+  .zoo-preview {
+    display: flex; align-items: center; gap: 0.875rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .zoo-preview:last-child { border-bottom: none; padding-bottom: 0; }
+  .zoo-dot {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .zoo-preview-info { flex: 1; }
+  .zoo-preview-name { font-size: 0.875rem; font-weight: 500; margin-bottom: 0.15rem; }
+  .zoo-preview-meta { font-size: 0.75rem; color: rgba(28,28,28,0.5); }
+  .stat-card {
+    text-align: center;
+    padding: 0.25rem 0;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--forest);
+  }
+  .stat-lbl { font-size: 0.8rem; color: rgba(28,28,28,0.55); margin-top: 0.2rem; }
+  .stat-divider {
+    width: 1px; background: rgba(0,0,0,0.08);
+    align-self: stretch; margin: 0 0.75rem;
+  }
+  .stats-row { display: flex; align-items: center; justify-content: center; }
+
+  /* SECTION STYLES */
+  section { max-width: 1200px; margin: 0 auto; padding: 6rem 2.5rem; }
+
+  .section-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sage);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--forest);
+    margin-bottom: 1.25rem;
+  }
+  .section-sub {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(28,28,28,0.6);
+    max-width: 520px;
+  }
+
+  /* ZOO GRID */
+  .zoos-header { margin-bottom: 3rem; }
+  .zoo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .zoo-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(74,124,89,0.1);
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .zoo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(26,58,42,0.13);
+  }
+  .zoo-card-header {
+    height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .zoo-card-body { padding: 1.25rem; }
+  .zoo-card-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    color: var(--forest);
+  }
+  .zoo-card-location {
+    font-size: 0.8rem;
+    color: rgba(28,28,28,0.5);
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.3rem;
+  }
+  .zoo-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(74,124,89,0.08);
+    color: var(--moss);
+    font-weight: 500;
+  }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+  .feature-card {
+    padding: 2rem;
+    border-radius: 18px;
+    background: white;
+    border: 1px solid rgba(74,124,89,0.08);
+  }
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+  .feature-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 0.6rem;
+  }
+  .feature-desc { font-size: 0.9rem; line-height: 1.65; color: rgba(28,28,28,0.6); }
+
+  /* CTA BANNER */
+  .cta-section {
+    background: var(--forest);
+    border-radius: 28px;
+    padding: 5rem 4rem;
+    text-align: center;
+    margin: 0 2.5rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(74,124,89,0.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(127,184,150,0.2) 0%, transparent 60%);
+  }
+  .cta-section > * { position: relative; }
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .cta-section p { color: rgba(245,240,232,0.65); font-size: 1rem; margin-bottom: 2.5rem; }
+  .btn-cream {
+    background: var(--cream);
+    color: var(--forest);
+    padding: 0.875rem 2.25rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s;
+  }
+  .btn-cream:hover { transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(74,124,89,0.12);
+    padding: 2.5rem 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgba(28,28,28,0.45);
+    font-size: 0.85rem;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-left > * {
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-left > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-left > *:nth-child(3) { animation-delay: 0.35s; }
+  .hero-left > *:nth-child(4) { animation-delay: 0.5s; }
+  .hero-visual { animation: fadeUp 0.8s ease 0.3s both; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 8rem; }
+    .hero-visual { display: none; }
+    .features-grid { grid-template-columns: 1fr; }
+    nav ul { display: none; }
+    .cta-section { padding: 3rem 2rem; margin: 0 1rem 4rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Zoo<span>vy</span></div>
+  <ul>
+    <li><a href="#zoos">Zoos</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#zoos" class="nav-cta">Explore</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Ontario Wildlife</div>
+    <h1>Find your next<br><em>wild</em> adventure</h1>
+    <p>Discover zoos, sanctuaries, and wildlife experiences across Ontario. Every animal, every location — all in one place.</p>
+    <div class="hero-btns">
+      <a href="#zoos" class="btn-primary">Browse Ontario Zoos</a>
+      <a href="#about" class="btn-ghost">How it works</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-map-card main">
+      <div class="card-label">🗺 Ontario Zoos</div>
+      <div class="zoo-preview">
+        <div class="zoo-dot" style="background:#e8f4ed;">🦁</div>
+        <div class="zoo-preview-info">
+          <div class="zoo-preview-name">Toronto Zoo</div>
+          <div class="zoo-preview-meta">Scarborough · 500+ animals</div>
+        </div>
+      </div>
+      <div class="zoo-preview">
+        <div class="zoo-dot" style="background:#f0f4e8;">🐘</div>
+        <div class="zoo-preview-info">
+          <div class="zoo-preview-name">African Lion Safari</div>
+          <div class="zoo-preview-meta">Cambridge · Drive-thru</div>
+        </div>
+      </div>
+      <div class="zoo-preview">
+        <div class="zoo-dot" style="background:#e8eef4;">🦦</div>
+        <div class="zoo-preview-info">
+          <div class="zoo-preview-name">Elmvale Jungle Zoo</div>
+          <div class="zoo-preview-meta">Elmvale · Family friendly</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-map-card small">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num">14</div>
+          <div class="stat-lbl">Ontario Zoos</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-card">
+          <div class="stat-num">2K+</div>
+          <div class="stat-lbl">Species</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ZOO GRID -->
+<section id="zoos">
+  <div class="zoos-header">
+    <div class="section-eyebrow">🌿 Ontario Wildlife</div>
+    <div class="section-title">Explore zoos &amp; sanctuaries</div>
+    <p class="section-sub">From world-class facilities to intimate sanctuaries — find wildlife experiences near you.</p>
+  </div>
+  <div class="zoo-grid">
+
+    <a class="zoo-card" href="https://www.torontozoo.com" target="_blank" rel="noopener">
+      <div class="zoo-card-header" style="background: linear-gradient(135deg, #e8f4ed, #c8e6d4);">🦁</div>
+      <div class="zoo-card-body">
+        <div class="zoo-card-name">Toronto Zoo</div>
+        <div class="zoo-card-location">📍 Scarborough, ON</div>
+        <div class="zoo-tags">
+          <span class="tag">500+ species</span>
+          <span class="tag">Kids zone</span>
+          <span class="tag">Conservation</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" href="https://www.lionsafari.com" target="_blank" rel="noopener">
+      <div class="zoo-card-header" style="background: linear-gradient(135deg, #faf0e0, #f5ddb0);">🦒</div>
+      <div class="zoo-card-body">
+        <div class="zoo-card-name">African Lion Safari</div>
+        <div class="zoo-card-location">📍 Cambridge, ON</div>
+        <div class="zoo-tags">
+          <span class="tag">Drive-thru</span>
+          <span class="tag">Boat tour</span>
+          <span class="tag">African wildlife</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" href="https://www.elmvalejunglezoo.com" target="_blank" rel="noopener">
+      <div class="zoo-card-header" style="background: linear-gradient(135deg, #e0f0f5, #b0d9e8);">🦦</div>
+      <div class="zoo-card-body">
+        <div class="zoo-card-name">Elmvale Jungle Zoo</div>
+        <div class="zoo-card-location">📍 Elmvale, ON</div>
+        <div class="zoo-tags">
+          <span class="tag">Family</span>
+          <span class="tag">Exotic animals</span>
+          <span class="tag">Picnic area</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" href="https://www.pineridgezoo.com" target="_blank" rel="noopener">
+      <div class="zoo-card-header" style="background: linear-gradient(135deg, #eee8f4, #d4c4e8);">🐺</div>
+      <div class="zoo-card-body">
+        <div class="zoo-card-name">Pine Ridge Zoo</div>
+        <div class="zoo-card-location">📍 Bowmanville, ON</div>
+        <div class="zoo-tags">
+          <span class="tag">Wildlife rescue</span>
+          <span class="tag">Educational</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" href="https://www.chelseyzoo.com" target="_blank" rel="noopener">
+      <div class="zoo-card-header" style="background: linear-gradient(135deg, #f4e8e8, #e8c4c4);">🦊</div>
+      <div class="zoo-card-body">
+        <div class="zoo-card-name">Chelsey Zoo</div>
+        <div class="zoo-card-location">📍 Chelsey, ON</div>
+        <div class="zoo-tags">
+          <span class="tag">Small &amp; local</span>
+          <span class="tag">Farmyard</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" href="https://www.littlerayzoo.com" target="_blank" rel="noopener">
+      <div class="zoo-card-header" style="background: linear-gradient(135deg, #e8f4e8, #c4e8c4);">🐊</div>
+      <div class="zoo-card-body">
+        <div class="zoo-card-name">Little Ray's Reptile Zoo</div>
+        <div class="zoo-card-location">📍 Ottawa, ON</div>
+        <div class="zoo-tags">
+          <span class="tag">Reptiles</span>
+          <span class="tag">Interactive</span>
+          <span class="tag">Education</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" href="https://www.ontariowolfcentre.ca" target="_blank" rel="noopener">
+      <div class="zoo-card-header" style="background: linear-gradient(135deg, #f0f0f0, #d8d8d0);">🐺</div>
+      <div class="zoo-card-body">
+        <div class="zoo-card-name">Ontario Wolf Centre</div>
+        <div class="zoo-card-location">📍 Haliburton, ON</div>
+        <div class="zoo-tags">
+          <span class="tag">Wolves</span>
+          <span class="tag">Sanctuary</span>
+          <span class="tag">Howling events</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" href="https://www.birdkingdom.ca" target="_blank" rel="noopener">
+      <div class="zoo-card-header" style="background: linear-gradient(135deg, #e8f0fc, #c0d4f5);">🦜</div>
+      <div class="zoo-card-body">
+        <div class="zoo-card-name">Bird Kingdom</div>
+        <div class="zoo-card-location">📍 Niagara Falls, ON</div>
+        <div class="zoo-tags">
+          <span class="tag">Free-flight</span>
+          <span class="tag">Indoor aviary</span>
+          <span class="tag">Nocturnal</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="about" style="background: var(--sand); border-radius: 28px; max-width: calc(100% - 5rem); margin: 0 auto; padding: 5rem 4rem;">
+  <div class="section-eyebrow">Why Zoovy</div>
+  <div class="section-title">Built for animal lovers</div>
+  <p class="section-sub">Everything you need to plan a wildlife visit, in one clean place.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon" style="background: rgba(74,124,89,0.1);">🗺</div>
+      <div class="feature-title">Location discovery</div>
+      <p class="feature-desc">Find every zoo, sanctuary, and wildlife centre in Ontario with addresses, hours, and directions.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background: rgba(26,58,42,0.08);">🔍</div>
+      <div class="feature-title">Filter by interest</div>
+      <p class="feature-desc">Looking for reptiles? Family-friendly? Drive-thru? Filter by experience type and find your match.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background: rgba(139,107,74,0.1);">🐣</div>
+      <div class="feature-title">Animal births — coming soon</div>
+      <p class="feature-desc">Track expectant and newborn animals at Ontario zoos. Be the first to know when a new cub arrives.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Ontario's wildlife, all in one place</h2>
+  <p>Start exploring zoos, sanctuaries, and wildlife experiences across the province.</p>
+  <a href="#zoos" class="btn-cream">Explore now</a>
+</div>
+
+<footer>
+  <div class="logo" style="font-size:1.1rem;">Zoo<span>vy</span></div>
+  <div>Ontario wildlife discovery · zoovy.net</div>
+  <div>© 2025 Zoovy</div>
+</footer>
+
+</body>
+</html>

@@ -3,94 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zoovy — Discover Ontario's Zoos & Wildlife Sanctuaries</title>
-<meta name="description" content="Find and explore zoos, wildlife sanctuaries, and animal experiences across Ontario. Discover Toronto Zoo, African Lion Safari, Bird Kingdom, and more — all in one place.">
-<meta name="keywords" content="Ontario zoos, zoos near me, Toronto Zoo, African Lion Safari, wildlife sanctuaries Ontario, family activities Ontario, animal experiences Canada">
+<title>Zoovy — Discover Ontario's Zoos, Sanctuaries & Wildlife Reserves</title>
+<meta name="description" content="Find and explore zoos, wildlife sanctuaries, and nature reserves across Ontario. Discover Toronto Zoo, African Lion Safari, Wye Marsh, Aspen Valley and more — all in one place.">
+<meta name="keywords" content="Ontario zoos, wildlife sanctuaries Ontario, nature reserves Ontario, Toronto Zoo, African Lion Safari, family activities Ontario, animal experiences Canada">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://zoovy.net/">
-
-<!-- Open Graph (Facebook, LinkedIn previews) -->
 <meta property="og:title" content="Zoovy — Discover Ontario's Zoos & Wildlife">
-<meta property="og:description" content="Find zoos, sanctuaries, and wildlife experiences across Ontario. Every animal, every location — all in one place.">
+<meta property="og:description" content="Find zoos, sanctuaries, and wildlife reserves across Ontario. Every animal, every location — all in one place.">
 <meta property="og:url" content="https://zoovy.net/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Zoovy">
-
-<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Zoovy — Discover Ontario's Zoos & Wildlife">
-<meta name="twitter:description" content="Find zoos, sanctuaries, and wildlife experiences across Ontario. Every animal, every location — all in one place.">
-
+<meta name="twitter:description" content="Find zoos, sanctuaries, and wildlife reserves across Ontario.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
-    --forest: #1a3a2a; --moss: #2d5a3d; --sage: #4a7c59;
-    --mint: #7fb896; --cream: #f5f0e8; --sand: #ede7d9;
-    --ink: #1c1c1c; --mist: #f9f7f3;
+    /* Greens */
+    --green-darkest: #0f2318;
+    --green-dark: #1a3a2a;
+    --green-mid: #2d5a3d;
+    --green-sage: #4a7c59;
+    --green-mint: #7fb896;
+    --green-light: #b8d9c4;
+    --green-pale: #e4f0e8;
+    /* Browns */
+    --brown-dark: #3d2410;
+    --brown-mid: #7a4a28;
+    --brown-warm: #a0622e;
+    --brown-light: #c49a6c;
+    --brown-pale: #e8d5b8;
+    --brown-cream: #f5ede0;
+    /* Neutrals */
+    --ink: #1c1c1c;
+    --mist: #f7f4ef;
+    --white: #ffffff;
   }
+
   html { scroll-behavior: smooth; }
   body { font-family: 'DM Sans', sans-serif; background: var(--mist); color: var(--ink); overflow-x: hidden; }
 
-  /* NAV */
+  /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1.25rem 2.5rem;
-    background: rgba(249,247,243,0.9); backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(74,124,89,0.12);
+    background: rgba(247,244,239,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(74,124,89,0.15);
   }
-  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--forest); letter-spacing: -0.02em; }
-  .logo span { color: var(--sage); }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--green-dark); letter-spacing: -0.02em; }
+  .logo span { color: var(--brown-warm); }
   nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
-  nav ul a { font-size: 0.9rem; color: var(--ink); text-decoration: none; opacity: 0.65; transition: opacity 0.2s; }
+  nav ul a { font-size: 0.9rem; color: var(--ink); text-decoration: none; opacity: 0.6; transition: opacity 0.2s; }
   nav ul a:hover { opacity: 1; }
-  .nav-cta { background: var(--forest) !important; color: var(--cream) !important; opacity: 1 !important; padding: 0.5rem 1.25rem; border-radius: 999px; font-weight: 500 !important; }
+  .nav-cta { background: var(--green-dark) !important; color: var(--brown-cream) !important; opacity: 1 !important; padding: 0.5rem 1.25rem; border-radius: 999px; font-weight: 500 !important; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--green-mid) !important; }
 
-  /* HERO */
-  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 7rem 2.5rem 4rem; gap: 3rem; max-width: 1200px; margin: 0 auto; }
-  .hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(74,124,89,0.1); color: var(--moss); font-size: 0.8rem; font-weight: 500; padding: 0.375rem 0.875rem; border-radius: 999px; margin-bottom: 1.5rem; letter-spacing: 0.04em; text-transform: uppercase; }
-  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--sage); border-radius: 50%; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.4); } }
-  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; color: var(--forest); margin-bottom: 1.5rem; }
-  .hero h1 em { font-style: normal; color: var(--sage); position: relative; }
-  .hero h1 em::after { content: ''; position: absolute; bottom: 2px; left: 0; right: 0; height: 3px; background: var(--mint); border-radius: 2px; }
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 7rem 2.5rem 4rem; gap: 3rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(74,124,89,0.12); color: var(--green-mid);
+    font-size: 0.78rem; font-weight: 500; padding: 0.375rem 0.875rem;
+    border-radius: 999px; margin-bottom: 1.5rem; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--green-sage); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.4)} }
+  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.8rem,5vw,4.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; color: var(--green-dark); margin-bottom: 1.5rem; }
+  .hero h1 em { font-style: normal; color: var(--brown-warm); position: relative; }
+  .hero h1 em::after { content: ''; position: absolute; bottom: 2px; left: 0; right: 0; height: 3px; background: var(--brown-light); border-radius: 2px; }
   .hero p { font-size: 1.1rem; line-height: 1.7; color: rgba(28,28,28,0.6); max-width: 440px; margin-bottom: 2.5rem; }
   .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary { background: var(--forest); color: var(--cream); padding: 0.875rem 2rem; border-radius: 999px; font-size: 0.95rem; font-weight: 500; text-decoration: none; transition: transform 0.2s, background 0.2s; }
-  .btn-primary:hover { background: var(--moss); transform: translateY(-2px); }
-  .btn-ghost { border: 1.5px solid rgba(26,58,42,0.25); color: var(--forest); padding: 0.875rem 2rem; border-radius: 999px; font-size: 0.95rem; font-weight: 400; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
-  .btn-ghost:hover { border-color: var(--sage); transform: translateY(-2px); }
+  .btn-primary { background: var(--green-dark); color: var(--brown-cream); padding: 0.875rem 2rem; border-radius: 999px; font-size: 0.95rem; font-weight: 500; text-decoration: none; transition: transform 0.2s, background 0.2s; }
+  .btn-primary:hover { background: var(--green-mid); transform: translateY(-2px); }
+  .btn-ghost { border: 1.5px solid rgba(122,74,40,0.3); color: var(--brown-mid); padding: 0.875rem 2rem; border-radius: 999px; font-size: 0.95rem; font-weight: 400; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
+  .btn-ghost:hover { border-color: var(--brown-warm); transform: translateY(-2px); }
 
-  /* HERO VISUAL */
+  /* ── HERO VISUAL ── */
   .hero-visual { position: relative; height: 520px; }
-  .hero-map-card { position: absolute; background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 40px rgba(26,58,42,0.12); }
-  .hero-map-card.main { top: 0; right: 0; width: 340px; }
-  .hero-map-card.small { bottom: 60px; left: 0; width: 220px; }
-  .card-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); margin-bottom: 0.75rem; }
-  .zoo-preview { display: flex; align-items: center; gap: 0.875rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .hero-card { position: absolute; background: var(--white); border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 40px rgba(15,35,24,0.12); }
+  .hero-card.main { top: 0; right: 0; width: 340px; }
+  .hero-card.small { bottom: 60px; left: 0; width: 220px; }
+  .card-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green-sage); margin-bottom: 0.75rem; }
+  .zoo-preview { display: flex; align-items: center; gap: 0.875rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
   .zoo-preview:last-child { border-bottom: none; padding-bottom: 0; }
   .zoo-dot { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
-  .zoo-preview-name { font-size: 0.875rem; font-weight: 500; margin-bottom: 0.15rem; }
+  .zoo-preview-name { font-size: 0.875rem; font-weight: 500; margin-bottom: 0.1rem; }
   .zoo-preview-meta { font-size: 0.75rem; color: rgba(28,28,28,0.5); }
   .stats-row { display: flex; align-items: center; justify-content: center; }
   .stat-card { text-align: center; padding: 0.25rem 0.75rem; }
-  .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 700; color: var(--forest); }
-  .stat-lbl { font-size: 0.8rem; color: rgba(28,28,28,0.55); margin-top: 0.2rem; }
-  .stat-divider { width: 1px; background: rgba(0,0,0,0.08); align-self: stretch; }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 700; color: var(--green-dark); }
+  .stat-lbl { font-size: 0.78rem; color: rgba(28,28,28,0.5); margin-top: 0.15rem; }
+  .stat-div { width: 1px; background: rgba(0,0,0,0.08); align-self: stretch; }
 
-  /* SECTION */
+  /* ── SECTION ── */
   section { max-width: 1200px; margin: 0 auto; padding: 6rem 2.5rem; }
-  .section-eyebrow { font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage); margin-bottom: 1rem; }
-  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; color: var(--forest); margin-bottom: 1.25rem; }
+  .section-eyebrow { font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brown-warm); margin-bottom: 1rem; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem,3.5vw,3rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; color: var(--green-dark); margin-bottom: 1.25rem; }
   .section-sub { font-size: 1.05rem; line-height: 1.7; color: rgba(28,28,28,0.6); max-width: 520px; }
 
-  /* FLIP CARDS */
-  .zoos-header { margin-bottom: 3rem; }
+  /* ── FILTER BAR ── */
+  .filter-bar { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .filter-btn {
+    font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 500;
+    padding: 0.55rem 1.25rem; border-radius: 999px; border: 1.5px solid rgba(74,124,89,0.25);
+    background: transparent; color: rgba(28,28,28,0.65); cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--green-sage); color: var(--green-dark); }
+  .filter-btn.active { background: var(--green-dark); color: var(--brown-cream); border-color: var(--green-dark); }
+  .filter-btn[data-filter="sanctuary"].active { background: var(--brown-mid); border-color: var(--brown-mid); }
+  .filter-btn[data-filter="reserve"].active { background: var(--brown-dark); border-color: var(--brown-dark); }
+
+  /* ── FLIP CARDS ── */
   .zoo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.5rem; }
 
   .zoo-card { height: 360px; perspective: 1000px; text-decoration: none; color: inherit; display: block; }
+  .zoo-card.hidden { display: none; }
   .zoo-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); border-radius: 18px; }
   .zoo-card:hover .zoo-card-inner { transform: rotateY(180deg); }
 
@@ -101,63 +137,126 @@
   }
 
   /* FRONT */
-  .zoo-card-front { background: white; border: 1px solid rgba(74,124,89,0.1); display: flex; flex-direction: column; }
+  .zoo-card-front { background: var(--white); border: 1px solid rgba(74,124,89,0.12); display: flex; flex-direction: column; }
   .zoo-card-img { height: 210px; flex-shrink: 0; background-size: cover; background-position: center; position: relative; }
-  .zoo-card-img::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(transparent, white); }
-  .zoo-card-front-body { padding: 1.1rem 1.25rem; flex: 1; }
-  .zoo-card-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--forest); margin-bottom: 0.3rem; }
+  .zoo-card-img::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 55px; background: linear-gradient(transparent, white); }
+  .zoo-type-badge {
+    position: absolute; top: 0.75rem; left: 0.75rem;
+    font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em;
+    padding: 0.25rem 0.6rem; border-radius: 999px; z-index: 1;
+  }
+  .badge-zoo { background: var(--green-dark); color: var(--green-pale); }
+  .badge-sanctuary { background: var(--brown-mid); color: var(--brown-cream); }
+  .badge-reserve { background: var(--brown-dark); color: var(--brown-pale); }
+  .zoo-card-front-body { padding: 1rem 1.25rem; flex: 1; }
+  .zoo-card-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--green-dark); margin-bottom: 0.25rem; }
   .zoo-card-city { font-size: 0.78rem; color: rgba(28,28,28,0.5); margin-bottom: 0.6rem; }
   .zoo-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-  .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; border-radius: 999px; background: rgba(74,124,89,0.08); color: var(--moss); font-weight: 500; }
+  .tag { font-size: 0.67rem; padding: 0.2rem 0.55rem; border-radius: 999px; font-weight: 500; }
+  .tag-green { background: var(--green-pale); color: var(--green-mid); }
+  .tag-brown { background: var(--brown-pale); color: var(--brown-dark); }
 
   /* BACK */
   .zoo-card-back {
     transform: rotateY(180deg);
-    background: white; border: 1px solid rgba(74,124,89,0.15);
+    background: var(--white);
+    border: 1.5px solid rgba(74,124,89,0.15);
     display: flex; flex-direction: column; justify-content: space-between;
-    padding: 2rem 1.5rem 1.5rem;
+    padding: 1.75rem 1.5rem 1.5rem;
   }
-  .zoo-card-back-emoji { font-size: 2.5rem; margin-bottom: 1rem; }
-  .zoo-card-back-name { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--forest); margin-bottom: 0.4rem; }
-  .zoo-card-back-city { font-size: 0.85rem; color: rgba(28,28,28,0.5); margin-bottom: 1rem; }
+  .zoo-card-back-emoji { font-size: 2.25rem; margin-bottom: 0.875rem; }
+  .zoo-card-back-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--green-dark); margin-bottom: 0.3rem; }
+  .zoo-card-back-city { font-size: 0.82rem; color: rgba(28,28,28,0.5); margin-bottom: 0.875rem; }
   .zoo-card-back-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-  .zoo-visit-btn { display: block; background: var(--forest); color: var(--cream); padding: 0.65rem 1.5rem; border-radius: 999px; font-size: 0.85rem; font-weight: 500; text-align: center; transition: background 0.2s; }
-  .zoo-visit-btn:hover { background: var(--moss); }
+  .zoo-visit-btn {
+    display: block; padding: 0.65rem 1.5rem; border-radius: 999px;
+    font-size: 0.85rem; font-weight: 500; text-align: center; transition: background 0.2s; margin-top: 1.25rem;
+  }
+  .visit-green { background: var(--green-dark); color: var(--brown-cream); }
+  .visit-green:hover { background: var(--green-mid); }
+  .visit-brown { background: var(--brown-mid); color: var(--brown-cream); }
+  .visit-brown:hover { background: var(--brown-warm); }
+  .visit-darkbrown { background: var(--brown-dark); color: var(--brown-pale); }
+  .visit-darkbrown:hover { background: var(--brown-mid); }
 
-  /* FEATURES */
+  /* ── FEATURES ── */
   .features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 3.5rem; }
-  .feature-card { padding: 2rem; border-radius: 18px; background: white; border: 1px solid rgba(74,124,89,0.08); }
+  .feature-card { padding: 2rem; border-radius: 18px; background: var(--white); border: 1px solid rgba(74,124,89,0.08); }
   .feature-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.25rem; }
-  .feature-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--forest); margin-bottom: 0.6rem; }
+  .feature-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 600; color: var(--green-dark); margin-bottom: 0.6rem; }
   .feature-desc { font-size: 0.9rem; line-height: 1.65; color: rgba(28,28,28,0.6); }
 
-  /* CTA */
-  .cta-section { background: var(--forest); border-radius: 28px; padding: 5rem 4rem; text-align: center; margin: 0 2.5rem 6rem; position: relative; overflow: hidden; }
-  .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(74,124,89,0.4) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(127,184,150,0.2) 0%, transparent 60%); }
+  /* ── CTA ── */
+  .cta-wrap { padding: 0 2.5rem 6rem; max-width: 1200px; margin: 0 auto; }
+  .cta-section {
+    background: var(--green-darkest); border-radius: 28px;
+    padding: 5rem 4rem; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 25% 50%, rgba(74,124,89,0.45) 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 50%, rgba(122,74,40,0.25) 0%, transparent 55%);
+  }
   .cta-section > * { position: relative; }
-  .cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 700; color: var(--cream); margin-bottom: 1rem; letter-spacing: -0.02em; }
-  .cta-section p { color: rgba(245,240,232,0.65); font-size: 1rem; margin-bottom: 2.5rem; }
-  .btn-cream { background: var(--cream); color: var(--forest); padding: 0.875rem 2.25rem; border-radius: 999px; font-size: 0.95rem; font-weight: 500; text-decoration: none; display: inline-block; transition: transform 0.2s; }
+  .cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 700; color: var(--brown-cream); margin-bottom: 1rem; letter-spacing: -0.02em; }
+  .cta-section p { color: rgba(245,237,224,0.6); font-size: 1rem; margin-bottom: 2.5rem; }
+  .btn-cream { background: var(--brown-cream); color: var(--green-dark); padding: 0.875rem 2.25rem; border-radius: 999px; font-size: 0.95rem; font-weight: 500; text-decoration: none; display: inline-block; transition: transform 0.2s; }
   .btn-cream:hover { transform: translateY(-2px); }
 
-  /* FOOTER */
-  footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; color: rgba(28,28,28,0.45); font-size: 0.85rem; }
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; color: rgba(28,28,28,0.4); font-size: 0.85rem; }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
   .hero-left > * { animation: fadeUp 0.6s ease both; }
-  .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
-  .hero-left > *:nth-child(2) { animation-delay: 0.2s; }
-  .hero-left > *:nth-child(3) { animation-delay: 0.35s; }
-  .hero-left > *:nth-child(4) { animation-delay: 0.5s; }
-  .hero-visual { animation: fadeUp 0.8s ease 0.3s both; }
+  .hero-left > *:nth-child(1){animation-delay:0.1s}
+  .hero-left > *:nth-child(2){animation-delay:0.2s}
+  .hero-left > *:nth-child(3){animation-delay:0.35s}
+  .hero-left > *:nth-child(4){animation-delay:0.5s}
+  .hero-visual{animation:fadeUp 0.8s ease 0.3s both}
 
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 8rem; }
-    .hero-visual { display: none; }
-    .features-grid { grid-template-columns: 1fr; }
-    nav ul { display: none; }
-    .cta-section { padding: 3rem 2rem; margin: 0 1rem 4rem; }
-    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  @keyframes fadeIn { from{opacity:0;transform:scale(0.97)}to{opacity:1;transform:scale(1)} }
+  .zoo-card { animation: fadeIn 0.3s ease both; }
+  /* ── MAP ── */
+  .map-wrap { position:relative; background:var(--green-pale); border-radius:20px; padding:1.5rem; border:1px solid rgba(74,124,89,0.15); overflow:hidden; }
+  .map-hint { text-align:center; font-size:0.8rem; color:rgba(28,28,28,0.4); margin-bottom:1rem; letter-spacing:0.05em; text-transform:uppercase; font-weight:500; }
+  #na-map .region { fill:var(--green-mid); stroke:var(--green-pale); stroke-width:0.8; transition:fill 0.15s; }
+  #na-map .region:hover { fill:var(--brown-warm); }
+  #na-map .region.has-data { fill:var(--green-dark); }
+  #na-map .region.has-data:hover { fill:var(--brown-mid); }
+  #na-map .region.active { fill:var(--brown-warm) !important; }
+  #na-map .mexico { fill:var(--green-sage); }
+  #na-map .mexico:hover { fill:var(--brown-light); }
+  .region-panel { margin-top:2rem; background:var(--white); border-radius:20px; border:1px solid rgba(74,124,89,0.12); padding:2rem; animation:fadeUp 0.3s ease both; }
+  .region-panel-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.75rem; }
+  .region-panel-title { font-family:'Syne',sans-serif; font-size:1.4rem; font-weight:700; color:var(--green-dark); }
+  .region-panel-sub { font-size:0.85rem; color:rgba(28,28,28,0.5); margin-top:0.25rem; }
+  .region-close { background:none; border:1.5px solid rgba(0,0,0,0.12); border-radius:999px; width:32px; height:32px; cursor:pointer; font-size:0.8rem; color:rgba(28,28,28,0.5); display:flex;align-items:center;justify-content:center; flex-shrink:0; }
+  .region-close:hover { border-color:var(--green-sage); color:var(--green-dark); }
+  .region-cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; }
+  .mini-card { background:var(--mist); border-radius:14px; padding:1.1rem 1.25rem; border:1px solid rgba(74,124,89,0.1); display:flex; gap:0.875rem; align-items:center; text-decoration:none; color:inherit; transition:transform 0.2s,box-shadow 0.2s; }
+  .mini-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(26,58,42,0.1); }
+  .mini-card-emoji { font-size:1.75rem; flex-shrink:0; }
+  .mini-card-name { font-family:'Syne',sans-serif; font-size:0.875rem; font-weight:600; color:var(--green-dark); margin-bottom:0.2rem; }
+  .mini-card-meta { font-size:0.75rem; color:rgba(28,28,28,0.5); }
+  .mini-card-badge { font-size:0.62rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; padding:0.15rem 0.5rem; border-radius:999px; margin-top:0.3rem; display:inline-block; }
+  .coming-soon-panel { margin-top:2rem; animation:fadeUp 0.3s ease both; }
+  .coming-soon-inner { background:var(--white); border-radius:20px; border:1px solid rgba(74,124,89,0.12); padding:3rem 2rem; text-align:center; max-width:420px; margin:0 auto; }
+  .coming-soon-badge { background:var(--brown-pale); color:var(--brown-dark); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; padding:0.35rem 1rem; border-radius:999px; }
+  .map-legend { display:flex; gap:1.25rem; justify-content:flex-end; margin-top:0.875rem; }
+  .legend-item { display:flex; align-items:center; gap:0.4rem; font-size:0.78rem; color:rgba(28,28,28,0.55); }
+  .legend-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+  .state-region, .canada-region { transition:fill 0.15s; }
+
+
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;min-height:auto;padding-top:8rem}
+    .hero-visual{display:none}
+    .features-grid{grid-template-columns:1fr}
+    nav ul{display:none}
+    .cta-section{padding:3rem 2rem}
+    .cta-wrap{padding:0 1rem 4rem}
+    footer{flex-direction:column;gap:1rem;text-align:center}
   }
 </style>
 </head>
@@ -166,188 +265,313 @@
 <nav>
   <div class="logo">Zoo<span>vy</span></div>
   <ul>
-    <li><a href="#zoos">Zoos</a></li>
+    <li><a href="#explore">Explore</a></li>
+    <li><a href="#map">Map</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#zoos" class="nav-cta">Explore</a></li>
+    <li><a href="#explore" class="nav-cta">Find Wildlife</a></li>
   </ul>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-left">
     <div class="hero-tag">Ontario Wildlife</div>
-    <h1>Find your next<br><em>wild</em> adventure</h1>
-    <p>Discover zoos, sanctuaries, and wildlife experiences across Ontario. Every animal, every location — all in one place.</p>
+    <h1>Your guide to<br>Ontario's <em>wild</em> side</h1>
+    <p>Discover zoos, sanctuaries, and nature reserves across Ontario. Every animal, every habitat — all in one place.</p>
     <div class="hero-btns">
-      <a href="#zoos" class="btn-primary">Browse Ontario Zoos</a>
+      <a href="#explore" class="btn-primary">Explore Now</a>
       <a href="#about" class="btn-ghost">How it works</a>
     </div>
   </div>
   <div class="hero-visual">
-    <div class="hero-map-card main">
-      <div class="card-label">🗺 Ontario Zoos</div>
+    <div class="hero-card main">
+      <div class="card-label">🌿 Ontario Wildlife</div>
       <div class="zoo-preview">
-        <div class="zoo-dot" style="background:#e8f4ed;">🦁</div>
-        <div><div class="zoo-preview-name">Toronto Zoo</div><div class="zoo-preview-meta">Scarborough · 500+ animals</div></div>
+        <div class="zoo-dot" style="background:var(--green-pale);">🦁</div>
+        <div><div class="zoo-preview-name">Toronto Zoo</div><div class="zoo-preview-meta">Scarborough · Zoo</div></div>
       </div>
       <div class="zoo-preview">
-        <div class="zoo-dot" style="background:#f0f4e8;">🦒</div>
-        <div><div class="zoo-preview-name">African Lion Safari</div><div class="zoo-preview-meta">Cambridge · Drive-thru</div></div>
+        <div class="zoo-dot" style="background:var(--brown-pale);">🦅</div>
+        <div><div class="zoo-preview-name">Aspen Valley Sanctuary</div><div class="zoo-preview-meta">Rosseau · Sanctuary</div></div>
       </div>
       <div class="zoo-preview">
-        <div class="zoo-dot" style="background:#e8eef4;">🦜</div>
-        <div><div class="zoo-preview-name">Bird Kingdom</div><div class="zoo-preview-meta">Niagara Falls · Free-flight aviary</div></div>
+        <div class="zoo-dot" style="background:var(--green-pale);">🦢</div>
+        <div><div class="zoo-preview-name">Wye Marsh Wildlife Centre</div><div class="zoo-preview-meta">Midland · Reserve</div></div>
       </div>
     </div>
-    <div class="hero-map-card small">
+    <div class="hero-card small">
       <div class="stats-row">
-        <div class="stat-card"><div class="stat-num">14</div><div class="stat-lbl">Ontario Zoos</div></div>
-        <div class="stat-divider"></div>
-        <div class="stat-card"><div class="stat-num">2K+</div><div class="stat-lbl">Species</div></div>
+        <div class="stat-card"><div class="stat-num">20+</div><div class="stat-lbl">Locations</div></div>
+        <div class="stat-div"></div>
+        <div class="stat-card"><div class="stat-num">3</div><div class="stat-lbl">Categories</div></div>
       </div>
     </div>
   </div>
 </div>
 
-<section id="zoos">
-  <div class="zoos-header">
+<!-- EXPLORE GRID -->
+<section id="explore">
+  <div style="margin-bottom:3rem;">
     <div class="section-eyebrow">🌿 Ontario Wildlife</div>
-    <div class="section-title">Explore zoos &amp; sanctuaries</div>
-    <p class="section-sub">Hover any card to see more info. Click to visit the zoo's website.</p>
+    <div class="section-title">Explore zoos, sanctuaries &amp; reserves</div>
+    <p class="section-sub">Hover any card to see more. Click to visit. Filter by category below.</p>
   </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="zoo">🦁 Zoos</button>
+    <button class="filter-btn" data-filter="sanctuary">🌿 Sanctuaries</button>
+    <button class="filter-btn" data-filter="reserve">🍃 Reserves</button>
+  </div>
+
   <div class="zoo-grid">
 
-    <a class="zoo-card" href="https://www.torontozoo.com" target="_blank" rel="noopener">
+    <!-- ZOOS -->
+    <a class="zoo-card" data-type="zoo" href="https://www.torontozoo.com" target="_blank" rel="noopener">
       <div class="zoo-card-inner">
         <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop');"></div>
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-zoo">Zoo</span>
+          </div>
           <div class="zoo-card-front-body">
             <div class="zoo-card-name">Toronto Zoo</div>
             <div class="zoo-card-city">📍 Scarborough, ON</div>
-            <div class="zoo-tags"><span class="tag">500+ species</span><span class="tag">Kids zone</span><span class="tag">Conservation</span></div>
+            <div class="zoo-tags"><span class="tag tag-green">500+ species</span><span class="tag tag-green">Kids zone</span><span class="tag tag-green">Conservation</span></div>
           </div>
         </div>
         <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🦁</div><div class="zoo-card-back-name">Toronto Zoo</div><div class="zoo-card-back-city">📍 2000 Meadowvale Rd, Scarborough</div><div class="zoo-card-back-tags"><span class="tag">500+ species</span><span class="tag">Kids zone</span><span class="tag">Conservation</span></div></div>
-          <span class="zoo-visit-btn">Visit Website ↗</span>
+          <div><div class="zoo-card-back-emoji">🦁</div><div class="zoo-card-back-name">Toronto Zoo</div><div class="zoo-card-back-city">📍 2000 Meadowvale Rd, Scarborough</div><div class="zoo-card-back-tags"><span class="tag tag-green">500+ species</span><span class="tag tag-green">Kids zone</span><span class="tag tag-green">Conservation</span></div></div>
+          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
         </div>
       </div>
     </a>
 
-    <a class="zoo-card" href="https://www.lionsafari.com" target="_blank" rel="noopener">
+    <a class="zoo-card" data-type="zoo" href="https://www.lionsafari.com" target="_blank" rel="noopener">
       <div class="zoo-card-inner">
         <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop');"></div>
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-zoo">Zoo</span>
+          </div>
           <div class="zoo-card-front-body">
             <div class="zoo-card-name">African Lion Safari</div>
             <div class="zoo-card-city">📍 Cambridge, ON</div>
-            <div class="zoo-tags"><span class="tag">Drive-thru</span><span class="tag">Boat tour</span><span class="tag">African wildlife</span></div>
+            <div class="zoo-tags"><span class="tag tag-green">Drive-thru</span><span class="tag tag-green">Boat tour</span><span class="tag tag-green">African wildlife</span></div>
           </div>
         </div>
         <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🦒</div><div class="zoo-card-back-name">African Lion Safari</div><div class="zoo-card-back-city">📍 1386 Cooper Rd, Cambridge</div><div class="zoo-card-back-tags"><span class="tag">Drive-thru</span><span class="tag">Boat tour</span><span class="tag">African wildlife</span></div></div>
-          <span class="zoo-visit-btn">Visit Website ↗</span>
+          <div><div class="zoo-card-back-emoji">🦒</div><div class="zoo-card-back-name">African Lion Safari</div><div class="zoo-card-back-city">📍 1386 Cooper Rd, Cambridge</div><div class="zoo-card-back-tags"><span class="tag tag-green">Drive-thru</span><span class="tag tag-green">Boat tour</span></div></div>
+          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
         </div>
       </div>
     </a>
 
-    <a class="zoo-card" href="https://www.elmvalejunglezoo.com" target="_blank" rel="noopener">
+    <a class="zoo-card" data-type="zoo" href="https://www.elmvalejunglezoo.com" target="_blank" rel="noopener">
       <div class="zoo-card-inner">
         <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop');"></div>
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-zoo">Zoo</span>
+          </div>
           <div class="zoo-card-front-body">
             <div class="zoo-card-name">Elmvale Jungle Zoo</div>
             <div class="zoo-card-city">📍 Elmvale, ON</div>
-            <div class="zoo-tags"><span class="tag">Family</span><span class="tag">Exotic animals</span><span class="tag">Picnic area</span></div>
+            <div class="zoo-tags"><span class="tag tag-green">Family</span><span class="tag tag-green">Exotic animals</span><span class="tag tag-green">Picnic area</span></div>
           </div>
         </div>
         <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🐆</div><div class="zoo-card-back-name">Elmvale Jungle Zoo</div><div class="zoo-card-back-city">📍 1430 Flos Rd 7 E, Elmvale</div><div class="zoo-card-back-tags"><span class="tag">Family</span><span class="tag">Exotic animals</span><span class="tag">Picnic area</span></div></div>
-          <span class="zoo-visit-btn">Visit Website ↗</span>
+          <div><div class="zoo-card-back-emoji">🐆</div><div class="zoo-card-back-name">Elmvale Jungle Zoo</div><div class="zoo-card-back-city">📍 1430 Flos Rd 7 E, Elmvale</div><div class="zoo-card-back-tags"><span class="tag tag-green">Family</span><span class="tag tag-green">Exotic animals</span></div></div>
+          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
         </div>
       </div>
     </a>
 
-    <a class="zoo-card" href="https://www.pineridgezoo.com" target="_blank" rel="noopener">
+    <a class="zoo-card" data-type="zoo" href="https://www.birdkingdom.ca" target="_blank" rel="noopener">
       <div class="zoo-card-inner">
         <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1612024782955-49fae79e42bb?w=600&auto=format&fit=crop');"></div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Pine Ridge Zoo</div>
-            <div class="zoo-card-city">📍 Bowmanville, ON</div>
-            <div class="zoo-tags"><span class="tag">Wildlife rescue</span><span class="tag">Educational</span></div>
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-zoo">Zoo</span>
           </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🐺</div><div class="zoo-card-back-name">Pine Ridge Zoo</div><div class="zoo-card-back-city">📍 1650 Lambs Rd, Bowmanville</div><div class="zoo-card-back-tags"><span class="tag">Wildlife rescue</span><span class="tag">Educational</span></div></div>
-          <span class="zoo-visit-btn">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" href="https://www.littlerayzoo.com" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?w=600&auto=format&fit=crop');"></div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Little Ray's Reptile Zoo</div>
-            <div class="zoo-card-city">📍 Ottawa, ON</div>
-            <div class="zoo-tags"><span class="tag">Reptiles</span><span class="tag">Interactive</span><span class="tag">Education</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🐊</div><div class="zoo-card-back-name">Little Ray's Reptile Zoo</div><div class="zoo-card-back-city">📍 Multiple locations, Ottawa</div><div class="zoo-card-back-tags"><span class="tag">Reptiles</span><span class="tag">Interactive</span><span class="tag">Education</span></div></div>
-          <span class="zoo-visit-btn">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" href="https://www.ontariowolfcentre.ca" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop');"></div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Ontario Wolf Centre</div>
-            <div class="zoo-card-city">📍 Haliburton, ON</div>
-            <div class="zoo-tags"><span class="tag">Wolves</span><span class="tag">Sanctuary</span><span class="tag">Howling events</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🐺</div><div class="zoo-card-back-name">Ontario Wolf Centre</div><div class="zoo-card-back-city">📍 1090 Haliburton Lake Rd</div><div class="zoo-card-back-tags"><span class="tag">Wolves</span><span class="tag">Sanctuary</span><span class="tag">Howling events</span></div></div>
-          <span class="zoo-visit-btn">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" href="https://www.birdkingdom.ca" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop');"></div>
           <div class="zoo-card-front-body">
             <div class="zoo-card-name">Bird Kingdom</div>
             <div class="zoo-card-city">📍 Niagara Falls, ON</div>
-            <div class="zoo-tags"><span class="tag">Free-flight</span><span class="tag">Indoor aviary</span><span class="tag">Nocturnal</span></div>
+            <div class="zoo-tags"><span class="tag tag-green">Free-flight</span><span class="tag tag-green">Indoor aviary</span><span class="tag tag-green">Nocturnal</span></div>
           </div>
         </div>
         <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🦜</div><div class="zoo-card-back-name">Bird Kingdom</div><div class="zoo-card-back-city">📍 5651 River Rd, Niagara Falls</div><div class="zoo-card-back-tags"><span class="tag">Free-flight</span><span class="tag">Indoor aviary</span><span class="tag">Nocturnal</span></div></div>
-          <span class="zoo-visit-btn">Visit Website ↗</span>
+          <div><div class="zoo-card-back-emoji">🦜</div><div class="zoo-card-back-name">Bird Kingdom</div><div class="zoo-card-back-city">📍 5651 River Rd, Niagara Falls</div><div class="zoo-card-back-tags"><span class="tag tag-green">Free-flight</span><span class="tag tag-green">Indoor aviary</span></div></div>
+          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
         </div>
       </div>
     </a>
 
-    <a class="zoo-card" href="https://www.chelseyzoo.com" target="_blank" rel="noopener">
+    <a class="zoo-card" data-type="zoo" href="https://www.ontariowolfcentre.ca" target="_blank" rel="noopener">
       <div class="zoo-card-inner">
         <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=600&auto=format&fit=crop');"></div>
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-zoo">Zoo</span>
+          </div>
           <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Chelsey Zoo</div>
-            <div class="zoo-card-city">📍 Chelsey, ON</div>
-            <div class="zoo-tags"><span class="tag">Small &amp; local</span><span class="tag">Farmyard</span></div>
+            <div class="zoo-card-name">Ontario Wolf Centre</div>
+            <div class="zoo-card-city">📍 Haliburton, ON</div>
+            <div class="zoo-tags"><span class="tag tag-green">Wolves</span><span class="tag tag-green">Howling events</span></div>
           </div>
         </div>
         <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🦊</div><div class="zoo-card-back-name">Chelsey Zoo</div><div class="zoo-card-back-city">📍 Chelsey, Ontario</div><div class="zoo-card-back-tags"><span class="tag">Small &amp; local</span><span class="tag">Farmyard</span></div></div>
-          <span class="zoo-visit-btn">Visit Website ↗</span>
+          <div><div class="zoo-card-back-emoji">🐺</div><div class="zoo-card-back-name">Ontario Wolf Centre</div><div class="zoo-card-back-city">📍 1090 Haliburton Lake Rd</div><div class="zoo-card-back-tags"><span class="tag tag-green">Wolves</span><span class="tag tag-green">Howling events</span></div></div>
+          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" data-type="zoo" href="https://www.littlerayzoo.com" target="_blank" rel="noopener">
+      <div class="zoo-card-inner">
+        <div class="zoo-card-front">
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-zoo">Zoo</span>
+          </div>
+          <div class="zoo-card-front-body">
+            <div class="zoo-card-name">Little Ray's Reptile Zoo</div>
+            <div class="zoo-card-city">📍 Ottawa, ON</div>
+            <div class="zoo-tags"><span class="tag tag-green">Reptiles</span><span class="tag tag-green">Interactive</span><span class="tag tag-green">Education</span></div>
+          </div>
+        </div>
+        <div class="zoo-card-back">
+          <div><div class="zoo-card-back-emoji">🐊</div><div class="zoo-card-back-name">Little Ray's Reptile Zoo</div><div class="zoo-card-back-city">📍 Multiple locations, Ottawa</div><div class="zoo-card-back-tags"><span class="tag tag-green">Reptiles</span><span class="tag tag-green">Interactive</span></div></div>
+          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- SANCTUARIES -->
+    <a class="zoo-card" data-type="sanctuary" href="https://www.aspenvalley.ca" target="_blank" rel="noopener">
+      <div class="zoo-card-inner">
+        <div class="zoo-card-front">
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-sanctuary">Sanctuary</span>
+          </div>
+          <div class="zoo-card-front-body">
+            <div class="zoo-card-name">Aspen Valley Wildlife Sanctuary</div>
+            <div class="zoo-card-city">📍 Rosseau, ON</div>
+            <div class="zoo-tags"><span class="tag tag-brown">Bears</span><span class="tag tag-brown">Bobcats</span><span class="tag tag-brown">Guided tours</span></div>
+          </div>
+        </div>
+        <div class="zoo-card-back">
+          <div><div class="zoo-card-back-emoji">🐻</div><div class="zoo-card-back-name">Aspen Valley Wildlife Sanctuary</div><div class="zoo-card-back-city">📍 Rosseau, Muskoka</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Bears</span><span class="tag tag-brown">Bobcats</span><span class="tag tag-brown">Moose</span></div></div>
+          <span class="zoo-visit-btn visit-brown">Visit Website ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" data-type="sanctuary" href="https://www.bearcreeksanctuary.com" target="_blank" rel="noopener">
+      <div class="zoo-card-inner">
+        <div class="zoo-card-front">
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-sanctuary">Sanctuary</span>
+          </div>
+          <div class="zoo-card-front-body">
+            <div class="zoo-card-name">Bear Creek Exotic Wildlife Sanctuary</div>
+            <div class="zoo-card-city">📍 Barrie, ON</div>
+            <div class="zoo-tags"><span class="tag tag-brown">Exotic animals</span><span class="tag tag-brown">Non-profit</span><span class="tag tag-brown">Rescue</span></div>
+          </div>
+        </div>
+        <div class="zoo-card-back">
+          <div><div class="zoo-card-back-emoji">🐯</div><div class="zoo-card-back-name">Bear Creek Exotic Wildlife Sanctuary</div><div class="zoo-card-back-city">📍 Barrie, Ontario</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Exotic animals</span><span class="tag tag-brown">Rescue</span></div></div>
+          <span class="zoo-visit-btn visit-brown">Visit Website ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" data-type="sanctuary" href="https://www.storybookfarm.org" target="_blank" rel="noopener">
+      <div class="zoo-card-inner">
+        <div class="zoo-card-front">
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-sanctuary">Sanctuary</span>
+          </div>
+          <div class="zoo-card-front-body">
+            <div class="zoo-card-name">Story Book Farm Primate Sanctuary</div>
+            <div class="zoo-card-city">📍 Sunderland, ON</div>
+            <div class="zoo-tags"><span class="tag tag-brown">Primates</span><span class="tag tag-brown">Rescue</span><span class="tag tag-brown">Tours available</span></div>
+          </div>
+        </div>
+        <div class="zoo-card-back">
+          <div><div class="zoo-card-back-emoji">🐒</div><div class="zoo-card-back-name">Story Book Farm Primate Sanctuary</div><div class="zoo-card-back-city">📍 Sunderland, Ontario</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Primates</span><span class="tag tag-brown">Rescue</span></div></div>
+          <span class="zoo-visit-btn visit-brown">Visit Website ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" data-type="sanctuary" href="https://www.salthaven.org" target="_blank" rel="noopener">
+      <div class="zoo-card-inner">
+        <div class="zoo-card-front">
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-sanctuary">Sanctuary</span>
+          </div>
+          <div class="zoo-card-front-body">
+            <div class="zoo-card-name">Salthaven Wildlife Centre</div>
+            <div class="zoo-card-city">📍 Mount Brydges, ON</div>
+            <div class="zoo-tags"><span class="tag tag-brown">Rehabilitation</span><span class="tag tag-brown">Native wildlife</span><span class="tag tag-brown">Education</span></div>
+          </div>
+        </div>
+        <div class="zoo-card-back">
+          <div><div class="zoo-card-back-emoji">🦉</div><div class="zoo-card-back-name">Salthaven Wildlife Centre</div><div class="zoo-card-back-city">📍 Mount Brydges, Ontario</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Rehabilitation</span><span class="tag tag-brown">Native wildlife</span></div></div>
+          <span class="zoo-visit-btn visit-brown">Visit Website ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- RESERVES -->
+    <a class="zoo-card" data-type="reserve" href="https://www.wyemarsh.com" target="_blank" rel="noopener">
+      <div class="zoo-card-inner">
+        <div class="zoo-card-front">
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-reserve">Reserve</span>
+          </div>
+          <div class="zoo-card-front-body">
+            <div class="zoo-card-name">Wye Marsh Wildlife Centre</div>
+            <div class="zoo-card-city">📍 Midland, ON</div>
+            <div class="zoo-tags"><span class="tag tag-brown">25km trails</span><span class="tag tag-brown">Canoe tours</span><span class="tag tag-brown">Birds of prey</span></div>
+          </div>
+        </div>
+        <div class="zoo-card-back">
+          <div><div class="zoo-card-back-emoji">🦢</div><div class="zoo-card-back-name">Wye Marsh Wildlife Centre</div><div class="zoo-card-back-city">📍 16160 Hwy 12, Midland</div><div class="zoo-card-back-tags"><span class="tag tag-brown">25km trails</span><span class="tag tag-brown">Canoe tours</span><span class="tag tag-brown">Open 362 days</span></div></div>
+          <span class="zoo-visit-btn visit-darkbrown">Visit Website ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" data-type="reserve" href="https://www.mountsberg.ca" target="_blank" rel="noopener">
+      <div class="zoo-card-inner">
+        <div class="zoo-card-front">
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-reserve">Reserve</span>
+          </div>
+          <div class="zoo-card-front-body">
+            <div class="zoo-card-name">Mountsberg Wildlife Centre</div>
+            <div class="zoo-card-city">📍 Campbellville, ON</div>
+            <div class="zoo-tags"><span class="tag tag-brown">Raptors</span><span class="tag tag-brown">Hiking</span><span class="tag tag-brown">Conservation</span></div>
+          </div>
+        </div>
+        <div class="zoo-card-back">
+          <div><div class="zoo-card-back-emoji">🦅</div><div class="zoo-card-back-name">Mountsberg Wildlife Centre</div><div class="zoo-card-back-city">📍 2259 Milburough Line, Campbellville</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Raptors</span><span class="tag tag-brown">Hiking</span></div></div>
+          <span class="zoo-visit-btn visit-darkbrown">Visit Website ↗</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="zoo-card" data-type="reserve" href="https://ontarionature.org/programs/nature-reserves/altberg-wildlife-sanctuary/" target="_blank" rel="noopener">
+      <div class="zoo-card-inner">
+        <div class="zoo-card-front">
+          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&auto=format&fit=crop');">
+            <span class="zoo-type-badge badge-reserve">Reserve</span>
+          </div>
+          <div class="zoo-card-front-body">
+            <div class="zoo-card-name">Altberg Wildlife Sanctuary Nature Reserve</div>
+            <div class="zoo-card-city">📍 Norland, ON</div>
+            <div class="zoo-tags"><span class="tag tag-brown">Free entry</span><span class="tag tag-brown">3.3km trails</span><span class="tag tag-brown">Old growth forest</span></div>
+          </div>
+        </div>
+        <div class="zoo-card-back">
+          <div><div class="zoo-card-back-emoji">🌲</div><div class="zoo-card-back-name">Altberg Wildlife Sanctuary Nature Reserve</div><div class="zoo-card-back-city">📍 Norland, Ontario</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Free entry</span><span class="tag tag-brown">480 hectares</span></div></div>
+          <span class="zoo-visit-btn visit-darkbrown">Visit Website ↗</span>
         </div>
       </div>
     </a>
@@ -355,40 +579,377 @@
   </div>
 </section>
 
-<section id="about" style="background:var(--sand);border-radius:28px;max-width:calc(100% - 5rem);padding:5rem 4rem;">
-  <div class="section-eyebrow">Why Zoovy</div>
-  <div class="section-title">Built for animal lovers</div>
-  <p class="section-sub">Everything you need to plan a wildlife visit, in one clean place.</p>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon" style="background:rgba(74,124,89,0.1);">🗺</div>
-      <div class="feature-title">Location discovery</div>
-      <p class="feature-desc">Find every zoo, sanctuary, and wildlife centre in Ontario with addresses, hours, and directions.</p>
+<!-- MAP SECTION -->
+<section id="map">
+  <div style="margin-bottom:2.5rem;">
+    <div class="section-eyebrow">🌎 Explore by Region</div>
+    <div class="section-title">Wildlife across North America</div>
+    <p class="section-sub">Click any state or province to explore zoos, sanctuaries, and reserves in that region.</p>
+  </div>
+  <div class="map-wrap">
+    <div id="map-hint" class="map-hint">Click a region to explore</div>
+    <div id="na-map" style="width:100%;"></div>
+    <div class="map-legend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--green-dark);"></span>Has wildlife data</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--green-sage);"></span>Coming soon</span>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:rgba(26,58,42,0.08);">🔍</div>
-      <div class="feature-title">Filter by interest</div>
-      <p class="feature-desc">Looking for reptiles? Family-friendly? Drive-thru? Filter by experience type and find your match.</p>
+  </div>
+  <div id="region-panel" class="region-panel" style="display:none;">
+    <div class="region-panel-header">
+      <div><div id="region-name" class="region-panel-title"></div><div id="region-count" class="region-panel-sub"></div></div>
+      <button id="region-close" class="region-close" onclick="closePanel()">✕</button>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:rgba(139,107,74,0.1);">🐣</div>
-      <div class="feature-title">Animal births — coming soon</div>
-      <p class="feature-desc">Track expectant and newborn animals at Ontario zoos. Be the first to know when a new cub arrives.</p>
+    <div id="region-cards" class="region-cards-grid"></div>
+  </div>
+  <div id="coming-soon-panel" class="coming-soon-panel" style="display:none;">
+    <div class="coming-soon-inner">
+      <div style="font-size:2.5rem;margin-bottom:0.75rem;">🗺</div>
+      <div class="region-panel-title" id="coming-soon-name"></div>
+      <p style="color:rgba(28,28,28,0.5);margin:0.5rem 0 1.5rem;font-size:0.9rem;">We're working on adding wildlife locations here.</p>
+      <span class="coming-soon-badge">Coming Soon</span>
+      <button onclick="closePanel()" style="display:block;margin:1.25rem auto 0;background:none;border:1.5px solid rgba(0,0,0,0.15);border-radius:999px;padding:0.5rem 1.25rem;cursor:pointer;font-size:0.85rem;color:rgba(28,28,28,0.6);">Close</button>
     </div>
   </div>
 </section>
 
-<div class="cta-section">
-  <h2>Ontario's wildlife, all in one place</h2>
-  <p>Start exploring zoos, sanctuaries, and wildlife experiences across the province.</p>
-  <a href="#zoos" class="btn-cream">Explore now</a>
+<!-- ABOUT -->
+<section id="about" style="background:var(--brown-cream);border-radius:28px;max-width:calc(100% - 5rem);padding:5rem 4rem;">
+  <div class="section-eyebrow">Why Zoovy</div>
+  <div class="section-title">Built for animal lovers</div>
+  <p class="section-sub">Everything you need to discover Ontario's wildlife — zoos, sanctuaries, and nature reserves — in one clean place.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon" style="background:var(--green-pale);">🗺</div>
+      <div class="feature-title">Three categories, one place</div>
+      <p class="feature-desc">Whether you want a full zoo day, a quiet sanctuary visit, or a nature reserve hike — find it all without the Googling.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:var(--brown-pale);">🔍</div>
+      <div class="feature-title">Filter by interest</div>
+      <p class="feature-desc">Looking for reptiles? Family-friendly? Drive-thru? Filter by type and find the right experience in seconds.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:var(--green-pale);">🐣</div>
+      <div class="feature-title">Animal births — coming soon</div>
+      <p class="feature-desc">Track expectant and newborn animals at Ontario zoos and sanctuaries. Be the first to know when a new cub arrives.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-wrap">
+  <div class="cta-section">
+    <h2>North America's wildlife, all in one place</h2>
+    <p>Zoos, sanctuaries, and reserves across Ontario and beyond.</p>
+    <a href="#explore" class="btn-cream">Explore now</a>
+  </div>
 </div>
 
 <footer>
   <div class="logo" style="font-size:1.1rem;">Zoo<span>vy</span></div>
-  <div>Ontario wildlife discovery · zoovy.net</div>
+  <div>North America wildlife discovery · zoovy.net</div>
   <div>© 2025 Zoovy</div>
 </footer>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.zoo-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.type === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+
+
+<script>
+// ── REGION DATA ──
+const regionData = {
+  ON: {
+    name: "Ontario, Canada",
+    locations: [
+      { name:"Toronto Zoo", type:"zoo", emoji:"🦁", city:"Scarborough", url:"https://www.torontozoo.com" },
+      { name:"African Lion Safari", type:"zoo", emoji:"🦒", city:"Cambridge", url:"https://www.lionsafari.com" },
+      { name:"Elmvale Jungle Zoo", type:"zoo", emoji:"🐆", city:"Elmvale", url:"https://www.elmvalejunglezoo.com" },
+      { name:"Bird Kingdom", type:"zoo", emoji:"🦜", city:"Niagara Falls", url:"https://www.birdkingdom.ca" },
+      { name:"Ontario Wolf Centre", type:"zoo", emoji:"🐺", city:"Haliburton", url:"https://www.ontariowolfcentre.ca" },
+      { name:"Little Ray's Reptile Zoo", type:"zoo", emoji:"🐊", city:"Ottawa", url:"https://www.littlerayzoo.com" },
+      { name:"Aspen Valley Wildlife Sanctuary", type:"sanctuary", emoji:"🐻", city:"Rosseau", url:"https://www.aspenvalley.ca" },
+      { name:"Bear Creek Exotic Wildlife Sanctuary", type:"sanctuary", emoji:"🐯", city:"Barrie", url:"https://www.bearcreeksanctuary.com" },
+      { name:"Story Book Farm Primate Sanctuary", type:"sanctuary", emoji:"🐒", city:"Sunderland", url:"https://www.storybookfarm.org" },
+      { name:"Salthaven Wildlife Centre", type:"sanctuary", emoji:"🦉", city:"Mount Brydges", url:"https://www.salthaven.org" },
+      { name:"Wye Marsh Wildlife Centre", type:"reserve", emoji:"🦢", city:"Midland", url:"https://www.wyemarsh.com" },
+      { name:"Mountsberg Wildlife Centre", type:"reserve", emoji:"🦅", city:"Campbellville", url:"https://www.mountsberg.ca" },
+      { name:"Altberg Wildlife Sanctuary", type:"reserve", emoji:"🌲", city:"Norland", url:"https://ontarionature.org" },
+    ]
+  },
+  BC: {
+    name: "British Columbia, Canada",
+    locations: [
+      { name:"Greater Vancouver Zoo", type:"zoo", emoji:"🦒", city:"Aldergrove", url:"https://www.gvzoo.com" },
+      { name:"Victoria Butterfly Gardens", type:"zoo", emoji:"🦋", city:"Victoria", url:"https://www.butterflygardens.com" },
+      { name:"Rescue Ranch", type:"sanctuary", emoji:"🐴", city:"Kamloops", url:"https://www.rescueranch.ca" },
+    ]
+  },
+  NY: {
+    name: "New York, USA",
+    locations: [
+      { name:"Bronx Zoo", type:"zoo", emoji:"🦁", city:"New York City", url:"https://www.bronxzoo.com" },
+      { name:"Central Park Zoo", type:"zoo", emoji:"🐧", city:"New York City", url:"https://centralparkzoo.com" },
+      { name:"Buffalo Zoo", type:"zoo", emoji:"🦬", city:"Buffalo", url:"https://www.buffalozoo.org" },
+      { name:"Watkins Glen State Park", type:"reserve", emoji:"🌊", city:"Watkins Glen", url:"https://parks.ny.gov" },
+    ]
+  },
+  CA: {
+    name: "California, USA",
+    locations: [
+      { name:"San Diego Zoo", type:"zoo", emoji:"🐼", city:"San Diego", url:"https://zoo.sandiegozoo.org" },
+      { name:"Los Angeles Zoo", type:"zoo", emoji:"🦍", city:"Los Angeles", url:"https://www.lazoo.org" },
+      { name:"Oakland Zoo", type:"zoo", emoji:"🦓", city:"Oakland", url:"https://www.oaklandzoo.org" },
+      { name:"Elephant Sanctuary", type:"sanctuary", emoji:"🐘", city:"San Andreas", url:"https://www.elephantsanctuary.org" },
+    ]
+  },
+  TX: {
+    name: "Texas, USA",
+    locations: [
+      { name:"San Antonio Zoo", type:"zoo", emoji:"🦏", city:"San Antonio", url:"https://www.sazoo.org" },
+      { name:"Houston Zoo", type:"zoo", emoji:"🐊", city:"Houston", url:"https://www.houstonzoo.org" },
+      { name:"Dallas Zoo", type:"zoo", emoji:"🦒", city:"Dallas", url:"https://www.dallaszoo.com" },
+    ]
+  },
+  FL: {
+    name: "Florida, USA",
+    locations: [
+      { name:"ZooTampa", type:"zoo", emoji:"🦛", city:"Tampa", url:"https://www.zootampa.org" },
+      { name:"Miami Zoo", type:"zoo", emoji:"🦩", city:"Miami", url:"https://www.miamimetrozoo.com" },
+      { name:"Busch Gardens", type:"zoo", emoji:"🦁", city:"Tampa", url:"https://buschgardens.com/tampa" },
+    ]
+  }
+};
+
+const typeColors = { zoo:"#1a3a2a", sanctuary:"#7a4a28", reserve:"#3d2410" };
+const typeLabels = { zoo:"Zoo", sanctuary:"Sanctuary", reserve:"Reserve" };
+
+function showPanel(regionId) {
+  document.querySelectorAll('.region').forEach(r => r.classList.remove('active'));
+  const el = document.querySelector('[data-region="' + regionId + '"]');
+  if (el) el.classList.add('active');
+
+  const rp = document.getElementById('region-panel');
+  const cp = document.getElementById('coming-soon-panel');
+
+  if (regionData[regionId]) {
+    const data = regionData[regionId];
+    document.getElementById('region-name').textContent = data.name;
+    document.getElementById('region-count').textContent = data.locations.length + ' wildlife locations';
+    const grid = document.getElementById('region-cards');
+    grid.innerHTML = data.locations.map(loc => `
+      <a class="mini-card" href="${loc.url}" target="_blank" rel="noopener">
+        <div class="mini-card-emoji">${loc.emoji}</div>
+        <div>
+          <div class="mini-card-name">${loc.name}</div>
+          <div class="mini-card-meta">📍 ${loc.city}</div>
+          <span class="mini-card-badge" style="background:${typeColors[loc.type]}20;color:${typeColors[loc.type]}">${typeLabels[loc.type]}</span>
+        </div>
+      </a>
+    `).join('');
+    rp.style.display = 'block';
+    cp.style.display = 'none';
+  } else if (regionId) {
+    document.getElementById('coming-soon-name').textContent = regionId;
+    cp.style.display = 'block';
+    rp.style.display = 'none';
+  }
+
+  setTimeout(() => {
+    document.getElementById('region-panel').scrollIntoView ? 
+    (rp.style.display !== 'none' ? rp : cp).scrollIntoView({behavior:'smooth', block:'start'}) : null;
+  }, 100);
+}
+
+function closePanel() {
+  document.getElementById('region-panel').style.display = 'none';
+  document.getElementById('coming-soon-panel').style.display = 'none';
+  document.querySelectorAll('.region').forEach(r => r.classList.remove('active'));
+}
+
+// ── D3 MAP ──
+// Load D3 and TopoJSON from CDN, then render real Mercator map
+(function() {
+  const d3Script = document.createElement('script');
+  d3Script.src = 'https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js';
+  d3Script.onload = function() {
+    const topoScript = document.createElement('script');
+    topoScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js';
+    topoScript.onload = function() {
+      initMap();
+    };
+    document.head.appendChild(topoScript);
+  };
+  document.head.appendChild(d3Script);
+})();
+
+function initMap() {
+  const container = document.getElementById('na-map');
+  const width = container.offsetWidth || 900;
+  const height = width * 0.62;
+
+  const svg = d3.select('#na-map')
+    .append('svg')
+    .attr('viewBox', `0 0 ${width} ${height}`)
+    .attr('width', '100%')
+    .attr('height', 'auto')
+    .style('display', 'block');
+
+  // Mercator projection centered on North America
+  const projection = d3.geoMercator()
+    .center([-96, 56])
+    .scale(width * 0.85)
+    .translate([width / 2, height / 2]);
+
+  const path = d3.geoPath().projection(projection);
+
+  const hasDataIds = Object.keys(regionData);
+
+  // Load North America from a public TopoJSON
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+    .then(r => r.json())
+    .then(world => {
+      // Draw country fills for NA countries first
+      const countries = topojson.feature(world, world.objects.countries);
+      const naIds = ['840','124','484']; // USA, Canada, Mexico
+      const naCountries = { type:'FeatureCollection', features: countries.features.filter(f => naIds.includes(f.id.toString().padStart(3,'0'))) };
+
+      svg.append('g')
+        .selectAll('path')
+        .data(naCountries.features)
+        .enter().append('path')
+        .attr('d', path)
+        .attr('fill', d => {
+          if (d.id == 484) return 'var(--green-sage)'; // Mexico
+          return 'var(--green-mid)';
+        })
+        .attr('stroke', 'var(--green-pale)')
+        .attr('stroke-width', 0.5);
+
+      // Now load admin1 (states/provinces) for US + Canada
+      fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
+        .then(r => r.json())
+        .then(() => {
+          // fallback — use a simpler states source
+        })
+        .catch(() => {});
+    })
+    .catch(() => {
+      container.innerHTML = '<p style="text-align:center;padding:3rem;color:rgba(28,28,28,0.5);">Map loading...</p>';
+    });
+
+  // Try loading states/provinces from a reliable source
+  fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json')
+    .then(r => r.json())
+    .then(us => {
+      const states = topojson.feature(us, us.objects.states);
+      
+      // FIPS code to state abbreviation mapping
+      const fipsToState = {
+        '01':'AL','02':'AK','04':'AZ','05':'AR','06':'CA','08':'CO','09':'CT',
+        '10':'DE','11':'DC','12':'FL','13':'GA','15':'HI','16':'ID','17':'IL',
+        '18':'IN','19':'IA','20':'KS','21':'KY','22':'LA','23':'ME','24':'MD',
+        '25':'MA','26':'MI','27':'MN','28':'MS','29':'MO','30':'MT','31':'NE',
+        '32':'NV','33':'NH','34':'NJ','35':'NM','36':'NY','37':'NC','38':'ND',
+        '39':'OH','40':'OK','41':'OR','42':'PA','44':'RI','45':'SC','46':'SD',
+        '47':'TN','48':'TX','49':'UT','50':'VT','51':'VA','53':'WA','54':'WV',
+        '55':'WI','56':'WY'
+      };
+
+      // US states projection — us-atlas uses its own projection, need albers
+      const usProjection = d3.geoAlbersUsa()
+        .scale(width * 1.1)
+        .translate([width * 0.58, height * 0.62]);
+      const usPath = d3.geoPath().projection(usProjection);
+
+      svg.append('g').attr('class','us-states')
+        .selectAll('path')
+        .data(states.features)
+        .enter().append('path')
+        .attr('d', usPath)
+        .attr('class', d => {
+          const abbr = fipsToState[d.id.toString().padStart(2,'0')];
+          return 'state-region' + (regionData[abbr] ? ' has-data' : '');
+        })
+        .attr('data-region', d => fipsToState[d.id.toString().padStart(2,'0')])
+        .attr('fill', d => {
+          const abbr = fipsToState[d.id.toString().padStart(2,'0')];
+          return regionData[abbr] ? 'var(--green-dark)' : 'var(--green-mid)';
+        })
+        .attr('stroke', 'var(--green-pale)')
+        .attr('stroke-width', 0.6)
+        .style('cursor', 'pointer')
+        .on('mouseover', function(event, d) {
+          const abbr = fipsToState[d.id.toString().padStart(2,'0')];
+          d3.select(this).attr('fill', regionData[abbr] ? 'var(--brown-mid)' : 'var(--brown-light)');
+        })
+        .on('mouseout', function(event, d) {
+          const abbr = fipsToState[d.id.toString().padStart(2,'0')];
+          if (!this.classList.contains('active')) {
+            d3.select(this).attr('fill', regionData[abbr] ? 'var(--green-dark)' : 'var(--green-mid)');
+          }
+        })
+        .on('click', function(event, d) {
+          const abbr = fipsToState[d.id.toString().padStart(2,'0')];
+          document.querySelectorAll('.state-region,.canada-region').forEach(el => {
+            const id = el.getAttribute('data-region');
+            d3.select(el).attr('fill', regionData[id] ? 'var(--green-dark)' : 'var(--green-mid)');
+          });
+          d3.select(this).attr('fill', 'var(--brown-warm)');
+          showPanel(abbr);
+        });
+    })
+    .catch(err => console.log('US atlas error', err));
+
+  // Canada provinces using a separate source
+  fetch('https://cdn.jsdelivr.net/npm/canada-map-topo@1.0.0/canada.json')
+    .then(r => r.json())
+    .then(canada => {
+      const provinces = topojson.feature(canada, canada.objects.provinces || Object.values(canada.objects)[0]);
+      
+      // projection for Canada
+      const caProjection = d3.geoMercator()
+        .center([-95, 62])
+        .scale(width * 0.72)
+        .translate([width * 0.42, height * 0.24]);
+      const caPath = d3.geoPath().projection(caProjection);
+
+      svg.append('g').attr('class','canada-provinces')
+        .selectAll('path')
+        .data(provinces.features)
+        .enter().append('path')
+        .attr('d', caPath)
+        .attr('class', d => {
+          const id = d.properties.cartodb_id || d.properties.PRUID || d.id;
+          return 'canada-region';
+        })
+        .attr('fill', 'var(--green-mid)')
+        .attr('stroke', 'var(--green-pale)')
+        .attr('stroke-width', 0.6);
+    })
+    .catch(err => {
+      // If Canada topo fails, draw it simply
+      console.log('Canada atlas error', err);
+    });
+}
+</script>
 
 </body>
 </html>

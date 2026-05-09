@@ -3,18 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zoovy — Discover Ontario's Zoos, Sanctuaries & Wildlife Reserves</title>
-<meta name="description" content="Find and explore zoos, wildlife sanctuaries, and nature reserves across Ontario. Discover Toronto Zoo, African Lion Safari, Wye Marsh, Aspen Valley and more — all in one place.">
-<meta name="keywords" content="Ontario zoos, wildlife sanctuaries Ontario, nature reserves Ontario, Toronto Zoo, African Lion Safari, family activities Ontario, animal experiences Canada">
+<title>Zoovy — Discover North America's Wildlife, Sanctuaries & Wildlife Reserves</title>
+<meta name="description" content="Find and explore zoos, wildlife sanctuaries, and nature reserves across North America. Discover Toronto Zoo, San Diego Zoo, Bronx Zoo and more — all in one place.">
+<meta name="keywords" content="zoos North America, wildlife sanctuaries, nature reserves, Toronto Zoo, San Diego Zoo, Bronx Zoo, animal experiences USA Canada">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://zoovy.net/">
-<meta property="og:title" content="Zoovy — Discover Ontario's Zoos & Wildlife">
-<meta property="og:description" content="Find zoos, sanctuaries, and wildlife reserves across Ontario. Every animal, every location — all in one place.">
+<meta property="og:title" content="Zoovy — Discover North America's Wildlife">
+<meta property="og:description" content="Find zoos, sanctuaries, and wildlife reserves across North America. Every animal, every location — all in one place.">
 <meta property="og:url" content="https://zoovy.net/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Zoovy — Discover Ontario's Zoos & Wildlife">
-<meta name="twitter:description" content="Find zoos, sanctuaries, and wildlife reserves across Ontario.">
+<meta name="twitter:title" content="Zoovy — Discover North America's Wildlife">
+<meta name="twitter:description" content="Find zoos, sanctuaries, and wildlife reserves across North America.">
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -247,6 +249,13 @@
   .legend-item { display:flex; align-items:center; gap:0.4rem; font-size:0.78rem; color:rgba(28,28,28,0.55); }
   .legend-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
   .state-region, .canada-region { transition:fill 0.15s; }
+  path.map-region { transition:fill 0.15s; stroke:var(--green-pale); stroke-width:0.6; }
+  path.map-region.has-data { fill:var(--green-dark); }
+  path.map-region:not(.mexico):not(.has-data) { fill:var(--green-mid); }
+  path.map-region:not(.mexico):hover { fill:var(--brown-light) !important; }
+  path.map-region.has-data:hover { fill:var(--brown-mid) !important; }
+  path.map-region.active { fill:var(--brown-warm) !important; }
+  path.map-region.mexico { fill:var(--green-sage); cursor:default !important; }
 
 
   @media(max-width:900px){
@@ -275,9 +284,9 @@
 <!-- HERO -->
 <div class="hero">
   <div class="hero-left">
-    <div class="hero-tag">Ontario Wildlife</div>
-    <h1>Your guide to<br>Ontario's <em>wild</em> side</h1>
-    <p>Discover zoos, sanctuaries, and nature reserves across Ontario. Every animal, every habitat — all in one place.</p>
+    <div class="hero-tag">North America Wildlife</div>
+    <h1>Your guide to<br>North America's <em>wild</em> side</h1>
+    <p>Discover zoos, sanctuaries, and nature reserves across North America. Every animal, every habitat — all in one place.</p>
     <div class="hero-btns">
       <a href="#explore" class="btn-primary">Explore Now</a>
       <a href="#about" class="btn-ghost">How it works</a>
@@ -285,7 +294,7 @@
   </div>
   <div class="hero-visual">
     <div class="hero-card main">
-      <div class="card-label">🌿 Ontario Wildlife</div>
+      <div class="card-label">🌿 North America Wildlife</div>
       <div class="zoo-preview">
         <div class="zoo-dot" style="background:var(--green-pale);">🦁</div>
         <div><div class="zoo-preview-name">Toronto Zoo</div><div class="zoo-preview-meta">Scarborough · Zoo</div></div>
@@ -309,11 +318,45 @@
   </div>
 </div>
 
+<!-- MAP SECTION -->
+<section id="map">
+  <div style="margin-bottom:2.5rem;">
+    <div class="section-eyebrow">🌎 Explore by Region</div>
+    <div class="section-title">Wildlife across North America</div>
+    <p class="section-sub">Click any state or province to explore wildlife locations in that region.</p>
+  </div>
+  <div id="map-wrap" class="map-wrap" style="position:relative;">
+    <div id="map-status" style="text-align:center;padding:40px;color:var(--green-sage);font-size:0.9rem;">Loading map...</div>
+    <svg id="na-map" style="width:100%;display:none;"></svg>
+    <div class="map-legend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--green-dark);"></span>Has wildlife data</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--green-sage);"></span>Coming soon</span>
+    </div>
+  </div>
+  <div id="region-panel" class="region-panel" style="display:none;">
+    <div class="region-panel-header">
+      <div><div id="region-name" class="region-panel-title"></div><div id="region-count" class="region-panel-sub"></div></div>
+      <button id="region-close" class="region-close" onclick="closePanel()">✕</button>
+    </div>
+    <div id="region-cards" class="region-cards-grid"></div>
+  </div>
+  <div id="coming-soon-panel" class="coming-soon-panel" style="display:none;">
+    <div class="coming-soon-inner">
+      <div style="font-size:2.5rem;margin-bottom:0.75rem;">🗺</div>
+      <div class="region-panel-title" id="coming-soon-name"></div>
+      <p style="color:rgba(28,28,28,0.5);margin:0.5rem 0 1.5rem;font-size:0.9rem;">We're working on adding wildlife locations here.</p>
+      <span class="coming-soon-badge">Coming Soon</span>
+      <button onclick="closePanel()" style="display:block;margin:1.25rem auto 0;background:none;border:1.5px solid rgba(0,0,0,0.15);border-radius:999px;padding:0.5rem 1.25rem;cursor:pointer;font-size:0.85rem;color:rgba(28,28,28,0.6);">Close</button>
+    </div>
+  </div>
+</section>
+
+
 <!-- EXPLORE GRID -->
 <section id="explore">
   <div style="margin-bottom:3rem;">
-    <div class="section-eyebrow">🌿 Ontario Wildlife</div>
-    <div class="section-title">Explore zoos, sanctuaries &amp; reserves</div>
+    <div class="section-eyebrow">🌿 North America Wildlife</div>
+    <div class="section-title">Explore Wildlife, sanctuaries &amp; reserves</div>
     <p class="section-sub">Hover any card to see more. Click to visit. Filter by category below.</p>
   </div>
 
@@ -579,44 +622,11 @@
   </div>
 </section>
 
-<!-- MAP SECTION -->
-<section id="map">
-  <div style="margin-bottom:2.5rem;">
-    <div class="section-eyebrow">🌎 Explore by Region</div>
-    <div class="section-title">Wildlife across North America</div>
-    <p class="section-sub">Click any state or province to explore zoos, sanctuaries, and reserves in that region.</p>
-  </div>
-  <div class="map-wrap">
-    <div id="map-hint" class="map-hint">Click a region to explore</div>
-    <div id="na-map" style="width:100%;"></div>
-    <div class="map-legend">
-      <span class="legend-item"><span class="legend-dot" style="background:var(--green-dark);"></span>Has wildlife data</span>
-      <span class="legend-item"><span class="legend-dot" style="background:var(--green-sage);"></span>Coming soon</span>
-    </div>
-  </div>
-  <div id="region-panel" class="region-panel" style="display:none;">
-    <div class="region-panel-header">
-      <div><div id="region-name" class="region-panel-title"></div><div id="region-count" class="region-panel-sub"></div></div>
-      <button id="region-close" class="region-close" onclick="closePanel()">✕</button>
-    </div>
-    <div id="region-cards" class="region-cards-grid"></div>
-  </div>
-  <div id="coming-soon-panel" class="coming-soon-panel" style="display:none;">
-    <div class="coming-soon-inner">
-      <div style="font-size:2.5rem;margin-bottom:0.75rem;">🗺</div>
-      <div class="region-panel-title" id="coming-soon-name"></div>
-      <p style="color:rgba(28,28,28,0.5);margin:0.5rem 0 1.5rem;font-size:0.9rem;">We're working on adding wildlife locations here.</p>
-      <span class="coming-soon-badge">Coming Soon</span>
-      <button onclick="closePanel()" style="display:block;margin:1.25rem auto 0;background:none;border:1.5px solid rgba(0,0,0,0.15);border-radius:999px;padding:0.5rem 1.25rem;cursor:pointer;font-size:0.85rem;color:rgba(28,28,28,0.6);">Close</button>
-    </div>
-  </div>
-</section>
-
 <!-- ABOUT -->
 <section id="about" style="background:var(--brown-cream);border-radius:28px;max-width:calc(100% - 5rem);padding:5rem 4rem;">
   <div class="section-eyebrow">Why Zoovy</div>
   <div class="section-title">Built for animal lovers</div>
-  <p class="section-sub">Everything you need to discover Ontario's wildlife — zoos, sanctuaries, and nature reserves — in one clean place.</p>
+  <p class="section-sub">Everything you need to discover wildlife across North America — zoos, sanctuaries, and nature reserves — in one clean place.</p>
   <div class="features-grid">
     <div class="feature-card">
       <div class="feature-icon" style="background:var(--green-pale);">🗺</div>
@@ -631,7 +641,7 @@
     <div class="feature-card">
       <div class="feature-icon" style="background:var(--green-pale);">🐣</div>
       <div class="feature-title">Animal births — coming soon</div>
-      <p class="feature-desc">Track expectant and newborn animals at Ontario zoos and sanctuaries. Be the first to know when a new cub arrives.</p>
+      <p class="feature-desc">Track expectant and newborn animals at zoos and sanctuaries across North America. Be the first to know when a new cub arrives.</p>
     </div>
   </div>
 </section>
@@ -640,7 +650,7 @@
 <div class="cta-wrap">
   <div class="cta-section">
     <h2>North America's wildlife, all in one place</h2>
-    <p>Zoos, sanctuaries, and reserves across Ontario and beyond.</p>
+    <p>Zoos, sanctuaries, and reserves from coast to coast.</p>
     <a href="#explore" class="btn-cream">Explore now</a>
   </div>
 </div>
@@ -652,303 +662,247 @@
 </footer>
 
 <script>
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.zoo-card');
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const filter = btn.dataset.filter;
-      cards.forEach(card => {
-        if (filter === 'all' || card.dataset.type === filter) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
+// ── FILTER ──
+const filterBtns = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.zoo-card');
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    cards.forEach(card => {
+      if (filter === 'all' || card.dataset.type === filter) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
     });
   });
-</script>
+});
 
-
-<script>
 // ── REGION DATA ──
-const regionData = {
-  ON: {
-    name: "Ontario, Canada",
-    locations: [
-      { name:"Toronto Zoo", type:"zoo", emoji:"🦁", city:"Scarborough", url:"https://www.torontozoo.com" },
-      { name:"African Lion Safari", type:"zoo", emoji:"🦒", city:"Cambridge", url:"https://www.lionsafari.com" },
-      { name:"Elmvale Jungle Zoo", type:"zoo", emoji:"🐆", city:"Elmvale", url:"https://www.elmvalejunglezoo.com" },
-      { name:"Bird Kingdom", type:"zoo", emoji:"🦜", city:"Niagara Falls", url:"https://www.birdkingdom.ca" },
-      { name:"Ontario Wolf Centre", type:"zoo", emoji:"🐺", city:"Haliburton", url:"https://www.ontariowolfcentre.ca" },
-      { name:"Little Ray's Reptile Zoo", type:"zoo", emoji:"🐊", city:"Ottawa", url:"https://www.littlerayzoo.com" },
-      { name:"Aspen Valley Wildlife Sanctuary", type:"sanctuary", emoji:"🐻", city:"Rosseau", url:"https://www.aspenvalley.ca" },
-      { name:"Bear Creek Exotic Wildlife Sanctuary", type:"sanctuary", emoji:"🐯", city:"Barrie", url:"https://www.bearcreeksanctuary.com" },
-      { name:"Story Book Farm Primate Sanctuary", type:"sanctuary", emoji:"🐒", city:"Sunderland", url:"https://www.storybookfarm.org" },
-      { name:"Salthaven Wildlife Centre", type:"sanctuary", emoji:"🦉", city:"Mount Brydges", url:"https://www.salthaven.org" },
-      { name:"Wye Marsh Wildlife Centre", type:"reserve", emoji:"🦢", city:"Midland", url:"https://www.wyemarsh.com" },
-      { name:"Mountsberg Wildlife Centre", type:"reserve", emoji:"🦅", city:"Campbellville", url:"https://www.mountsberg.ca" },
-      { name:"Altberg Wildlife Sanctuary", type:"reserve", emoji:"🌲", city:"Norland", url:"https://ontarionature.org" },
-    ]
-  },
-  BC: {
-    name: "British Columbia, Canada",
-    locations: [
-      { name:"Greater Vancouver Zoo", type:"zoo", emoji:"🦒", city:"Aldergrove", url:"https://www.gvzoo.com" },
-      { name:"Victoria Butterfly Gardens", type:"zoo", emoji:"🦋", city:"Victoria", url:"https://www.butterflygardens.com" },
-      { name:"Rescue Ranch", type:"sanctuary", emoji:"🐴", city:"Kamloops", url:"https://www.rescueranch.ca" },
-    ]
-  },
-  NY: {
-    name: "New York, USA",
-    locations: [
-      { name:"Bronx Zoo", type:"zoo", emoji:"🦁", city:"New York City", url:"https://www.bronxzoo.com" },
-      { name:"Central Park Zoo", type:"zoo", emoji:"🐧", city:"New York City", url:"https://centralparkzoo.com" },
-      { name:"Buffalo Zoo", type:"zoo", emoji:"🦬", city:"Buffalo", url:"https://www.buffalozoo.org" },
-      { name:"Watkins Glen State Park", type:"reserve", emoji:"🌊", city:"Watkins Glen", url:"https://parks.ny.gov" },
-    ]
-  },
-  CA: {
-    name: "California, USA",
-    locations: [
-      { name:"San Diego Zoo", type:"zoo", emoji:"🐼", city:"San Diego", url:"https://zoo.sandiegozoo.org" },
-      { name:"Los Angeles Zoo", type:"zoo", emoji:"🦍", city:"Los Angeles", url:"https://www.lazoo.org" },
-      { name:"Oakland Zoo", type:"zoo", emoji:"🦓", city:"Oakland", url:"https://www.oaklandzoo.org" },
-      { name:"Elephant Sanctuary", type:"sanctuary", emoji:"🐘", city:"San Andreas", url:"https://www.elephantsanctuary.org" },
-    ]
-  },
-  TX: {
-    name: "Texas, USA",
-    locations: [
-      { name:"San Antonio Zoo", type:"zoo", emoji:"🦏", city:"San Antonio", url:"https://www.sazoo.org" },
-      { name:"Houston Zoo", type:"zoo", emoji:"🐊", city:"Houston", url:"https://www.houstonzoo.org" },
-      { name:"Dallas Zoo", type:"zoo", emoji:"🦒", city:"Dallas", url:"https://www.dallaszoo.com" },
-    ]
-  },
-  FL: {
-    name: "Florida, USA",
-    locations: [
-      { name:"ZooTampa", type:"zoo", emoji:"🦛", city:"Tampa", url:"https://www.zootampa.org" },
-      { name:"Miami Zoo", type:"zoo", emoji:"🦩", city:"Miami", url:"https://www.miamimetrozoo.com" },
-      { name:"Busch Gardens", type:"zoo", emoji:"🦁", city:"Tampa", url:"https://buschgardens.com/tampa" },
-    ]
-  }
+const RD = {
+  ON:{name:"Ontario, Canada",loc:[
+    {n:"Toronto Zoo",t:"zoo",e:"🦁",c:"Scarborough",u:"https://www.torontozoo.com"},
+    {n:"African Lion Safari",t:"zoo",e:"🦒",c:"Cambridge",u:"https://www.lionsafari.com"},
+    {n:"Elmvale Jungle Zoo",t:"zoo",e:"🐆",c:"Elmvale",u:"https://www.elmvalejunglezoo.com"},
+    {n:"Bird Kingdom",t:"zoo",e:"🦜",c:"Niagara Falls",u:"https://www.birdkingdom.ca"},
+    {n:"Ontario Wolf Centre",t:"zoo",e:"🐺",c:"Haliburton",u:"https://www.ontariowolfcentre.ca"},
+    {n:"Little Ray's Reptile Zoo",t:"zoo",e:"🐊",c:"Ottawa",u:"https://www.littlerayzoo.com"},
+    {n:"Aspen Valley Wildlife Sanctuary",t:"sanctuary",e:"🐻",c:"Rosseau",u:"https://www.aspenvalley.ca"},
+    {n:"Bear Creek Exotic Wildlife Sanctuary",t:"sanctuary",e:"🐯",c:"Barrie",u:"https://www.bearcreeksanctuary.com"},
+    {n:"Story Book Farm Primate Sanctuary",t:"sanctuary",e:"🐒",c:"Sunderland",u:"https://www.storybookfarm.org"},
+    {n:"Salthaven Wildlife Centre",t:"sanctuary",e:"🦉",c:"Mount Brydges",u:"https://www.salthaven.org"},
+    {n:"Wye Marsh Wildlife Centre",t:"reserve",e:"🦢",c:"Midland",u:"https://www.wyemarsh.com"},
+    {n:"Mountsberg Wildlife Centre",t:"reserve",e:"🦅",c:"Campbellville",u:"https://www.mountsberg.ca"},
+    {n:"Altberg Wildlife Sanctuary",t:"reserve",e:"🌲",c:"Norland",u:"https://ontarionature.org"},
+  ]},
+  BC:{name:"British Columbia, Canada",loc:[
+    {n:"Greater Vancouver Zoo",t:"zoo",e:"🦒",c:"Aldergrove",u:"https://www.gvzoo.com"},
+    {n:"Victoria Butterfly Gardens",t:"zoo",e:"🦋",c:"Victoria",u:"https://www.butterflygardens.com"},
+    {n:"Rescue Ranch",t:"sanctuary",e:"🐴",c:"Kamloops",u:"https://www.rescueranch.ca"},
+  ]},
+  NY:{name:"New York, USA",loc:[
+    {n:"Bronx Zoo",t:"zoo",e:"🦁",c:"New York City",u:"https://www.bronxzoo.com"},
+    {n:"Central Park Zoo",t:"zoo",e:"🐧",c:"New York City",u:"https://centralparkzoo.com"},
+    {n:"Buffalo Zoo",t:"zoo",e:"🦬",c:"Buffalo",u:"https://www.buffalozoo.org"},
+  ]},
+  CA:{name:"California, USA",loc:[
+    {n:"San Diego Zoo",t:"zoo",e:"🐼",c:"San Diego",u:"https://zoo.sandiegozoo.org"},
+    {n:"Los Angeles Zoo",t:"zoo",e:"🦍",c:"Los Angeles",u:"https://www.lazoo.org"},
+    {n:"Oakland Zoo",t:"zoo",e:"🦓",c:"Oakland",u:"https://www.oaklandzoo.org"},
+  ]},
+  TX:{name:"Texas, USA",loc:[
+    {n:"San Antonio Zoo",t:"zoo",e:"🦏",c:"San Antonio",u:"https://www.sazoo.org"},
+    {n:"Houston Zoo",t:"zoo",e:"🐊",c:"Houston",u:"https://www.houstonzoo.org"},
+    {n:"Dallas Zoo",t:"zoo",e:"🦒",c:"Dallas",u:"https://www.dallaszoo.com"},
+  ]},
+  FL:{name:"Florida, USA",loc:[
+    {n:"ZooTampa",t:"zoo",e:"🦛",c:"Tampa",u:"https://www.zootampa.org"},
+    {n:"Zoo Miami",t:"zoo",e:"🦩",c:"Miami",u:"https://www.zoomiami.org"},
+    {n:"Busch Gardens",t:"zoo",e:"🦁",c:"Tampa",u:"https://buschgardens.com/tampa"},
+  ]},
 };
 
-const typeColors = { zoo:"#1a3a2a", sanctuary:"#7a4a28", reserve:"#3d2410" };
-const typeLabels = { zoo:"Zoo", sanctuary:"Sanctuary", reserve:"Reserve" };
+const FIPS={"01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE","11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL","18":"IN","19":"IA","20":"KS","21":"KY","22":"LA","23":"ME","24":"MD","25":"MA","26":"MI","27":"MN","28":"MS","29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY","37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC","46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV","55":"WI","56":"WY"};
+const PNAMES={NL:"Newfoundland & Labrador",PE:"Prince Edward Island",NS:"Nova Scotia",NB:"New Brunswick",QC:"Québec",ON:"Ontario",MB:"Manitoba",SK:"Saskatchewan",AB:"Alberta",BC:"British Columbia",YT:"Yukon",NT:"Northwest Territories",NU:"Nunavut"};
 
-function showPanel(regionId) {
-  document.querySelectorAll('.region').forEach(r => r.classList.remove('active'));
-  const el = document.querySelector('[data-region="' + regionId + '"]');
-  if (el) el.classList.add('active');
-
+function showPanel(id, name) {
+  document.querySelectorAll('.map-region').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll(`[data-id="${id}"]`).forEach(p => p.classList.add('active'));
   const rp = document.getElementById('region-panel');
   const cp = document.getElementById('coming-soon-panel');
-
-  if (regionData[regionId]) {
-    const data = regionData[regionId];
-    document.getElementById('region-name').textContent = data.name;
-    document.getElementById('region-count').textContent = data.locations.length + ' wildlife locations';
-    const grid = document.getElementById('region-cards');
-    grid.innerHTML = data.locations.map(loc => `
-      <a class="mini-card" href="${loc.url}" target="_blank" rel="noopener">
-        <div class="mini-card-emoji">${loc.emoji}</div>
+  if (RD[id]) {
+    document.getElementById('region-name').textContent = RD[id].name;
+    document.getElementById('region-count').textContent = RD[id].loc.length + ' wildlife locations';
+    document.getElementById('region-cards').innerHTML = RD[id].loc.map(l => `
+      <a class="mini-card" href="${l.u}" target="_blank" rel="noopener">
+        <div class="mini-card-emoji">${l.e}</div>
         <div>
-          <div class="mini-card-name">${loc.name}</div>
-          <div class="mini-card-meta">📍 ${loc.city}</div>
-          <span class="mini-card-badge" style="background:${typeColors[loc.type]}20;color:${typeColors[loc.type]}">${typeLabels[loc.type]}</span>
+          <div class="mini-card-name">${l.n}</div>
+          <div class="mini-card-meta">📍 ${l.c}</div>
+          <span class="mini-card-badge" style="background:${l.t==='zoo'?'rgba(26,58,42,0.1)':l.t==='sanctuary'?'rgba(122,74,40,0.1)':'rgba(61,36,16,0.1)'};color:${l.t==='zoo'?'#1a3a2a':l.t==='sanctuary'?'#7a4a28':'#3d2410'}">${l.t[0].toUpperCase()+l.t.slice(1)}</span>
         </div>
-      </a>
-    `).join('');
+      </a>`).join('');
     rp.style.display = 'block';
     cp.style.display = 'none';
-  } else if (regionId) {
-    document.getElementById('coming-soon-name').textContent = regionId;
+  } else {
+    document.getElementById('coming-soon-name').textContent = PNAMES[id] || name || id;
     cp.style.display = 'block';
     rp.style.display = 'none';
   }
-
-  setTimeout(() => {
-    document.getElementById('region-panel').scrollIntoView ? 
-    (rp.style.display !== 'none' ? rp : cp).scrollIntoView({behavior:'smooth', block:'start'}) : null;
-  }, 100);
+  rp.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 function closePanel() {
   document.getElementById('region-panel').style.display = 'none';
   document.getElementById('coming-soon-panel').style.display = 'none';
-  document.querySelectorAll('.region').forEach(r => r.classList.remove('active'));
+  document.querySelectorAll('.map-region').forEach(p => p.classList.remove('active'));
 }
 
-// ── D3 MAP ──
-// Load D3 and TopoJSON from CDN, then render real Mercator map
-(function() {
-  const d3Script = document.createElement('script');
-  d3Script.src = 'https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js';
-  d3Script.onload = function() {
-    const topoScript = document.createElement('script');
-    topoScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js';
-    topoScript.onload = function() {
-      initMap();
+// ── MAP ──
+async function initMap() {
+  const wrap = document.getElementById('map-wrap');
+  const W = wrap.offsetWidth - 24;
+  const H = Math.round(W * 0.62);
+  const svg = d3.select('#na-map').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+
+  const proj = d3.geoConicConformal()
+    .parallels([33, 45])
+    .rotate([98, 0])
+    .center([0, 55])
+    .scale(W * 0.68)
+    .translate([W * 0.5, H * 0.5]);
+  const path = d3.geoPath().projection(proj);
+
+  try {
+    const [usData, caData] = await Promise.all([
+      d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'),
+      d3.json('https://cdn.jsdelivr.net/npm/@highcharts/map-collection@2.0.1/countries/ca/ca-all.topo.json'),
+    ]);
+
+    const usStates = topojson.feature(usData, usData.objects.states);
+    const contiguous = usStates.features.filter(d => !['02','15'].includes(String(d.id).padStart(2,'0')));
+    const alaska = usStates.features.find(d => String(d.id).padStart(2,'0') === '02');
+    const hawaii = usStates.features.find(d => String(d.id).padStart(2,'0') === '15');
+
+    // Contiguous US
+    svg.append('g').selectAll('path')
+      .data(contiguous).join('path')
+      .attr('class', d => { const id = FIPS[String(d.id).padStart(2,'0')]; return 'map-region ' + (RD[id] ? 'has-data' : 'no-data'); })
+      .attr('data-id', d => FIPS[String(d.id).padStart(2,'0')] || '')
+      .attr('fill', d => { const id = FIPS[String(d.id).padStart(2,'0')]; return RD[id] ? 'var(--green-dark)' : 'var(--green-mid)'; })
+      .attr('stroke', 'var(--green-pale)').attr('stroke-width', 0.4)
+      .style('cursor','pointer').style('transition','fill 0.15s')
+      .on('mouseover', function(e,d) { if(!this.classList.contains('active')) d3.select(this).attr('fill','var(--brown-light)'); })
+      .on('mouseout', function(e,d) { if(!this.classList.contains('active')) { const id=FIPS[String(d.id).padStart(2,'0')]; d3.select(this).attr('fill', RD[id]?'var(--green-dark)':'var(--green-mid)'); } })
+      .on('click', (e,d) => { const id = FIPS[String(d.id).padStart(2,'0')]; if(id) showPanel(id, id); });
+
+    svg.append('path').datum(topojson.mesh(usData, usData.objects.states, (a,b) => a !== b))
+      .attr('fill','none').attr('stroke','var(--green-pale)').attr('stroke-width',0.5).attr('d',path);
+
+    // State labels
+    const lblStates = ['CA','TX','FL','NY','PA','OH','IL','GA','NC','MI','WA','OR','AZ','CO','MN','WI','MO','TN','AL','MS','LA','AR','OK','KS','NE','SD','ND','MT','WY','NV','ID','UT','NM','ME','IA','VA','IN','KY','SC'];
+    contiguous.forEach(d => {
+      const id = FIPS[String(d.id).padStart(2,'0')];
+      if (!id || !lblStates.includes(id)) return;
+      const c = path.centroid(d);
+      if (!c || isNaN(c[0])) return;
+      svg.append('text').attr('x',c[0]).attr('y',c[1])
+        .attr('text-anchor','middle').attr('dominant-baseline','middle')
+        .attr('font-size', RD[id] ? 7 : 6).attr('font-weight','600')
+        .attr('font-family','DM Sans,sans-serif').attr('pointer-events','none')
+        .attr('fill', RD[id] ? 'rgba(245,237,224,0.97)' : 'rgba(245,237,224,0.65)')
+        .text(id);
+    });
+
+    // Alaska inset
+    const akProj = d3.geoMercator().center([-153,64]).scale(W*0.11).translate([W*0.09, H*0.86]);
+    const akPath = d3.geoPath().projection(akProj);
+    if (alaska) {
+      svg.append('rect').attr('x',W*0.01).attr('y',H*0.73).attr('width',W*0.16).attr('height',H*0.25).attr('fill','var(--green-pale)').attr('rx',6).attr('opacity',0.6);
+      svg.append('path').datum(alaska)
+        .attr('class','map-region '+(RD['AK']?'has-data':'no-data'))
+        .attr('data-id','AK')
+        .attr('fill', RD['AK'] ? 'var(--green-dark)' : 'var(--green-mid)')
+        .attr('stroke','var(--green-pale)').attr('stroke-width',0.4)
+        .style('cursor','pointer')
+        .attr('d', akPath)
+        .on('mouseover', function() { d3.select(this).attr('fill','var(--brown-light)'); })
+        .on('mouseout', function() { d3.select(this).attr('fill', RD['AK']?'var(--green-dark)':'var(--green-mid)'); })
+        .on('click', () => showPanel('AK','Alaska'));
+      const akC = akPath.centroid(alaska);
+      if (akC && !isNaN(akC[0])) svg.append('text').attr('x',akC[0]).attr('y',akC[1]).attr('text-anchor','middle').attr('dominant-baseline','middle').attr('font-size',6).attr('font-weight','600').attr('font-family','DM Sans,sans-serif').attr('pointer-events','none').attr('fill','rgba(245,237,224,0.75)').text('AK');
+    }
+
+    // Hawaii inset — bigger
+    const hiProj = d3.geoMercator().center([-156.5,20.5]).scale(W*0.38).translate([W*0.275, H*0.875]);
+    const hiPath = d3.geoPath().projection(hiProj);
+    if (hawaii) {
+      svg.append('rect').attr('x',W*0.175).attr('y',H*0.78).attr('width',W*0.195).attr('height',H*0.2).attr('fill','var(--green-pale)').attr('rx',6).attr('opacity',0.6);
+      svg.append('path').datum(hawaii)
+        .attr('class','map-region '+(RD['HI']?'has-data':'no-data'))
+        .attr('data-id','HI')
+        .attr('fill', RD['HI'] ? 'var(--green-dark)' : 'var(--green-mid)')
+        .attr('stroke','var(--green-pale)').attr('stroke-width',0.4)
+        .style('cursor','pointer')
+        .attr('d', hiPath)
+        .on('mouseover', function() { d3.select(this).attr('fill','var(--brown-light)'); })
+        .on('mouseout', function() { d3.select(this).attr('fill', RD['HI']?'var(--green-dark)':'var(--green-mid)'); })
+        .on('click', () => showPanel('HI','Hawaii'));
+      svg.append('text').attr('x',W*0.285).attr('y',H*0.93).attr('text-anchor','middle').attr('font-size',6).attr('font-weight','600').attr('font-family','DM Sans,sans-serif').attr('pointer-events','none').attr('fill','rgba(245,237,224,0.75)').text('HI');
+    }
+
+    // Canada provinces
+    const provMap = {
+      'ca-nl':'NL','ca-pe':'PE','ca-ns':'NS','ca-nb':'NB','ca-qc':'QC',
+      'ca-on':'ON','ca-mb':'MB','ca-sk':'SK','ca-ab':'AB','ca-bc':'BC',
+      'ca-yt':'YT','ca-nt':'NT','ca-nu':'NU'
     };
-    document.head.appendChild(topoScript);
-  };
-  document.head.appendChild(d3Script);
-})();
+    const objKey = Object.keys(caData.objects)[0];
+    const provFeatures = topojson.feature(caData, caData.objects[objKey]);
 
-function initMap() {
-  const container = document.getElementById('na-map');
-  const width = container.offsetWidth || 900;
-  const height = width * 0.62;
+    svg.append('g').selectAll('path')
+      .data(provFeatures.features).join('path')
+      .attr('class', d => { const id = provMap[d.properties['hc-key']] || ''; return 'map-region ' + (id && RD[id] ? 'has-data' : 'no-data'); })
+      .attr('data-id', d => provMap[d.properties['hc-key']] || '')
+      .attr('fill', d => { const id = provMap[d.properties['hc-key']] || ''; return id && RD[id] ? 'var(--green-dark)' : 'var(--green-mid)'; })
+      .attr('stroke','var(--green-pale)').attr('stroke-width',0.4)
+      .style('cursor','pointer').style('transition','fill 0.15s')
+      .on('mouseover', function(e,d) { if(!this.classList.contains('active')) d3.select(this).attr('fill','var(--brown-light)'); })
+      .on('mouseout', function(e,d) { if(!this.classList.contains('active')) { const id=provMap[d.properties['hc-key']]||''; d3.select(this).attr('fill', id&&RD[id]?'var(--green-dark)':'var(--green-mid)'); } })
+      .on('click', (e,d) => { const id = provMap[d.properties['hc-key']] || ''; if(id) showPanel(id, PNAMES[id]||id); });
 
-  const svg = d3.select('#na-map')
-    .append('svg')
-    .attr('viewBox', `0 0 ${width} ${height}`)
-    .attr('width', '100%')
-    .attr('height', 'auto')
-    .style('display', 'block');
+    svg.append('path')
+      .datum(topojson.mesh(caData, caData.objects[objKey], (a,b) => a !== b))
+      .attr('fill','none').attr('stroke','var(--green-pale)').attr('stroke-width',0.5).attr('d',path);
 
-  // Mercator projection centered on North America
-  const projection = d3.geoMercator()
-    .center([-96, 56])
-    .scale(width * 0.85)
-    .translate([width / 2, height / 2]);
-
-  const path = d3.geoPath().projection(projection);
-
-  const hasDataIds = Object.keys(regionData);
-
-  // Load North America from a public TopoJSON
-  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
-    .then(r => r.json())
-    .then(world => {
-      // Draw country fills for NA countries first
-      const countries = topojson.feature(world, world.objects.countries);
-      const naIds = ['840','124','484']; // USA, Canada, Mexico
-      const naCountries = { type:'FeatureCollection', features: countries.features.filter(f => naIds.includes(f.id.toString().padStart(3,'0'))) };
-
-      svg.append('g')
-        .selectAll('path')
-        .data(naCountries.features)
-        .enter().append('path')
-        .attr('d', path)
-        .attr('fill', d => {
-          if (d.id == 484) return 'var(--green-sage)'; // Mexico
-          return 'var(--green-mid)';
-        })
-        .attr('stroke', 'var(--green-pale)')
-        .attr('stroke-width', 0.5);
-
-      // Now load admin1 (states/provinces) for US + Canada
-      fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
-        .then(r => r.json())
-        .then(() => {
-          // fallback — use a simpler states source
-        })
-        .catch(() => {});
-    })
-    .catch(() => {
-      container.innerHTML = '<p style="text-align:center;padding:3rem;color:rgba(28,28,28,0.5);">Map loading...</p>';
+    // Province labels
+    provFeatures.features.forEach(d => {
+      const id = provMap[d.properties['hc-key']] || '';
+      if (!id) return;
+      const c = path.centroid(d);
+      if (!c || isNaN(c[0]) || c[0] < 0 || c[0] > W || c[1] < -20 || c[1] > H + 20) return;
+      svg.append('text').attr('x',c[0]).attr('y', Math.min(Math.max(c[1],5), H-5))
+        .attr('text-anchor','middle').attr('dominant-baseline','middle')
+        .attr('font-size', RD[id] ? 7 : 6).attr('font-weight','600')
+        .attr('font-family','DM Sans,sans-serif').attr('pointer-events','none')
+        .attr('fill', RD[id] ? 'rgba(245,237,224,0.97)' : 'rgba(245,237,224,0.65)')
+        .text(id);
     });
 
-  // Try loading states/provinces from a reliable source
-  fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json')
-    .then(r => r.json())
-    .then(us => {
-      const states = topojson.feature(us, us.objects.states);
-      
-      // FIPS code to state abbreviation mapping
-      const fipsToState = {
-        '01':'AL','02':'AK','04':'AZ','05':'AR','06':'CA','08':'CO','09':'CT',
-        '10':'DE','11':'DC','12':'FL','13':'GA','15':'HI','16':'ID','17':'IL',
-        '18':'IN','19':'IA','20':'KS','21':'KY','22':'LA','23':'ME','24':'MD',
-        '25':'MA','26':'MI','27':'MN','28':'MS','29':'MO','30':'MT','31':'NE',
-        '32':'NV','33':'NH','34':'NJ','35':'NM','36':'NY','37':'NC','38':'ND',
-        '39':'OH','40':'OK','41':'OR','42':'PA','44':'RI','45':'SC','46':'SD',
-        '47':'TN','48':'TX','49':'UT','50':'VT','51':'VA','53':'WA','54':'WV',
-        '55':'WI','56':'WY'
-      };
+    document.getElementById('map-status').style.display = 'none';
+    document.getElementById('na-map').style.display = 'block';
 
-      // US states projection — us-atlas uses its own projection, need albers
-      const usProjection = d3.geoAlbersUsa()
-        .scale(width * 1.1)
-        .translate([width * 0.58, height * 0.62]);
-      const usPath = d3.geoPath().projection(usProjection);
-
-      svg.append('g').attr('class','us-states')
-        .selectAll('path')
-        .data(states.features)
-        .enter().append('path')
-        .attr('d', usPath)
-        .attr('class', d => {
-          const abbr = fipsToState[d.id.toString().padStart(2,'0')];
-          return 'state-region' + (regionData[abbr] ? ' has-data' : '');
-        })
-        .attr('data-region', d => fipsToState[d.id.toString().padStart(2,'0')])
-        .attr('fill', d => {
-          const abbr = fipsToState[d.id.toString().padStart(2,'0')];
-          return regionData[abbr] ? 'var(--green-dark)' : 'var(--green-mid)';
-        })
-        .attr('stroke', 'var(--green-pale)')
-        .attr('stroke-width', 0.6)
-        .style('cursor', 'pointer')
-        .on('mouseover', function(event, d) {
-          const abbr = fipsToState[d.id.toString().padStart(2,'0')];
-          d3.select(this).attr('fill', regionData[abbr] ? 'var(--brown-mid)' : 'var(--brown-light)');
-        })
-        .on('mouseout', function(event, d) {
-          const abbr = fipsToState[d.id.toString().padStart(2,'0')];
-          if (!this.classList.contains('active')) {
-            d3.select(this).attr('fill', regionData[abbr] ? 'var(--green-dark)' : 'var(--green-mid)');
-          }
-        })
-        .on('click', function(event, d) {
-          const abbr = fipsToState[d.id.toString().padStart(2,'0')];
-          document.querySelectorAll('.state-region,.canada-region').forEach(el => {
-            const id = el.getAttribute('data-region');
-            d3.select(el).attr('fill', regionData[id] ? 'var(--green-dark)' : 'var(--green-mid)');
-          });
-          d3.select(this).attr('fill', 'var(--brown-warm)');
-          showPanel(abbr);
-        });
-    })
-    .catch(err => console.log('US atlas error', err));
-
-  // Canada provinces using a separate source
-  fetch('https://cdn.jsdelivr.net/npm/canada-map-topo@1.0.0/canada.json')
-    .then(r => r.json())
-    .then(canada => {
-      const provinces = topojson.feature(canada, canada.objects.provinces || Object.values(canada.objects)[0]);
-      
-      // projection for Canada
-      const caProjection = d3.geoMercator()
-        .center([-95, 62])
-        .scale(width * 0.72)
-        .translate([width * 0.42, height * 0.24]);
-      const caPath = d3.geoPath().projection(caProjection);
-
-      svg.append('g').attr('class','canada-provinces')
-        .selectAll('path')
-        .data(provinces.features)
-        .enter().append('path')
-        .attr('d', caPath)
-        .attr('class', d => {
-          const id = d.properties.cartodb_id || d.properties.PRUID || d.id;
-          return 'canada-region';
-        })
-        .attr('fill', 'var(--green-mid)')
-        .attr('stroke', 'var(--green-pale)')
-        .attr('stroke-width', 0.6);
-    })
-    .catch(err => {
-      // If Canada topo fails, draw it simply
-      console.log('Canada atlas error', err);
-    });
+  } catch(err) {
+    document.getElementById('map-status').textContent = 'Map failed to load.';
+    console.error(err);
+  }
 }
+
+// Init map after page loads
+if (document.readyState === 'complete') { initMap(); }
+else { window.addEventListener('load', initMap); }
 </script>
 
 </body>

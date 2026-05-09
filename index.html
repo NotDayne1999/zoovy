@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zoovy — Discover North America's Wildlife, Sanctuaries & Wildlife Reserves</title>
-<meta name="description" content="Find and explore zoos, wildlife sanctuaries, and nature reserves across North America. Discover Toronto Zoo, San Diego Zoo, Bronx Zoo and more — all in one place.">
-<meta name="keywords" content="zoos North America, wildlife sanctuaries, nature reserves, Toronto Zoo, San Diego Zoo, Bronx Zoo, animal experiences USA Canada">
+<title>Zoovy — Discover North America's Wildlife</title>
+<meta name="description" content="Find zoos, wildlife sanctuaries, and nature reserves across North America. Explore by region, discover animals, and plan your next wild adventure.">
+<meta name="keywords" content="zoos North America, wildlife sanctuaries, nature reserves, Toronto Zoo, San Diego Zoo, Bronx Zoo, Ontario zoos, animal experiences">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://zoovy.net/">
 <meta property="og:title" content="Zoovy — Discover North America's Wildlife">
@@ -15,892 +15,695 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Zoovy — Discover North America's Wildlife">
 <meta name="twitter:description" content="Find zoos, sanctuaries, and wildlife reserves across North America.">
+
+<!-- D3 + TopoJSON loaded in head so map works immediately -->
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    /* Greens */
-    --green-darkest: #0f2318;
-    --green-dark: #1a3a2a;
-    --green-mid: #2d5a3d;
-    --green-sage: #4a7c59;
-    --green-mint: #7fb896;
-    --green-light: #b8d9c4;
-    --green-pale: #e4f0e8;
-    /* Browns */
-    --brown-dark: #3d2410;
-    --brown-mid: #7a4a28;
-    --brown-warm: #a0622e;
-    --brown-light: #c49a6c;
-    --brown-pale: #e8d5b8;
-    --brown-cream: #f5ede0;
-    /* Neutrals */
-    --ink: #1c1c1c;
-    --mist: #f7f4ef;
-    --white: #ffffff;
-  }
+:root {
+  --g0: #0a1a10;
+  --g1: #1a3a2a;
+  --g2: #2d5a3d;
+  --g3: #4a7c59;
+  --g4: #7fb896;
+  --g5: #b8d9c4;
+  --g6: #e4f0e8;
+  --b1: #3d2410;
+  --b2: #7a4a28;
+  --b3: #a0622e;
+  --b4: #c49a6c;
+  --b5: #e8d5b8;
+  --b6: #f5ede0;
+  --ink: #1c1c1c;
+  --mist: #f7f4ef;
+  --white: #ffffff;
+}
 
-  html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--mist); color: var(--ink); overflow-x: hidden; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--mist); color: var(--ink); overflow-x: hidden; }
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.25rem 2.5rem;
-    background: rgba(247,244,239,0.92);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(74,124,89,0.15);
-  }
-  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--green-dark); letter-spacing: -0.02em; }
-  .logo span { color: var(--brown-warm); }
-  nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
-  nav ul a { font-size: 0.9rem; color: var(--ink); text-decoration: none; opacity: 0.6; transition: opacity 0.2s; }
-  nav ul a:hover { opacity: 1; }
-  .nav-cta { background: var(--green-dark) !important; color: var(--brown-cream) !important; opacity: 1 !important; padding: 0.5rem 1.25rem; border-radius: 999px; font-weight: 500 !important; transition: background 0.2s !important; }
-  .nav-cta:hover { background: var(--green-mid) !important; }
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 2.5rem;
+  background: rgba(247,244,239,0.92); backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(74,124,89,0.15);
+}
+.logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.45rem; color: var(--g1); letter-spacing: -0.02em; text-decoration: none; }
+.logo span { color: var(--b3); }
+.nav-links { list-style: none; display: flex; gap: 1.75rem; align-items: center; }
+.nav-links a { font-size: 0.875rem; color: var(--ink); text-decoration: none; opacity: 0.6; transition: opacity 0.2s; }
+.nav-links a:hover { opacity: 1; }
+.nav-cta { background: var(--g1) !important; color: var(--b6) !important; opacity: 1 !important; padding: 0.45rem 1.1rem; border-radius: 999px; font-weight: 500 !important; transition: background 0.2s !important; }
+.nav-cta:hover { background: var(--g2) !important; }
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
-    align-items: center; padding: 7rem 2.5rem 4rem; gap: 3rem;
-    max-width: 1200px; margin: 0 auto;
-  }
-  .hero-tag {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: rgba(74,124,89,0.12); color: var(--green-mid);
-    font-size: 0.78rem; font-weight: 500; padding: 0.375rem 0.875rem;
-    border-radius: 999px; margin-bottom: 1.5rem; letter-spacing: 0.05em; text-transform: uppercase;
-  }
-  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--green-sage); border-radius: 50%; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.4)} }
-  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.8rem,5vw,4.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; color: var(--green-dark); margin-bottom: 1.5rem; }
-  .hero h1 em { font-style: normal; color: var(--brown-warm); position: relative; }
-  .hero h1 em::after { content: ''; position: absolute; bottom: 2px; left: 0; right: 0; height: 3px; background: var(--brown-light); border-radius: 2px; }
-  .hero p { font-size: 1.1rem; line-height: 1.7; color: rgba(28,28,28,0.6); max-width: 440px; margin-bottom: 2.5rem; }
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary { background: var(--green-dark); color: var(--brown-cream); padding: 0.875rem 2rem; border-radius: 999px; font-size: 0.95rem; font-weight: 500; text-decoration: none; transition: transform 0.2s, background 0.2s; }
-  .btn-primary:hover { background: var(--green-mid); transform: translateY(-2px); }
-  .btn-ghost { border: 1.5px solid rgba(122,74,40,0.3); color: var(--brown-mid); padding: 0.875rem 2rem; border-radius: 999px; font-size: 0.95rem; font-weight: 400; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
-  .btn-ghost:hover { border-color: var(--brown-warm); transform: translateY(-2px); }
+/* ── HERO ── */
+.hero {
+  min-height: 90vh;
+  background: var(--g0);
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  padding: 8rem 2.5rem 5rem;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 60%, rgba(74,124,89,0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 30%, rgba(122,74,40,0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(26,58,42,0.5) 0%, transparent 60%);
+}
+.hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; position: relative; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(127,184,150,0.15); color: var(--g4);
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.35rem 0.875rem; border-radius: 999px; margin-bottom: 1.75rem;
+  border: 1px solid rgba(127,184,150,0.2);
+}
+.hero-eyebrow::before { content: ''; width: 5px; height: 5px; background: var(--g4); border-radius: 50%; animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:0.3} }
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3rem, 6.5vw, 6rem);
+  font-weight: 800; line-height: 1.0; letter-spacing: -0.035em;
+  color: var(--b6); margin-bottom: 1.5rem;
+}
+.hero h1 .accent { color: var(--g4); }
+.hero p {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.7; color: rgba(245,237,224,0.55);
+  max-width: 520px; margin-bottom: 3rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary { background: var(--g4); color: var(--g0); padding: 0.875rem 2rem; border-radius: 999px; font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: transform 0.2s, background 0.2s; }
+.btn-primary:hover { background: var(--g5); transform: translateY(-2px); }
+.btn-outline { border: 1.5px solid rgba(245,237,224,0.2); color: rgba(245,237,224,0.7); padding: 0.875rem 2rem; border-radius: 999px; font-size: 0.95rem; font-weight: 400; text-decoration: none; transition: border-color 0.2s, transform 0.2s, color 0.2s; }
+.btn-outline:hover { border-color: rgba(245,237,224,0.5); color: var(--b6); transform: translateY(-2px); }
 
-  /* ── HERO VISUAL ── */
-  .hero-visual { position: relative; height: 520px; }
-  .hero-card { position: absolute; background: var(--white); border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 40px rgba(15,35,24,0.12); }
-  .hero-card.main { top: 0; right: 0; width: 340px; }
-  .hero-card.small { bottom: 60px; left: 0; width: 220px; }
-  .card-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green-sage); margin-bottom: 0.75rem; }
-  .zoo-preview { display: flex; align-items: center; gap: 0.875rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
-  .zoo-preview:last-child { border-bottom: none; padding-bottom: 0; }
-  .zoo-dot { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
-  .zoo-preview-name { font-size: 0.875rem; font-weight: 500; margin-bottom: 0.1rem; }
-  .zoo-preview-meta { font-size: 0.75rem; color: rgba(28,28,28,0.5); }
-  .stats-row { display: flex; align-items: center; justify-content: center; }
-  .stat-card { text-align: center; padding: 0.25rem 0.75rem; }
-  .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 700; color: var(--green-dark); }
-  .stat-lbl { font-size: 0.78rem; color: rgba(28,28,28,0.5); margin-top: 0.15rem; }
-  .stat-div { width: 1px; background: rgba(0,0,0,0.08); align-self: stretch; }
+/* Hero stats row */
+.hero-stats { display: flex; gap: 3rem; margin-top: 5rem; padding-top: 3rem; border-top: 1px solid rgba(245,237,224,0.08); }
+.hero-stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 700; color: var(--b6); }
+.hero-stat-lbl { font-size: 0.8rem; color: rgba(245,237,224,0.4); margin-top: 0.1rem; }
 
-  /* ── SECTION ── */
-  section { max-width: 1200px; margin: 0 auto; padding: 6rem 2.5rem; }
-  .section-eyebrow { font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brown-warm); margin-bottom: 1rem; }
-  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem,3.5vw,3rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; color: var(--green-dark); margin-bottom: 1.25rem; }
-  .section-sub { font-size: 1.05rem; line-height: 1.7; color: rgba(28,28,28,0.6); max-width: 520px; }
+/* ── MAP SECTION ── */
+.map-section { background: var(--white); padding: 5rem 0 0; }
+.map-section-inner { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; }
+.map-eyebrow { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--g3); margin-bottom: 0.875rem; }
+.map-title { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; color: var(--g1); letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+.map-sub { font-size: 0.95rem; color: rgba(28,28,28,0.5); margin-bottom: 2.5rem; }
 
-  /* ── FILTER BAR ── */
-  .filter-bar { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
-  .filter-btn {
-    font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 500;
-    padding: 0.55rem 1.25rem; border-radius: 999px; border: 1.5px solid rgba(74,124,89,0.25);
-    background: transparent; color: rgba(28,28,28,0.65); cursor: pointer;
-    transition: all 0.2s;
-  }
-  .filter-btn:hover { border-color: var(--green-sage); color: var(--green-dark); }
-  .filter-btn.active { background: var(--green-dark); color: var(--brown-cream); border-color: var(--green-dark); }
-  .filter-btn[data-filter="sanctuary"].active { background: var(--brown-mid); border-color: var(--brown-mid); }
-  .filter-btn[data-filter="reserve"].active { background: var(--brown-dark); border-color: var(--brown-dark); }
+.map-container {
+  background: rgba(255,255,255,0.04);
+  border-radius: 20px; overflow: hidden;
+  border: 1px solid rgba(74,124,89,0.15);
+  position: relative;
+}
+#map-loading { text-align: center; padding: 60px; color: var(--g4); font-size: 0.9rem; }
+#na-map { width: 100%; display: block; }
 
-  /* ── FLIP CARDS ── */
-  .zoo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.5rem; }
+.map-legend { display: flex; gap: 1rem; padding: 0.875rem 1.25rem; border-top: 1px solid rgba(127,184,150,0.1); background: rgba(74,124,89,0.05); }
+.legend-dot { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: rgba(28,28,28,0.5); }
+.legend-dot::before { content: ''; width: 10px; height: 10px; border-radius: 2px; background: currentColor; }
+.legend-dot.has { color: var(--g2); }
+.legend-dot.soon { color: var(--g4); }
 
-  .zoo-card { height: 360px; perspective: 1000px; text-decoration: none; color: inherit; display: block; }
-  .zoo-card.hidden { display: none; }
-  .zoo-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); border-radius: 18px; }
-  .zoo-card:hover .zoo-card-inner { transform: rotateY(180deg); }
+/* ── REGION PANEL ── */
+.region-section {
+  background: var(--mist);
+  padding: 4rem 0;
+  transition: all 0.3s ease;
+}
+.region-section-inner { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; }
+.region-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
+.region-header-left {}
+.region-selected-name { font-family: 'Syne', sans-serif; font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; color: var(--g1); letter-spacing: -0.02em; }
+.region-selected-count { font-size: 0.875rem; color: rgba(28,28,28,0.5); margin-top: 0.25rem; }
+.region-coming-soon { background: var(--b5); color: var(--b1); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; padding: 0.35rem 0.875rem; border-radius: 999px; display: inline-block; margin-top: 0.5rem; }
 
-  .zoo-card-front, .zoo-card-back {
-    position: absolute; inset: 0;
-    backface-visibility: hidden; -webkit-backface-visibility: hidden;
-    border-radius: 18px; overflow: hidden;
-  }
+/* Filter buttons */
+.filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.filter-btn { font-family: 'DM Sans', sans-serif; font-size: 0.825rem; font-weight: 500; padding: 0.45rem 1rem; border-radius: 999px; border: 1.5px solid rgba(74,124,89,0.2); background: transparent; color: rgba(28,28,28,0.6); cursor: pointer; transition: all 0.2s; }
+.filter-btn:hover { border-color: var(--g3); color: var(--g1); }
+.filter-btn.active { background: var(--g1); color: var(--b6); border-color: var(--g1); }
+.filter-btn[data-filter="sanctuary"].active { background: var(--b2); border-color: var(--b2); }
+.filter-btn[data-filter="reserve"].active { background: var(--b1); border-color: var(--b1); }
 
-  /* FRONT */
-  .zoo-card-front { background: var(--white); border: 1px solid rgba(74,124,89,0.12); display: flex; flex-direction: column; }
-  .zoo-card-img { height: 210px; flex-shrink: 0; background-size: cover; background-position: center; position: relative; }
-  .zoo-card-img::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 55px; background: linear-gradient(transparent, white); }
-  .zoo-type-badge {
-    position: absolute; top: 0.75rem; left: 0.75rem;
-    font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em;
-    padding: 0.25rem 0.6rem; border-radius: 999px; z-index: 1;
-  }
-  .badge-zoo { background: var(--green-dark); color: var(--green-pale); }
-  .badge-sanctuary { background: var(--brown-mid); color: var(--brown-cream); }
-  .badge-reserve { background: var(--brown-dark); color: var(--brown-pale); }
-  .zoo-card-front-body { padding: 1rem 1.25rem; flex: 1; }
-  .zoo-card-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--green-dark); margin-bottom: 0.25rem; }
-  .zoo-card-city { font-size: 0.78rem; color: rgba(28,28,28,0.5); margin-bottom: 0.6rem; }
-  .zoo-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-  .tag { font-size: 0.67rem; padding: 0.2rem 0.55rem; border-radius: 999px; font-weight: 500; }
-  .tag-green { background: var(--green-pale); color: var(--green-mid); }
-  .tag-brown { background: var(--brown-pale); color: var(--brown-dark); }
+/* Zoo cards grid */
+.zoo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 1.25rem; }
+.zoo-card { height: 340px; perspective: 1000px; text-decoration: none; color: inherit; display: block; }
+.zoo-card.hidden { display: none; }
+.zoo-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1); border-radius: 16px; }
+.zoo-card:hover .zoo-card-inner { transform: rotateY(180deg); }
+.zoo-card-front, .zoo-card-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 16px; overflow: hidden; }
 
-  /* BACK */
-  .zoo-card-back {
-    transform: rotateY(180deg);
-    background: var(--white);
-    border: 1.5px solid rgba(74,124,89,0.15);
-    display: flex; flex-direction: column; justify-content: space-between;
-    padding: 1.75rem 1.5rem 1.5rem;
-  }
-  .zoo-card-back-emoji { font-size: 2.25rem; margin-bottom: 0.875rem; }
-  .zoo-card-back-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--green-dark); margin-bottom: 0.3rem; }
-  .zoo-card-back-city { font-size: 0.82rem; color: rgba(28,28,28,0.5); margin-bottom: 0.875rem; }
-  .zoo-card-back-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-  .zoo-visit-btn {
-    display: block; padding: 0.65rem 1.5rem; border-radius: 999px;
-    font-size: 0.85rem; font-weight: 500; text-align: center; transition: background 0.2s; margin-top: 1.25rem;
-  }
-  .visit-green { background: var(--green-dark); color: var(--brown-cream); }
-  .visit-green:hover { background: var(--green-mid); }
-  .visit-brown { background: var(--brown-mid); color: var(--brown-cream); }
-  .visit-brown:hover { background: var(--brown-warm); }
-  .visit-darkbrown { background: var(--brown-dark); color: var(--brown-pale); }
-  .visit-darkbrown:hover { background: var(--brown-mid); }
+/* Card front */
+.zoo-card-front { background: var(--white); border: 1px solid rgba(74,124,89,0.1); display: flex; flex-direction: column; }
+.card-img { height: 195px; flex-shrink: 0; background-size: cover; background-position: center; position: relative; }
+.card-img::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(transparent, white); }
+.card-type-badge { position: absolute; top: 0.625rem; left: 0.625rem; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.55rem; border-radius: 999px; }
+.badge-zoo { background: var(--g1); color: var(--g6); }
+.badge-sanctuary { background: var(--b2); color: var(--b6); }
+.badge-reserve { background: var(--b1); color: var(--b5); }
+.card-body { padding: 1rem 1.25rem; flex: 1; }
+.card-name { font-family: 'Syne', sans-serif; font-size: 0.925rem; font-weight: 600; color: var(--g1); margin-bottom: 0.25rem; }
+.card-city { font-size: 0.75rem; color: rgba(28,28,28,0.5); margin-bottom: 0.6rem; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.tag { font-size: 0.65rem; padding: 0.18rem 0.5rem; border-radius: 999px; font-weight: 500; background: var(--g6); color: var(--g2); }
+.tag-b { background: var(--b5); color: var(--b2); }
 
-  /* ── FEATURES ── */
-  .features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 3.5rem; }
-  .feature-card { padding: 2rem; border-radius: 18px; background: var(--white); border: 1px solid rgba(74,124,89,0.08); }
-  .feature-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.25rem; }
-  .feature-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 600; color: var(--green-dark); margin-bottom: 0.6rem; }
-  .feature-desc { font-size: 0.9rem; line-height: 1.65; color: rgba(28,28,28,0.6); }
+/* Card back */
+.zoo-card-back { transform: rotateY(180deg); background: var(--white); border: 1.5px solid rgba(74,124,89,0.15); display: flex; flex-direction: column; justify-content: space-between; padding: 1.75rem 1.5rem 1.5rem; }
+.back-emoji { font-size: 2.25rem; margin-bottom: 0.875rem; }
+.back-name { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--g1); margin-bottom: 0.3rem; }
+.back-city { font-size: 0.8rem; color: rgba(28,28,28,0.5); margin-bottom: 0.875rem; }
+.back-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0; }
+.visit-btn { display: block; padding: 0.6rem 1.25rem; border-radius: 999px; font-size: 0.82rem; font-weight: 500; text-align: center; margin-top: 1.25rem; }
+.visit-zoo { background: var(--g1); color: var(--b6); }
+.visit-sanctuary { background: var(--b2); color: var(--b6); }
+.visit-reserve { background: var(--b1); color: var(--b5); }
 
-  /* ── CTA ── */
-  .cta-wrap { padding: 0 2.5rem 6rem; max-width: 1200px; margin: 0 auto; }
-  .cta-section {
-    background: var(--green-darkest); border-radius: 28px;
-    padding: 5rem 4rem; text-align: center; position: relative; overflow: hidden;
-  }
-  .cta-section::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 25% 50%, rgba(74,124,89,0.45) 0%, transparent 55%),
-                radial-gradient(ellipse at 75% 50%, rgba(122,74,40,0.25) 0%, transparent 55%);
-  }
-  .cta-section > * { position: relative; }
-  .cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 700; color: var(--brown-cream); margin-bottom: 1rem; letter-spacing: -0.02em; }
-  .cta-section p { color: rgba(245,237,224,0.6); font-size: 1rem; margin-bottom: 2.5rem; }
-  .btn-cream { background: var(--brown-cream); color: var(--green-dark); padding: 0.875rem 2.25rem; border-radius: 999px; font-size: 0.95rem; font-weight: 500; text-decoration: none; display: inline-block; transition: transform 0.2s; }
-  .btn-cream:hover { transform: translateY(-2px); }
+/* Empty state */
+.empty-state { text-align: center; padding: 5rem 2rem; }
+.empty-state-icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-state-title { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 600; color: var(--g1); margin-bottom: 0.5rem; }
+.empty-state-sub { font-size: 0.9rem; color: rgba(28,28,28,0.5); }
 
-  /* ── FOOTER ── */
-  footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; color: rgba(28,28,28,0.4); font-size: 0.85rem; }
+/* ── FEATURES ── */
+.features-section { max-width: 1200px; margin: 0 auto; padding: 6rem 2.5rem; }
+.section-eyebrow { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--b3); margin-bottom: 0.875rem; }
+.section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; color: var(--g1); margin-bottom: 1rem; }
+.section-sub { font-size: 1rem; line-height: 1.7; color: rgba(28,28,28,0.6); max-width: 500px; }
+.features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+.feature-card { background: var(--white); border-radius: 16px; padding: 1.75rem; border: 1px solid rgba(74,124,89,0.08); }
+.feature-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1.1rem; }
+.feature-title { font-family: 'Syne', sans-serif; font-size: 0.975rem; font-weight: 600; color: var(--g1); margin-bottom: 0.5rem; }
+.feature-desc { font-size: 0.875rem; line-height: 1.65; color: rgba(28,28,28,0.6); }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
-  .hero-left > * { animation: fadeUp 0.6s ease both; }
-  .hero-left > *:nth-child(1){animation-delay:0.1s}
-  .hero-left > *:nth-child(2){animation-delay:0.2s}
-  .hero-left > *:nth-child(3){animation-delay:0.35s}
-  .hero-left > *:nth-child(4){animation-delay:0.5s}
-  .hero-visual{animation:fadeUp 0.8s ease 0.3s both}
+/* ── CTA ── */
+.cta-wrap { padding: 0 2.5rem 6rem; max-width: 1200px; margin: 0 auto; }
+.cta-box { background: var(--g0); border-radius: 24px; padding: 5rem 4rem; text-align: center; position: relative; overflow: hidden; }
+.cta-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 25% 50%, rgba(74,124,89,0.45) 0%, transparent 55%), radial-gradient(ellipse at 75% 50%, rgba(122,74,40,0.25) 0%, transparent 55%); }
+.cta-box > * { position: relative; }
+.cta-box h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.7rem,3vw,2.6rem); font-weight: 700; color: var(--b6); margin-bottom: 0.875rem; letter-spacing: -0.02em; }
+.cta-box p { color: rgba(245,237,224,0.5); font-size: 0.975rem; margin-bottom: 2.5rem; }
+.btn-light { background: var(--g4); color: var(--g0); padding: 0.875rem 2.25rem; border-radius: 999px; font-size: 0.95rem; font-weight: 600; text-decoration: none; display: inline-block; transition: transform 0.2s, background 0.2s; }
+.btn-light:hover { background: var(--g5); transform: translateY(-2px); }
 
-  @keyframes fadeIn { from{opacity:0;transform:scale(0.97)}to{opacity:1;transform:scale(1)} }
-  .zoo-card { animation: fadeIn 0.3s ease both; }
-  /* ── MAP ── */
-  .map-wrap { position:relative; background:var(--green-pale); border-radius:20px; padding:1.5rem; border:1px solid rgba(74,124,89,0.15); overflow:hidden; }
-  .map-hint { text-align:center; font-size:0.8rem; color:rgba(28,28,28,0.4); margin-bottom:1rem; letter-spacing:0.05em; text-transform:uppercase; font-weight:500; }
-  #na-map .region { fill:var(--green-mid); stroke:var(--green-pale); stroke-width:0.8; transition:fill 0.15s; }
-  #na-map .region:hover { fill:var(--brown-warm); }
-  #na-map .region.has-data { fill:var(--green-dark); }
-  #na-map .region.has-data:hover { fill:var(--brown-mid); }
-  #na-map .region.active { fill:var(--brown-warm) !important; }
-  #na-map .mexico { fill:var(--green-sage); }
-  #na-map .mexico:hover { fill:var(--brown-light); }
-  .region-panel { margin-top:2rem; background:var(--white); border-radius:20px; border:1px solid rgba(74,124,89,0.12); padding:2rem; animation:fadeUp 0.3s ease both; }
-  .region-panel-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.75rem; }
-  .region-panel-title { font-family:'Syne',sans-serif; font-size:1.4rem; font-weight:700; color:var(--green-dark); }
-  .region-panel-sub { font-size:0.85rem; color:rgba(28,28,28,0.5); margin-top:0.25rem; }
-  .region-close { background:none; border:1.5px solid rgba(0,0,0,0.12); border-radius:999px; width:32px; height:32px; cursor:pointer; font-size:0.8rem; color:rgba(28,28,28,0.5); display:flex;align-items:center;justify-content:center; flex-shrink:0; }
-  .region-close:hover { border-color:var(--green-sage); color:var(--green-dark); }
-  .region-cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; }
-  .mini-card { background:var(--mist); border-radius:14px; padding:1.1rem 1.25rem; border:1px solid rgba(74,124,89,0.1); display:flex; gap:0.875rem; align-items:center; text-decoration:none; color:inherit; transition:transform 0.2s,box-shadow 0.2s; }
-  .mini-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(26,58,42,0.1); }
-  .mini-card-emoji { font-size:1.75rem; flex-shrink:0; }
-  .mini-card-name { font-family:'Syne',sans-serif; font-size:0.875rem; font-weight:600; color:var(--green-dark); margin-bottom:0.2rem; }
-  .mini-card-meta { font-size:0.75rem; color:rgba(28,28,28,0.5); }
-  .mini-card-badge { font-size:0.62rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; padding:0.15rem 0.5rem; border-radius:999px; margin-top:0.3rem; display:inline-block; }
-  .coming-soon-panel { margin-top:2rem; animation:fadeUp 0.3s ease both; }
-  .coming-soon-inner { background:var(--white); border-radius:20px; border:1px solid rgba(74,124,89,0.12); padding:3rem 2rem; text-align:center; max-width:420px; margin:0 auto; }
-  .coming-soon-badge { background:var(--brown-pale); color:var(--brown-dark); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; padding:0.35rem 1rem; border-radius:999px; }
-  .map-legend { display:flex; gap:1.25rem; justify-content:flex-end; margin-top:0.875rem; }
-  .legend-item { display:flex; align-items:center; gap:0.4rem; font-size:0.78rem; color:rgba(28,28,28,0.55); }
-  .legend-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
-  .state-region, .canada-region { transition:fill 0.15s; }
-  path.map-region { transition:fill 0.15s; stroke:var(--green-pale); stroke-width:0.6; }
-  path.map-region.has-data { fill:var(--green-dark); }
-  path.map-region:not(.mexico):not(.has-data) { fill:var(--green-mid); }
-  path.map-region:not(.mexico):hover { fill:var(--brown-light) !important; }
-  path.map-region.has-data:hover { fill:var(--brown-mid) !important; }
-  path.map-region.active { fill:var(--brown-warm) !important; }
-  path.map-region.mexico { fill:var(--green-sage); cursor:default !important; }
+/* ── FOOTER ── */
+footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; color: rgba(28,28,28,0.4); font-size: 0.82rem; }
 
+/* ── MAP SVG STYLES ── */
+.map-region { stroke: rgba(127,184,150,0.25); stroke-width: 0.5; cursor: pointer; transition: fill 0.15s; }
+.map-region.has-data { fill: var(--g2); }
+.map-region.no-data { fill: rgba(74,124,89,0.45); }
+.map-region:hover { fill: var(--b3) !important; }
+.map-region.selected { fill: var(--g4) !important; stroke: var(--g5); stroke-width: 1.5; }
+.map-label { font-size: 6px; font-weight: 600; fill: rgba(245,237,224,0.6); pointer-events: none; text-anchor: middle; dominant-baseline: middle; }
+.map-label.has-data { fill: rgba(245,237,224,0.92); font-size: 7px; }
+.map-label.selected { fill: var(--g0); }
 
-  @media(max-width:900px){
-    .hero{grid-template-columns:1fr;min-height:auto;padding-top:8rem}
-    .hero-visual{display:none}
-    .features-grid{grid-template-columns:1fr}
-    nav ul{display:none}
-    .cta-section{padding:3rem 2rem}
-    .cta-wrap{padding:0 1rem 4rem}
-    footer{flex-direction:column;gap:1rem;text-align:center}
-  }
+/* Inset box */
+.inset-bg { fill: rgba(255,255,255,0.03); stroke: rgba(127,184,150,0.15); stroke-width: 0.5; rx: 4; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+.hero-inner > * { animation: fadeUp 0.6s ease both; }
+.hero-inner > *:nth-child(1){animation-delay:0.1s}
+.hero-inner > *:nth-child(2){animation-delay:0.2s}
+.hero-inner > *:nth-child(3){animation-delay:0.3s}
+.hero-inner > *:nth-child(4){animation-delay:0.45s}
+.hero-inner > *:nth-child(5){animation-delay:0.6s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav .nav-links { display: none; }
+  .hero { padding: 7rem 1.5rem 4rem; }
+  .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+  .features-grid { grid-template-columns: 1fr; }
+  .cta-box { padding: 3rem 1.5rem; }
+  .cta-wrap { padding: 0 1rem 4rem; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+  .region-header { flex-direction: column; }
+  .map-section-inner, .region-section-inner, .features-section { padding: 0 1.25rem; }
+}
 </style>
 </head>
 <body>
 
+<!-- ── NAV ── -->
 <nav>
-  <div class="logo">Zoo<span>vy</span></div>
-  <ul>
+  <a href="#" class="logo">Zoo<span>vy</span></a>
+  <ul class="nav-links">
     <li><a href="#explore">Explore</a></li>
-    <li><a href="#map">Map</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#explore" class="nav-cta">Find Wildlife</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-left">
-    <div class="hero-tag">North America Wildlife</div>
-    <h1>Your guide to<br>North America's <em>wild</em> side</h1>
-    <p>Discover zoos, sanctuaries, and nature reserves across North America. Every animal, every habitat — all in one place.</p>
-    <div class="hero-btns">
-      <a href="#explore" class="btn-primary">Explore Now</a>
-      <a href="#about" class="btn-ghost">How it works</a>
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">North America Wildlife Discovery</div>
+    <h1>Explore<br>North America's<br><span class="accent">wild side</span></h1>
+    <p>Discover zoos, sanctuaries, and nature reserves across the continent. Click any region on the map to explore wildlife near you.</p>
+    <div class="hero-actions">
+      <a href="#explore" class="btn-primary">Explore the map</a>
+      <a href="#about" class="btn-outline">How it works</a>
     </div>
-  </div>
-  <div class="hero-visual">
-    <div class="hero-card main">
-      <div class="card-label">🌿 North America Wildlife</div>
-      <div class="zoo-preview">
-        <div class="zoo-dot" style="background:var(--green-pale);">🦁</div>
-        <div><div class="zoo-preview-name">Toronto Zoo</div><div class="zoo-preview-meta">Scarborough · Zoo</div></div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">20+</div>
+        <div class="hero-stat-lbl">Wildlife locations</div>
       </div>
-      <div class="zoo-preview">
-        <div class="zoo-dot" style="background:var(--brown-pale);">🦅</div>
-        <div><div class="zoo-preview-name">Aspen Valley Sanctuary</div><div class="zoo-preview-meta">Rosseau · Sanctuary</div></div>
+      <div>
+        <div class="hero-stat-num">3</div>
+        <div class="hero-stat-lbl">Categories</div>
       </div>
-      <div class="zoo-preview">
-        <div class="zoo-dot" style="background:var(--green-pale);">🦢</div>
-        <div><div class="zoo-preview-name">Wye Marsh Wildlife Centre</div><div class="zoo-preview-meta">Midland · Reserve</div></div>
+      <div>
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-lbl">Regions covered</div>
       </div>
-    </div>
-    <div class="hero-card small">
-      <div class="stats-row">
-        <div class="stat-card"><div class="stat-num">20+</div><div class="stat-lbl">Locations</div></div>
-        <div class="stat-div"></div>
-        <div class="stat-card"><div class="stat-num">3</div><div class="stat-lbl">Categories</div></div>
+      <div>
+        <div class="hero-stat-num">∞</div>
+        <div class="hero-stat-lbl">Animals to discover</div>
       </div>
     </div>
   </div>
+</section>
+
+<!-- ── MAP + EXPLORE ── -->
+<div id="explore">
+
+  <!-- MAP -->
+  <section class="map-section">
+    <div class="map-section-inner">
+      <div class="map-eyebrow">🌎 Interactive Map</div>
+      <div class="map-title">Click a region to explore</div>
+      <div class="map-sub">Darker regions have wildlife listings. More regions coming soon.</div>
+      <div class="map-container">
+        <div id="map-loading">Loading map…</div>
+        <svg id="na-map" style="display:none;"></svg>
+        <div class="map-legend">
+          <span class="legend-dot has">Has wildlife data</span>
+          <span class="legend-dot soon">Coming soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZOO GRID (updates on region click) -->
+  <section class="region-section">
+    <div class="region-section-inner">
+      <div class="region-header">
+        <div class="region-header-left">
+          <div class="region-selected-name" id="region-display-name">Ontario, Canada</div>
+          <div class="region-selected-count" id="region-display-count">13 wildlife locations</div>
+        </div>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="zoo">🦁 Zoos</button>
+          <button class="filter-btn" data-filter="sanctuary">🌿 Sanctuaries</button>
+          <button class="filter-btn" data-filter="reserve">🍃 Reserves</button>
+        </div>
+      </div>
+      <div class="zoo-grid" id="zoo-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
 </div>
 
-<!-- MAP SECTION -->
-<section id="map">
-  <div style="margin-bottom:2.5rem;">
-    <div class="section-eyebrow">🌎 Explore by Region</div>
-    <div class="section-title">Wildlife across North America</div>
-    <p class="section-sub">Click any state or province to explore wildlife locations in that region.</p>
-  </div>
-  <div id="map-wrap" class="map-wrap" style="position:relative;">
-    <div id="map-status" style="text-align:center;padding:40px;color:var(--green-sage);font-size:0.9rem;">Loading map...</div>
-    <svg id="na-map" style="width:100%;display:none;"></svg>
-    <div class="map-legend">
-      <span class="legend-item"><span class="legend-dot" style="background:var(--green-dark);"></span>Has wildlife data</span>
-      <span class="legend-item"><span class="legend-dot" style="background:var(--green-sage);"></span>Coming soon</span>
-    </div>
-  </div>
-  <div id="region-panel" class="region-panel" style="display:none;">
-    <div class="region-panel-header">
-      <div><div id="region-name" class="region-panel-title"></div><div id="region-count" class="region-panel-sub"></div></div>
-      <button id="region-close" class="region-close" onclick="closePanel()">✕</button>
-    </div>
-    <div id="region-cards" class="region-cards-grid"></div>
-  </div>
-  <div id="coming-soon-panel" class="coming-soon-panel" style="display:none;">
-    <div class="coming-soon-inner">
-      <div style="font-size:2.5rem;margin-bottom:0.75rem;">🗺</div>
-      <div class="region-panel-title" id="coming-soon-name"></div>
-      <p style="color:rgba(28,28,28,0.5);margin:0.5rem 0 1.5rem;font-size:0.9rem;">We're working on adding wildlife locations here.</p>
-      <span class="coming-soon-badge">Coming Soon</span>
-      <button onclick="closePanel()" style="display:block;margin:1.25rem auto 0;background:none;border:1.5px solid rgba(0,0,0,0.15);border-radius:999px;padding:0.5rem 1.25rem;cursor:pointer;font-size:0.85rem;color:rgba(28,28,28,0.6);">Close</button>
-    </div>
-  </div>
-</section>
-
-
-<!-- EXPLORE GRID -->
-<section id="explore">
-  <div style="margin-bottom:3rem;">
-    <div class="section-eyebrow">🌿 North America Wildlife</div>
-    <div class="section-title">Explore Wildlife, sanctuaries &amp; reserves</div>
-    <p class="section-sub">Hover any card to see more. Click to visit. Filter by category below.</p>
-  </div>
-
-  <div class="filter-bar">
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="zoo">🦁 Zoos</button>
-    <button class="filter-btn" data-filter="sanctuary">🌿 Sanctuaries</button>
-    <button class="filter-btn" data-filter="reserve">🍃 Reserves</button>
-  </div>
-
-  <div class="zoo-grid">
-
-    <!-- ZOOS -->
-    <a class="zoo-card" data-type="zoo" href="https://www.torontozoo.com" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-zoo">Zoo</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Toronto Zoo</div>
-            <div class="zoo-card-city">📍 Scarborough, ON</div>
-            <div class="zoo-tags"><span class="tag tag-green">500+ species</span><span class="tag tag-green">Kids zone</span><span class="tag tag-green">Conservation</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🦁</div><div class="zoo-card-back-name">Toronto Zoo</div><div class="zoo-card-back-city">📍 2000 Meadowvale Rd, Scarborough</div><div class="zoo-card-back-tags"><span class="tag tag-green">500+ species</span><span class="tag tag-green">Kids zone</span><span class="tag tag-green">Conservation</span></div></div>
-          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" data-type="zoo" href="https://www.lionsafari.com" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-zoo">Zoo</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">African Lion Safari</div>
-            <div class="zoo-card-city">📍 Cambridge, ON</div>
-            <div class="zoo-tags"><span class="tag tag-green">Drive-thru</span><span class="tag tag-green">Boat tour</span><span class="tag tag-green">African wildlife</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🦒</div><div class="zoo-card-back-name">African Lion Safari</div><div class="zoo-card-back-city">📍 1386 Cooper Rd, Cambridge</div><div class="zoo-card-back-tags"><span class="tag tag-green">Drive-thru</span><span class="tag tag-green">Boat tour</span></div></div>
-          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" data-type="zoo" href="https://www.elmvalejunglezoo.com" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-zoo">Zoo</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Elmvale Jungle Zoo</div>
-            <div class="zoo-card-city">📍 Elmvale, ON</div>
-            <div class="zoo-tags"><span class="tag tag-green">Family</span><span class="tag tag-green">Exotic animals</span><span class="tag tag-green">Picnic area</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🐆</div><div class="zoo-card-back-name">Elmvale Jungle Zoo</div><div class="zoo-card-back-city">📍 1430 Flos Rd 7 E, Elmvale</div><div class="zoo-card-back-tags"><span class="tag tag-green">Family</span><span class="tag tag-green">Exotic animals</span></div></div>
-          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" data-type="zoo" href="https://www.birdkingdom.ca" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-zoo">Zoo</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Bird Kingdom</div>
-            <div class="zoo-card-city">📍 Niagara Falls, ON</div>
-            <div class="zoo-tags"><span class="tag tag-green">Free-flight</span><span class="tag tag-green">Indoor aviary</span><span class="tag tag-green">Nocturnal</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🦜</div><div class="zoo-card-back-name">Bird Kingdom</div><div class="zoo-card-back-city">📍 5651 River Rd, Niagara Falls</div><div class="zoo-card-back-tags"><span class="tag tag-green">Free-flight</span><span class="tag tag-green">Indoor aviary</span></div></div>
-          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" data-type="zoo" href="https://www.ontariowolfcentre.ca" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-zoo">Zoo</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Ontario Wolf Centre</div>
-            <div class="zoo-card-city">📍 Haliburton, ON</div>
-            <div class="zoo-tags"><span class="tag tag-green">Wolves</span><span class="tag tag-green">Howling events</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🐺</div><div class="zoo-card-back-name">Ontario Wolf Centre</div><div class="zoo-card-back-city">📍 1090 Haliburton Lake Rd</div><div class="zoo-card-back-tags"><span class="tag tag-green">Wolves</span><span class="tag tag-green">Howling events</span></div></div>
-          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" data-type="zoo" href="https://www.littlerayzoo.com" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-zoo">Zoo</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Little Ray's Reptile Zoo</div>
-            <div class="zoo-card-city">📍 Ottawa, ON</div>
-            <div class="zoo-tags"><span class="tag tag-green">Reptiles</span><span class="tag tag-green">Interactive</span><span class="tag tag-green">Education</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🐊</div><div class="zoo-card-back-name">Little Ray's Reptile Zoo</div><div class="zoo-card-back-city">📍 Multiple locations, Ottawa</div><div class="zoo-card-back-tags"><span class="tag tag-green">Reptiles</span><span class="tag tag-green">Interactive</span></div></div>
-          <span class="zoo-visit-btn visit-green">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <!-- SANCTUARIES -->
-    <a class="zoo-card" data-type="sanctuary" href="https://www.aspenvalley.ca" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-sanctuary">Sanctuary</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Aspen Valley Wildlife Sanctuary</div>
-            <div class="zoo-card-city">📍 Rosseau, ON</div>
-            <div class="zoo-tags"><span class="tag tag-brown">Bears</span><span class="tag tag-brown">Bobcats</span><span class="tag tag-brown">Guided tours</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🐻</div><div class="zoo-card-back-name">Aspen Valley Wildlife Sanctuary</div><div class="zoo-card-back-city">📍 Rosseau, Muskoka</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Bears</span><span class="tag tag-brown">Bobcats</span><span class="tag tag-brown">Moose</span></div></div>
-          <span class="zoo-visit-btn visit-brown">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" data-type="sanctuary" href="https://www.bearcreeksanctuary.com" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-sanctuary">Sanctuary</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Bear Creek Exotic Wildlife Sanctuary</div>
-            <div class="zoo-card-city">📍 Barrie, ON</div>
-            <div class="zoo-tags"><span class="tag tag-brown">Exotic animals</span><span class="tag tag-brown">Non-profit</span><span class="tag tag-brown">Rescue</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🐯</div><div class="zoo-card-back-name">Bear Creek Exotic Wildlife Sanctuary</div><div class="zoo-card-back-city">📍 Barrie, Ontario</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Exotic animals</span><span class="tag tag-brown">Rescue</span></div></div>
-          <span class="zoo-visit-btn visit-brown">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" data-type="sanctuary" href="https://www.storybookfarm.org" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-sanctuary">Sanctuary</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Story Book Farm Primate Sanctuary</div>
-            <div class="zoo-card-city">📍 Sunderland, ON</div>
-            <div class="zoo-tags"><span class="tag tag-brown">Primates</span><span class="tag tag-brown">Rescue</span><span class="tag tag-brown">Tours available</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🐒</div><div class="zoo-card-back-name">Story Book Farm Primate Sanctuary</div><div class="zoo-card-back-city">📍 Sunderland, Ontario</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Primates</span><span class="tag tag-brown">Rescue</span></div></div>
-          <span class="zoo-visit-btn visit-brown">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" data-type="sanctuary" href="https://www.salthaven.org" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-sanctuary">Sanctuary</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Salthaven Wildlife Centre</div>
-            <div class="zoo-card-city">📍 Mount Brydges, ON</div>
-            <div class="zoo-tags"><span class="tag tag-brown">Rehabilitation</span><span class="tag tag-brown">Native wildlife</span><span class="tag tag-brown">Education</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🦉</div><div class="zoo-card-back-name">Salthaven Wildlife Centre</div><div class="zoo-card-back-city">📍 Mount Brydges, Ontario</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Rehabilitation</span><span class="tag tag-brown">Native wildlife</span></div></div>
-          <span class="zoo-visit-btn visit-brown">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <!-- RESERVES -->
-    <a class="zoo-card" data-type="reserve" href="https://www.wyemarsh.com" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-reserve">Reserve</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Wye Marsh Wildlife Centre</div>
-            <div class="zoo-card-city">📍 Midland, ON</div>
-            <div class="zoo-tags"><span class="tag tag-brown">25km trails</span><span class="tag tag-brown">Canoe tours</span><span class="tag tag-brown">Birds of prey</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🦢</div><div class="zoo-card-back-name">Wye Marsh Wildlife Centre</div><div class="zoo-card-back-city">📍 16160 Hwy 12, Midland</div><div class="zoo-card-back-tags"><span class="tag tag-brown">25km trails</span><span class="tag tag-brown">Canoe tours</span><span class="tag tag-brown">Open 362 days</span></div></div>
-          <span class="zoo-visit-btn visit-darkbrown">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" data-type="reserve" href="https://www.mountsberg.ca" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-reserve">Reserve</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Mountsberg Wildlife Centre</div>
-            <div class="zoo-card-city">📍 Campbellville, ON</div>
-            <div class="zoo-tags"><span class="tag tag-brown">Raptors</span><span class="tag tag-brown">Hiking</span><span class="tag tag-brown">Conservation</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🦅</div><div class="zoo-card-back-name">Mountsberg Wildlife Centre</div><div class="zoo-card-back-city">📍 2259 Milburough Line, Campbellville</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Raptors</span><span class="tag tag-brown">Hiking</span></div></div>
-          <span class="zoo-visit-btn visit-darkbrown">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-    <a class="zoo-card" data-type="reserve" href="https://ontarionature.org/programs/nature-reserves/altberg-wildlife-sanctuary/" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="zoo-card-img" style="background-image:url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&auto=format&fit=crop');">
-            <span class="zoo-type-badge badge-reserve">Reserve</span>
-          </div>
-          <div class="zoo-card-front-body">
-            <div class="zoo-card-name">Altberg Wildlife Sanctuary Nature Reserve</div>
-            <div class="zoo-card-city">📍 Norland, ON</div>
-            <div class="zoo-tags"><span class="tag tag-brown">Free entry</span><span class="tag tag-brown">3.3km trails</span><span class="tag tag-brown">Old growth forest</span></div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div><div class="zoo-card-back-emoji">🌲</div><div class="zoo-card-back-name">Altberg Wildlife Sanctuary Nature Reserve</div><div class="zoo-card-back-city">📍 Norland, Ontario</div><div class="zoo-card-back-tags"><span class="tag tag-brown">Free entry</span><span class="tag tag-brown">480 hectares</span></div></div>
-          <span class="zoo-visit-btn visit-darkbrown">Visit Website ↗</span>
-        </div>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" style="background:var(--brown-cream);border-radius:28px;max-width:calc(100% - 5rem);padding:5rem 4rem;">
+<!-- ── FEATURES ── -->
+<section class="features-section" id="about" style="background:var(--b6);border-radius:28px;max-width:calc(100% - 5rem);margin:0 auto;">
   <div class="section-eyebrow">Why Zoovy</div>
   <div class="section-title">Built for animal lovers</div>
-  <p class="section-sub">Everything you need to discover wildlife across North America — zoos, sanctuaries, and nature reserves — in one clean place.</p>
+  <p class="section-sub">Everything you need to discover wildlife across North America — in one clean place.</p>
   <div class="features-grid">
     <div class="feature-card">
-      <div class="feature-icon" style="background:var(--green-pale);">🗺</div>
-      <div class="feature-title">Three categories, one place</div>
-      <p class="feature-desc">Whether you want a full zoo day, a quiet sanctuary visit, or a nature reserve hike — find it all without the Googling.</p>
+      <div class="feature-icon" style="background:var(--g6);">🗺</div>
+      <div class="feature-title">Explore by region</div>
+      <p class="feature-desc">Click any state or province on the map to instantly see all wildlife locations in that area.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon" style="background:var(--brown-pale);">🔍</div>
-      <div class="feature-title">Filter by interest</div>
-      <p class="feature-desc">Looking for reptiles? Family-friendly? Drive-thru? Filter by type and find the right experience in seconds.</p>
+      <div class="feature-icon" style="background:var(--b5);">🔍</div>
+      <div class="feature-title">Filter by type</div>
+      <p class="feature-desc">Zoo day, sanctuary visit, or nature reserve hike — filter by experience type and find your perfect match.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon" style="background:var(--green-pale);">🐣</div>
+      <div class="feature-icon" style="background:var(--g6);">🐣</div>
       <div class="feature-title">Animal births — coming soon</div>
-      <p class="feature-desc">Track expectant and newborn animals at zoos and sanctuaries across North America. Be the first to know when a new cub arrives.</p>
+      <p class="feature-desc">Track expectant and newborn animals at zoos across North America. Be the first to know when a new cub arrives.</p>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<div class="cta-wrap">
-  <div class="cta-section">
+<!-- ── CTA ── -->
+<div class="cta-wrap" style="padding-top:4rem;">
+  <div class="cta-box">
     <h2>North America's wildlife, all in one place</h2>
-    <p>Zoos, sanctuaries, and reserves from coast to coast.</p>
-    <a href="#explore" class="btn-cream">Explore now</a>
+    <p>Zoos, sanctuaries, and reserves from coast to coast. Start exploring today.</p>
+    <a href="#explore" class="btn-light">Explore now</a>
   </div>
 </div>
 
+<!-- ── FOOTER ── -->
 <footer>
-  <div class="logo" style="font-size:1.1rem;">Zoo<span>vy</span></div>
+  <a href="#" class="logo" style="font-size:1.05rem;">Zoo<span>vy</span></a>
   <div>North America wildlife discovery · zoovy.net</div>
   <div>© 2025 Zoovy</div>
 </footer>
 
 <script>
-// ── FILTER ──
-const filterBtns = document.querySelectorAll('.filter-btn');
-const cards = document.querySelectorAll('.zoo-card');
-filterBtns.forEach(btn => {
+// ── REGION DATA ──
+const REGIONS = {
+  ON: {
+    name: "Ontario", country: "Canada",
+    locations: [
+      { name:"Toronto Zoo", type:"zoo", emoji:"🦁", city:"Scarborough", tags:["500+ species","Kids zone","Conservation"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.torontozoo.com" },
+      { name:"African Lion Safari", type:"zoo", emoji:"🦒", city:"Cambridge", tags:["Drive-thru","Boat tour","African wildlife"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.lionsafari.com" },
+      { name:"Elmvale Jungle Zoo", type:"zoo", emoji:"🐆", city:"Elmvale", tags:["Family","Exotic animals","Picnic area"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.elmvalejunglezoo.com" },
+      { name:"Bird Kingdom", type:"zoo", emoji:"🦜", city:"Niagara Falls", tags:["Free-flight","Indoor aviary","Nocturnal"], img:"https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop", url:"https://www.birdkingdom.ca" },
+      { name:"Ontario Wolf Centre", type:"zoo", emoji:"🐺", city:"Haliburton", tags:["Wolves","Howling events"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.ontariowolfcentre.ca" },
+      { name:"Little Ray's Reptile Zoo", type:"zoo", emoji:"🐊", city:"Ottawa", tags:["Reptiles","Interactive","Education"], img:"https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?w=600&auto=format&fit=crop", url:"https://www.littlerayzoo.com" },
+      { name:"Aspen Valley Wildlife Sanctuary", type:"sanctuary", emoji:"🐻", city:"Rosseau", tags:["Bears","Bobcats","Guided tours"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.aspenvalley.ca" },
+      { name:"Bear Creek Exotic Wildlife Sanctuary", type:"sanctuary", emoji:"🐯", city:"Barrie", tags:["Exotic animals","Non-profit","Rescue"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.bearcreeksanctuary.com" },
+      { name:"Story Book Farm Primate Sanctuary", type:"sanctuary", emoji:"🐒", city:"Sunderland", tags:["Primates","Rescue","Tours"], img:"https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=600&auto=format&fit=crop", url:"https://www.storybookfarm.org" },
+      { name:"Salthaven Wildlife Centre", type:"sanctuary", emoji:"🦉", city:"Mount Brydges", tags:["Rehabilitation","Native wildlife"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.salthaven.org" },
+      { name:"Wye Marsh Wildlife Centre", type:"reserve", emoji:"🦢", city:"Midland", tags:["25km trails","Canoe tours","Birds of prey"], img:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&auto=format&fit=crop", url:"https://www.wyemarsh.com" },
+      { name:"Mountsberg Wildlife Centre", type:"reserve", emoji:"🦅", city:"Campbellville", tags:["Raptors","Hiking","Conservation"], img:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&auto=format&fit=crop", url:"https://www.mountsberg.ca" },
+      { name:"Altberg Wildlife Sanctuary Nature Reserve", type:"reserve", emoji:"🌲", city:"Norland", tags:["Free entry","3.3km trails","Old growth"], img:"https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&auto=format&fit=crop", url:"https://ontarionature.org" },
+    ]
+  },
+  BC: {
+    name: "British Columbia", country: "Canada",
+    locations: [
+      { name:"Greater Vancouver Zoo", type:"zoo", emoji:"🦒", city:"Aldergrove", tags:["98 species","Family","Drive-thru"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.gvzoo.com" },
+      { name:"Victoria Butterfly Gardens", type:"zoo", emoji:"🦋", city:"Victoria", tags:["Free-flight","Tropical","Indoor"], img:"https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop", url:"https://www.butterflygardens.com" },
+      { name:"Rescue Ranch", type:"sanctuary", emoji:"🐴", city:"Kamloops", tags:["Farm animals","Rescue","Education"], img:"https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=600&auto=format&fit=crop", url:"https://www.rescueranch.ca" },
+    ]
+  },
+  NY: {
+    name: "New York", country: "USA",
+    locations: [
+      { name:"Bronx Zoo", type:"zoo", emoji:"🦁", city:"New York City", tags:["265 species","World-class","Conservation"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.bronxzoo.com" },
+      { name:"Central Park Zoo", type:"zoo", emoji:"🐧", city:"New York City", tags:["Urban zoo","Penguins","Snow leopards"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://centralparkzoo.com" },
+      { name:"Buffalo Zoo", type:"zoo", emoji:"🦬", city:"Buffalo", tags:["Historic","Polar bears","Family"], img:"https://images.unsplash.com/photo-1612024782955-49fae79e42bb?w=600&auto=format&fit=crop", url:"https://www.buffalozoo.org" },
+    ]
+  },
+  CA: {
+    name: "California", country: "USA",
+    locations: [
+      { name:"San Diego Zoo", type:"zoo", emoji:"🐼", city:"San Diego", tags:["World famous","3,500 animals","Giant pandas"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://zoo.sandiegozoo.org" },
+      { name:"Los Angeles Zoo", type:"zoo", emoji:"🦍", city:"Los Angeles", tags:["270 species","Gorillas","Kids area"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.lazoo.org" },
+      { name:"Oakland Zoo", type:"zoo", emoji:"🦓", city:"Oakland", tags:["Gondola ride","700 animals","California Trail"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.oaklandzoo.org" },
+    ]
+  },
+  TX: {
+    name: "Texas", country: "USA",
+    locations: [
+      { name:"San Antonio Zoo", type:"zoo", emoji:"🦏", city:"San Antonio", tags:["750 species","Rhinos","Historic"], img:"https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?w=600&auto=format&fit=crop", url:"https://www.sazoo.org" },
+      { name:"Houston Zoo", type:"zoo", emoji:"🐊", city:"Houston", tags:["6,000 animals","Reptiles","Conservation"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.houstonzoo.org" },
+      { name:"Dallas Zoo", type:"zoo", emoji:"🦒", city:"Dallas", tags:["Largest TX zoo","Giraffes","Kids zone"], img:"https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop", url:"https://www.dallaszoo.com" },
+    ]
+  },
+  FL: {
+    name: "Florida", country: "USA",
+    locations: [
+      { name:"ZooTampa at Lowry Park", type:"zoo", emoji:"🦛", city:"Tampa", tags:["Manatees","Hippos","Florida wildlife"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.zootampa.org" },
+      { name:"Zoo Miami", type:"zoo", emoji:"🦩", city:"Miami", tags:["Tropical","750 species","Open air"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.zoomiami.org" },
+      { name:"Busch Gardens Tampa", type:"zoo", emoji:"🦁", city:"Tampa", tags:["Thrill rides","African animals","Roller coasters"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://buschgardens.com/tampa" },
+    ]
+  }
+};
+
+// HC-key → region ID mapping
+const HC_TO_ID = {
+  // Canada
+  'ca-on':'ON','ca-bc':'BC','ca-qc':'QC','ca-ab':'AB','ca-sk':'SK',
+  'ca-mb':'MB','ca-nb':'NB','ca-ns':'NS','ca-pe':'PE','ca-nl':'NL',
+  'ca-yt':'YT','ca-nt':'NT','ca-nu':'NU',
+  // USA
+  'us-al':'AL','us-ak':'AK','us-az':'AZ','us-ar':'AR','us-ca':'CA',
+  'us-co':'CO','us-ct':'CT','us-de':'DE','us-fl':'FL','us-ga':'GA',
+  'us-hi':'HI','us-id':'ID','us-il':'IL','us-in':'IN','us-ia':'IA',
+  'us-ks':'KS','us-ky':'KY','us-la':'LA','us-me':'ME','us-md':'MD',
+  'us-ma':'MA','us-mi':'MI','us-mn':'MN','us-ms':'MS','us-mo':'MO',
+  'us-mt':'MT','us-ne':'NE','us-nv':'NV','us-nh':'NH','us-nj':'NJ',
+  'us-nm':'NM','us-ny':'NY','us-nc':'NC','us-nd':'ND','us-oh':'OH',
+  'us-ok':'OK','us-or':'OR','us-pa':'PA','us-ri':'RI','us-sc':'SC',
+  'us-sd':'SD','us-tn':'TN','us-tx':'TX','us-ut':'UT','us-vt':'VT',
+  'us-va':'VA','us-wa':'WA','us-wv':'WV','us-wi':'WI','us-wy':'WY',
+  'us-dc':'DC'
+};
+
+// State label shortcuts
+const REGION_LABELS = {
+  'ca-on':'ON','ca-bc':'BC','ca-qc':'QC','ca-ab':'AB','ca-sk':'SK','ca-mb':'MB',
+  'ca-nb':'NB','ca-ns':'NS','ca-nt':'NT','ca-yt':'YT','ca-nu':'NU','ca-nl':'NL',
+  'us-ca':'CA','us-tx':'TX','us-fl':'FL','us-ny':'NY','us-pa':'PA','us-oh':'OH',
+  'us-il':'IL','us-ga':'GA','us-nc':'NC','us-mi':'MI','us-wa':'WA','us-or':'OR',
+  'us-az':'AZ','us-co':'CO','us-mn':'MN','us-wi':'WI','us-mo':'MO','us-tn':'TN',
+  'us-al':'AL','us-ms':'MS','us-la':'LA','us-ar':'AR','us-ok':'OK','us-ks':'KS',
+  'us-ne':'NE','us-sd':'SD','us-nd':'ND','us-mt':'MT','us-wy':'WY','us-nv':'NV',
+  'us-id':'ID','us-ut':'UT','us-nm':'NM','us-me':'ME','us-ia':'IA','us-va':'VA',
+  'us-in':'IN','us-ky':'KY','us-sc':'SC','us-ak':'AK','us-hi':'HI'
+};
+
+// ── STATE ──
+let selectedRegion = 'ON';
+let activeFilter = 'all';
+
+// ── RENDER ZOO GRID ──
+function renderGrid(regionId) {
+  const data = REGIONS[regionId];
+  const grid = document.getElementById('zoo-grid');
+  const nameEl = document.getElementById('region-display-name');
+  const countEl = document.getElementById('region-display-count');
+
+  if (!data) {
+    nameEl.textContent = regionId;
+    countEl.textContent = '';
+    grid.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1;">
+        <div class="empty-state-icon">🗺</div>
+        <div class="empty-state-title">Coming Soon</div>
+        <div class="empty-state-sub">We're adding wildlife locations for this region soon.</div>
+      </div>`;
+    return;
+  }
+
+  nameEl.textContent = `${data.name}, ${data.country}`;
+  countEl.textContent = `${data.locations.length} wildlife locations`;
+
+  const filtered = data.locations.filter(l => activeFilter === 'all' || l.type === activeFilter);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1;">
+        <div class="empty-state-icon">🔍</div>
+        <div class="empty-state-title">No ${activeFilter}s found</div>
+        <div class="empty-state-sub">Try a different filter.</div>
+      </div>`;
+    return;
+  }
+
+  const tagClass = (type) => type === 'zoo' ? 'tag' : 'tag tag-b';
+  const visitClass = (type) => `visit-btn visit-${type}`;
+  const badgeClass = (type) => `card-type-badge badge-${type}`;
+  const typeLabel = (type) => type.charAt(0).toUpperCase() + type.slice(1);
+
+  grid.innerHTML = filtered.map(loc => `
+    <a class="zoo-card" href="${loc.url}" target="_blank" rel="noopener">
+      <div class="zoo-card-inner">
+        <div class="zoo-card-front">
+          <div class="card-img" style="background-image:url('${loc.img}');">
+            <span class="${badgeClass(loc.type)}">${typeLabel(loc.type)}</span>
+          </div>
+          <div class="card-body">
+            <div class="card-name">${loc.name}</div>
+            <div class="card-city">📍 ${loc.city}</div>
+            <div class="card-tags">${loc.tags.map(t => `<span class="${tagClass(loc.type)}">${t}</span>`).join('')}</div>
+          </div>
+        </div>
+        <div class="zoo-card-back">
+          <div>
+            <div class="back-emoji">${loc.emoji}</div>
+            <div class="back-name">${loc.name}</div>
+            <div class="back-city">📍 ${loc.city}</div>
+            <div class="back-tags">${loc.tags.map(t => `<span class="${tagClass(loc.type)}">${t}</span>`).join('')}</div>
+          </div>
+          <span class="${visitClass(loc.type)}">Visit Website ↗</span>
+        </div>
+      </div>
+    </a>
+  `).join('');
+}
+
+// ── FILTER BAR ──
+document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    filterBtns.forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const filter = btn.dataset.filter;
-    cards.forEach(card => {
-      if (filter === 'all' || card.dataset.type === filter) {
-        card.classList.remove('hidden');
-      } else {
-        card.classList.add('hidden');
-      }
-    });
+    activeFilter = btn.dataset.filter;
+    renderGrid(selectedRegion);
   });
 });
 
-// ── REGION DATA ──
-const RD = {
-  ON:{name:"Ontario, Canada",loc:[
-    {n:"Toronto Zoo",t:"zoo",e:"🦁",c:"Scarborough",u:"https://www.torontozoo.com"},
-    {n:"African Lion Safari",t:"zoo",e:"🦒",c:"Cambridge",u:"https://www.lionsafari.com"},
-    {n:"Elmvale Jungle Zoo",t:"zoo",e:"🐆",c:"Elmvale",u:"https://www.elmvalejunglezoo.com"},
-    {n:"Bird Kingdom",t:"zoo",e:"🦜",c:"Niagara Falls",u:"https://www.birdkingdom.ca"},
-    {n:"Ontario Wolf Centre",t:"zoo",e:"🐺",c:"Haliburton",u:"https://www.ontariowolfcentre.ca"},
-    {n:"Little Ray's Reptile Zoo",t:"zoo",e:"🐊",c:"Ottawa",u:"https://www.littlerayzoo.com"},
-    {n:"Aspen Valley Wildlife Sanctuary",t:"sanctuary",e:"🐻",c:"Rosseau",u:"https://www.aspenvalley.ca"},
-    {n:"Bear Creek Exotic Wildlife Sanctuary",t:"sanctuary",e:"🐯",c:"Barrie",u:"https://www.bearcreeksanctuary.com"},
-    {n:"Story Book Farm Primate Sanctuary",t:"sanctuary",e:"🐒",c:"Sunderland",u:"https://www.storybookfarm.org"},
-    {n:"Salthaven Wildlife Centre",t:"sanctuary",e:"🦉",c:"Mount Brydges",u:"https://www.salthaven.org"},
-    {n:"Wye Marsh Wildlife Centre",t:"reserve",e:"🦢",c:"Midland",u:"https://www.wyemarsh.com"},
-    {n:"Mountsberg Wildlife Centre",t:"reserve",e:"🦅",c:"Campbellville",u:"https://www.mountsberg.ca"},
-    {n:"Altberg Wildlife Sanctuary",t:"reserve",e:"🌲",c:"Norland",u:"https://ontarionature.org"},
-  ]},
-  BC:{name:"British Columbia, Canada",loc:[
-    {n:"Greater Vancouver Zoo",t:"zoo",e:"🦒",c:"Aldergrove",u:"https://www.gvzoo.com"},
-    {n:"Victoria Butterfly Gardens",t:"zoo",e:"🦋",c:"Victoria",u:"https://www.butterflygardens.com"},
-    {n:"Rescue Ranch",t:"sanctuary",e:"🐴",c:"Kamloops",u:"https://www.rescueranch.ca"},
-  ]},
-  NY:{name:"New York, USA",loc:[
-    {n:"Bronx Zoo",t:"zoo",e:"🦁",c:"New York City",u:"https://www.bronxzoo.com"},
-    {n:"Central Park Zoo",t:"zoo",e:"🐧",c:"New York City",u:"https://centralparkzoo.com"},
-    {n:"Buffalo Zoo",t:"zoo",e:"🦬",c:"Buffalo",u:"https://www.buffalozoo.org"},
-  ]},
-  CA:{name:"California, USA",loc:[
-    {n:"San Diego Zoo",t:"zoo",e:"🐼",c:"San Diego",u:"https://zoo.sandiegozoo.org"},
-    {n:"Los Angeles Zoo",t:"zoo",e:"🦍",c:"Los Angeles",u:"https://www.lazoo.org"},
-    {n:"Oakland Zoo",t:"zoo",e:"🦓",c:"Oakland",u:"https://www.oaklandzoo.org"},
-  ]},
-  TX:{name:"Texas, USA",loc:[
-    {n:"San Antonio Zoo",t:"zoo",e:"🦏",c:"San Antonio",u:"https://www.sazoo.org"},
-    {n:"Houston Zoo",t:"zoo",e:"🐊",c:"Houston",u:"https://www.houstonzoo.org"},
-    {n:"Dallas Zoo",t:"zoo",e:"🦒",c:"Dallas",u:"https://www.dallaszoo.com"},
-  ]},
-  FL:{name:"Florida, USA",loc:[
-    {n:"ZooTampa",t:"zoo",e:"🦛",c:"Tampa",u:"https://www.zootampa.org"},
-    {n:"Zoo Miami",t:"zoo",e:"🦩",c:"Miami",u:"https://www.zoomiami.org"},
-    {n:"Busch Gardens",t:"zoo",e:"🦁",c:"Tampa",u:"https://buschgardens.com/tampa"},
-  ]},
-};
+// ── SELECT REGION ──
+function selectRegion(id) {
+  selectedRegion = id;
 
-const FIPS={"01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE","11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL","18":"IN","19":"IA","20":"KS","21":"KY","22":"LA","23":"ME","24":"MD","25":"MA","26":"MI","27":"MN","28":"MS","29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY","37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC","46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV","55":"WI","56":"WY"};
-const PNAMES={NL:"Newfoundland & Labrador",PE:"Prince Edward Island",NS:"Nova Scotia",NB:"New Brunswick",QC:"Québec",ON:"Ontario",MB:"Manitoba",SK:"Saskatchewan",AB:"Alberta",BC:"British Columbia",YT:"Yukon",NT:"Northwest Territories",NU:"Nunavut"};
+  // Update map highlight
+  document.querySelectorAll('.map-region').forEach(p => p.classList.remove('selected'));
+  document.querySelectorAll(`[data-id="${id}"]`).forEach(p => {
+    p.classList.add('selected');
+    // Update label color
+    const lbl = document.querySelector(`.map-label[data-id="${id}"]`);
+    if (lbl) lbl.classList.add('selected');
+  });
 
-function showPanel(id, name) {
-  document.querySelectorAll('.map-region').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll(`[data-id="${id}"]`).forEach(p => p.classList.add('active'));
-  const rp = document.getElementById('region-panel');
-  const cp = document.getElementById('coming-soon-panel');
-  if (RD[id]) {
-    document.getElementById('region-name').textContent = RD[id].name;
-    document.getElementById('region-count').textContent = RD[id].loc.length + ' wildlife locations';
-    document.getElementById('region-cards').innerHTML = RD[id].loc.map(l => `
-      <a class="mini-card" href="${l.u}" target="_blank" rel="noopener">
-        <div class="mini-card-emoji">${l.e}</div>
-        <div>
-          <div class="mini-card-name">${l.n}</div>
-          <div class="mini-card-meta">📍 ${l.c}</div>
-          <span class="mini-card-badge" style="background:${l.t==='zoo'?'rgba(26,58,42,0.1)':l.t==='sanctuary'?'rgba(122,74,40,0.1)':'rgba(61,36,16,0.1)'};color:${l.t==='zoo'?'#1a3a2a':l.t==='sanctuary'?'#7a4a28':'#3d2410'}">${l.t[0].toUpperCase()+l.t.slice(1)}</span>
-        </div>
-      </a>`).join('');
-    rp.style.display = 'block';
-    cp.style.display = 'none';
-  } else {
-    document.getElementById('coming-soon-name').textContent = PNAMES[id] || name || id;
-    cp.style.display = 'block';
-    rp.style.display = 'none';
-  }
-  rp.scrollIntoView({behavior:'smooth', block:'nearest'});
-}
+  renderGrid(id);
 
-function closePanel() {
-  document.getElementById('region-panel').style.display = 'none';
-  document.getElementById('coming-soon-panel').style.display = 'none';
-  document.querySelectorAll('.map-region').forEach(p => p.classList.remove('active'));
+  // Scroll to region section
+  document.querySelector('.region-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ── MAP ──
 async function initMap() {
-  const wrap = document.getElementById('map-wrap');
-  const W = wrap.offsetWidth - 24;
-  const H = Math.round(W * 0.62);
-  const svg = d3.select('#na-map').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+  const wrap = document.getElementById('na-map').parentElement;
+  const W = wrap.offsetWidth;
+  const H = Math.round(W * 0.6);
 
+  const svg = d3.select('#na-map')
+    .attr('viewBox', `0 0 ${W} ${H}`)
+    .attr('width', W)
+    .attr('height', H);
+
+  // SINGLE projection for both US and Canada
+  // Both Highcharts datasets use geographic (lon/lat) coordinates
+  // Lambert Conformal Conic — standard for North America
   const proj = d3.geoConicConformal()
     .parallels([33, 45])
     .rotate([98, 0])
-    .center([0, 55])
-    .scale(W * 0.68)
-    .translate([W * 0.5, H * 0.5]);
-  const path = d3.geoPath().projection(proj);
+    .center([5, 53])
+    .scale(W * 0.58)
+    .translate([W * 0.505, H * 0.5]);
+
+  const pathGen = d3.geoPath().projection(proj);
 
   try {
+    // Both sources use geographic coordinates — single projection works for both
     const [usData, caData] = await Promise.all([
-      d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'),
+      d3.json('https://cdn.jsdelivr.net/npm/@highcharts/map-collection@2.0.1/countries/us/us-all.topo.json'),
       d3.json('https://cdn.jsdelivr.net/npm/@highcharts/map-collection@2.0.1/countries/ca/ca-all.topo.json'),
     ]);
 
-    const usStates = topojson.feature(usData, usData.objects.states);
-    const contiguous = usStates.features.filter(d => !['02','15'].includes(String(d.id).padStart(2,'0')));
-    const alaska = usStates.features.find(d => String(d.id).padStart(2,'0') === '02');
-    const hawaii = usStates.features.find(d => String(d.id).padStart(2,'0') === '15');
+    const usKey = Object.keys(usData.objects)[0];
+    const caKey = Object.keys(caData.objects)[0];
 
-    // Contiguous US
+    const usFeatures = topojson.feature(usData, usData.objects[usKey]).features;
+    const caFeatures = topojson.feature(caData, caData.objects[caKey]).features;
+
+    // Exclude AK and HI from main map — they get insets
+    const mainUS = usFeatures.filter(d => !['us-ak','us-hi'].includes(d.properties['hc-key']));
+    const ak = usFeatures.find(d => d.properties['hc-key'] === 'us-ak');
+    const hi = usFeatures.find(d => d.properties['hc-key'] === 'us-hi');
+
+    const allMain = [...caFeatures, ...mainUS];
+
+    // Draw all main regions
     svg.append('g').selectAll('path')
-      .data(contiguous).join('path')
-      .attr('class', d => { const id = FIPS[String(d.id).padStart(2,'0')]; return 'map-region ' + (RD[id] ? 'has-data' : 'no-data'); })
-      .attr('data-id', d => FIPS[String(d.id).padStart(2,'0')] || '')
-      .attr('fill', d => { const id = FIPS[String(d.id).padStart(2,'0')]; return RD[id] ? 'var(--green-dark)' : 'var(--green-mid)'; })
-      .attr('stroke', 'var(--green-pale)').attr('stroke-width', 0.4)
-      .style('cursor','pointer').style('transition','fill 0.15s')
-      .on('mouseover', function(e,d) { if(!this.classList.contains('active')) d3.select(this).attr('fill','var(--brown-light)'); })
-      .on('mouseout', function(e,d) { if(!this.classList.contains('active')) { const id=FIPS[String(d.id).padStart(2,'0')]; d3.select(this).attr('fill', RD[id]?'var(--green-dark)':'var(--green-mid)'); } })
-      .on('click', (e,d) => { const id = FIPS[String(d.id).padStart(2,'0')]; if(id) showPanel(id, id); });
+      .data(allMain).join('path')
+      .attr('class', d => {
+        const id = HC_TO_ID[d.properties['hc-key']];
+        return 'map-region ' + (id && REGIONS[id] ? 'has-data' : 'no-data') + (id === selectedRegion ? ' selected' : '');
+      })
+      .attr('data-id', d => HC_TO_ID[d.properties['hc-key']] || '')
+      .attr('d', pathGen)
+      .on('click', (e, d) => {
+        const id = HC_TO_ID[d.properties['hc-key']];
+        if (id) selectRegion(id);
+      });
 
-    svg.append('path').datum(topojson.mesh(usData, usData.objects.states, (a,b) => a !== b))
-      .attr('fill','none').attr('stroke','var(--green-pale)').attr('stroke-width',0.5).attr('d',path);
-
-    // State labels
-    const lblStates = ['CA','TX','FL','NY','PA','OH','IL','GA','NC','MI','WA','OR','AZ','CO','MN','WI','MO','TN','AL','MS','LA','AR','OK','KS','NE','SD','ND','MT','WY','NV','ID','UT','NM','ME','IA','VA','IN','KY','SC'];
-    contiguous.forEach(d => {
-      const id = FIPS[String(d.id).padStart(2,'0')];
-      if (!id || !lblStates.includes(id)) return;
-      const c = path.centroid(d);
-      if (!c || isNaN(c[0])) return;
-      svg.append('text').attr('x',c[0]).attr('y',c[1])
-        .attr('text-anchor','middle').attr('dominant-baseline','middle')
-        .attr('font-size', RD[id] ? 7 : 6).attr('font-weight','600')
-        .attr('font-family','DM Sans,sans-serif').attr('pointer-events','none')
-        .attr('fill', RD[id] ? 'rgba(245,237,224,0.97)' : 'rgba(245,237,224,0.65)')
-        .text(id);
-    });
-
-    // Alaska inset
-    const akProj = d3.geoMercator().center([-153,64]).scale(W*0.11).translate([W*0.09, H*0.86]);
-    const akPath = d3.geoPath().projection(akProj);
-    if (alaska) {
-      svg.append('rect').attr('x',W*0.01).attr('y',H*0.73).attr('width',W*0.16).attr('height',H*0.25).attr('fill','var(--green-pale)').attr('rx',6).attr('opacity',0.6);
-      svg.append('path').datum(alaska)
-        .attr('class','map-region '+(RD['AK']?'has-data':'no-data'))
-        .attr('data-id','AK')
-        .attr('fill', RD['AK'] ? 'var(--green-dark)' : 'var(--green-mid)')
-        .attr('stroke','var(--green-pale)').attr('stroke-width',0.4)
-        .style('cursor','pointer')
-        .attr('d', akPath)
-        .on('mouseover', function() { d3.select(this).attr('fill','var(--brown-light)'); })
-        .on('mouseout', function() { d3.select(this).attr('fill', RD['AK']?'var(--green-dark)':'var(--green-mid)'); })
-        .on('click', () => showPanel('AK','Alaska'));
-      const akC = akPath.centroid(alaska);
-      if (akC && !isNaN(akC[0])) svg.append('text').attr('x',akC[0]).attr('y',akC[1]).attr('text-anchor','middle').attr('dominant-baseline','middle').attr('font-size',6).attr('font-weight','600').attr('font-family','DM Sans,sans-serif').attr('pointer-events','none').attr('fill','rgba(245,237,224,0.75)').text('AK');
-    }
-
-    // Hawaii inset — bigger
-    const hiProj = d3.geoMercator().center([-156.5,20.5]).scale(W*0.38).translate([W*0.275, H*0.875]);
-    const hiPath = d3.geoPath().projection(hiProj);
-    if (hawaii) {
-      svg.append('rect').attr('x',W*0.175).attr('y',H*0.78).attr('width',W*0.195).attr('height',H*0.2).attr('fill','var(--green-pale)').attr('rx',6).attr('opacity',0.6);
-      svg.append('path').datum(hawaii)
-        .attr('class','map-region '+(RD['HI']?'has-data':'no-data'))
-        .attr('data-id','HI')
-        .attr('fill', RD['HI'] ? 'var(--green-dark)' : 'var(--green-mid)')
-        .attr('stroke','var(--green-pale)').attr('stroke-width',0.4)
-        .style('cursor','pointer')
-        .attr('d', hiPath)
-        .on('mouseover', function() { d3.select(this).attr('fill','var(--brown-light)'); })
-        .on('mouseout', function() { d3.select(this).attr('fill', RD['HI']?'var(--green-dark)':'var(--green-mid)'); })
-        .on('click', () => showPanel('HI','Hawaii'));
-      svg.append('text').attr('x',W*0.285).attr('y',H*0.93).attr('text-anchor','middle').attr('font-size',6).attr('font-weight','600').attr('font-family','DM Sans,sans-serif').attr('pointer-events','none').attr('fill','rgba(245,237,224,0.75)').text('HI');
-    }
-
-    // Canada provinces
-    const provMap = {
-      'ca-nl':'NL','ca-pe':'PE','ca-ns':'NS','ca-nb':'NB','ca-qc':'QC',
-      'ca-on':'ON','ca-mb':'MB','ca-sk':'SK','ca-ab':'AB','ca-bc':'BC',
-      'ca-yt':'YT','ca-nt':'NT','ca-nu':'NU'
-    };
-    const objKey = Object.keys(caData.objects)[0];
-    const provFeatures = topojson.feature(caData, caData.objects[objKey]);
-
-    svg.append('g').selectAll('path')
-      .data(provFeatures.features).join('path')
-      .attr('class', d => { const id = provMap[d.properties['hc-key']] || ''; return 'map-region ' + (id && RD[id] ? 'has-data' : 'no-data'); })
-      .attr('data-id', d => provMap[d.properties['hc-key']] || '')
-      .attr('fill', d => { const id = provMap[d.properties['hc-key']] || ''; return id && RD[id] ? 'var(--green-dark)' : 'var(--green-mid)'; })
-      .attr('stroke','var(--green-pale)').attr('stroke-width',0.4)
-      .style('cursor','pointer').style('transition','fill 0.15s')
-      .on('mouseover', function(e,d) { if(!this.classList.contains('active')) d3.select(this).attr('fill','var(--brown-light)'); })
-      .on('mouseout', function(e,d) { if(!this.classList.contains('active')) { const id=provMap[d.properties['hc-key']]||''; d3.select(this).attr('fill', id&&RD[id]?'var(--green-dark)':'var(--green-mid)'); } })
-      .on('click', (e,d) => { const id = provMap[d.properties['hc-key']] || ''; if(id) showPanel(id, PNAMES[id]||id); });
-
+    // Border mesh — US internal borders
     svg.append('path')
-      .datum(topojson.mesh(caData, caData.objects[objKey], (a,b) => a !== b))
-      .attr('fill','none').attr('stroke','var(--green-pale)').attr('stroke-width',0.5).attr('d',path);
+      .datum(topojson.mesh(usData, usData.objects[usKey], (a,b) => a !== b && !['us-ak','us-hi'].includes(a.properties['hc-key']) && !['us-ak','us-hi'].includes(b.properties['hc-key'])))
+      .attr('fill','none').attr('stroke','rgba(184,217,196,0.3)').attr('stroke-width',0.4)
+      .attr('d', pathGen);
 
-    // Province labels
-    provFeatures.features.forEach(d => {
-      const id = provMap[d.properties['hc-key']] || '';
-      if (!id) return;
-      const c = path.centroid(d);
-      if (!c || isNaN(c[0]) || c[0] < 0 || c[0] > W || c[1] < -20 || c[1] > H + 20) return;
-      svg.append('text').attr('x',c[0]).attr('y', Math.min(Math.max(c[1],5), H-5))
-        .attr('text-anchor','middle').attr('dominant-baseline','middle')
-        .attr('font-size', RD[id] ? 7 : 6).attr('font-weight','600')
-        .attr('font-family','DM Sans,sans-serif').attr('pointer-events','none')
-        .attr('fill', RD[id] ? 'rgba(245,237,224,0.97)' : 'rgba(245,237,224,0.65)')
-        .text(id);
+    // CA internal borders
+    svg.append('path')
+      .datum(topojson.mesh(caData, caData.objects[caKey], (a,b) => a !== b))
+      .attr('fill','none').attr('stroke','rgba(184,217,196,0.3)').attr('stroke-width',0.4)
+      .attr('d', pathGen);
+
+    // Region labels
+    allMain.forEach(d => {
+      const hcKey = d.properties['hc-key'];
+      const lbl = REGION_LABELS[hcKey];
+      if (!lbl) return;
+      const id = HC_TO_ID[hcKey];
+      const c = pathGen.centroid(d);
+      if (!c || isNaN(c[0]) || c[0] < 2 || c[0] > W-2 || c[1] < 2 || c[1] > H-2) return;
+      svg.append('text')
+        .attr('class', `map-label ${id && REGIONS[id] ? 'has-data' : ''} ${id === selectedRegion ? 'selected' : ''}`)
+        .attr('data-id', id || '')
+        .attr('x', c[0]).attr('y', c[1])
+        .attr('pointer-events','none')
+        .text(lbl);
     });
 
-    document.getElementById('map-status').style.display = 'none';
+    // ── ALASKA INSET ──
+    if (ak) {
+      const akProj = d3.geoMercator().center([-153,64]).scale(W*0.115).translate([W*0.098, H*0.875]);
+      const akPath = d3.geoPath().projection(akProj);
+      const akId = 'AK';
+      svg.append('rect').attr('class','inset-bg').attr('x',W*0.01).attr('y',H*0.75).attr('width',W*0.175).attr('height',H*0.24).attr('rx',4);
+      svg.append('path').datum(ak)
+        .attr('class', `map-region no-data`)
+        .attr('data-id', akId)
+        .attr('d', akPath)
+        .on('click', () => selectRegion(akId));
+      const akC = akPath.centroid(ak);
+      if (akC && !isNaN(akC[0])) {
+        svg.append('text').attr('class','map-label').attr('x',akC[0]).attr('y',akC[1]).attr('pointer-events','none').text('AK');
+      }
+    }
+
+    // ── HAWAII INSET ──
+    if (hi) {
+      const hiProj = d3.geoMercator().center([-156.5,20.5]).scale(W*0.38).translate([W*0.285, H*0.9]);
+      const hiPath = d3.geoPath().projection(hiProj);
+      const hiId = 'HI';
+      svg.append('rect').attr('class','inset-bg').attr('x',W*0.19).attr('y',H*0.81).attr('width',W*0.19).attr('height',H*0.17).attr('rx',4);
+      svg.append('path').datum(hi)
+        .attr('class', `map-region no-data`)
+        .attr('data-id', hiId)
+        .attr('d', hiPath)
+        .on('click', () => selectRegion(hiId));
+      svg.append('text').attr('class','map-label').attr('x',W*0.285).attr('y',H*0.955).attr('text-anchor','middle').attr('pointer-events','none').text('HI');
+    }
+
+    document.getElementById('map-loading').style.display = 'none';
     document.getElementById('na-map').style.display = 'block';
 
   } catch(err) {
-    document.getElementById('map-status').textContent = 'Map failed to load.';
-    console.error(err);
+    document.getElementById('map-loading').textContent = 'Map failed to load. Please refresh.';
+    console.error('Map error:', err);
   }
 }
 
-// Init map after page loads
+// ── INIT ──
+renderGrid('ON'); // Default Ontario
+
 if (document.readyState === 'complete') { initMap(); }
 else { window.addEventListener('load', initMap); }
 </script>

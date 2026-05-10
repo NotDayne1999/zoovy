@@ -157,7 +157,7 @@ nav {
 
 /* Zoo cards grid */
 .zoo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 1.25rem; }
-.zoo-card { height: 340px; perspective: 1000px; text-decoration: none; color: inherit; display: block; }
+.zoo-card { height: 380px; perspective: 1000px; text-decoration: none; color: inherit; display: block; }
 .zoo-card.hidden { display: none; }
 .zoo-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1); border-radius: 16px; }
 .zoo-card:hover .zoo-card-inner { transform: rotateY(180deg); }
@@ -165,7 +165,7 @@ nav {
 
 /* Card front */
 .zoo-card-front { background: var(--white); border: 1px solid rgba(74,124,89,0.1); display: flex; flex-direction: column; }
-.card-img { height: 195px; flex-shrink: 0; background-size: cover; background-position: center; position: relative; }
+.card-img { height: 185px; flex-shrink: 0; background-size: cover; background-position: center; position: relative; }
 .card-img::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(transparent, white); }
 .card-type-badge { position: absolute; top: 0.625rem; left: 0.625rem; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.55rem; border-radius: 999px; }
 .badge-zoo { background: var(--g1); color: var(--g6); }
@@ -179,12 +179,13 @@ nav {
 .tag-b { background: var(--b5); color: var(--b2); }
 
 /* Card back */
-.zoo-card-back { transform: rotateY(180deg); background: var(--white); border: 1.5px solid rgba(74,124,89,0.15); display: flex; flex-direction: column; justify-content: space-between; padding: 1.75rem 1.5rem 1.5rem; }
-.back-emoji { font-size: 2.25rem; margin-bottom: 0.875rem; }
-.back-name { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--g1); margin-bottom: 0.3rem; }
-.back-city { font-size: 0.8rem; color: rgba(28,28,28,0.5); margin-bottom: 0.875rem; }
+.zoo-card-back { transform: rotateY(180deg); background: var(--white); border: 1.5px solid rgba(74,124,89,0.15); display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem 1.5rem 1.25rem; }
+.back-emoji { font-size: 1.75rem; margin-bottom: 0.5rem; }
+.back-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--g1); margin-bottom: 0.2rem; }
+.back-city { font-size: 0.75rem; color: rgba(28,28,28,0.45); margin-bottom: 0.5rem; }
+.back-desc { font-size: 0.82rem; line-height: 1.55; color: rgba(28,28,28,0.7); margin-bottom: 0.875rem; flex: 1; }
 .back-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0; }
-.visit-btn { display: block; padding: 0.6rem 1.25rem; border-radius: 999px; font-size: 0.82rem; font-weight: 500; text-align: center; margin-top: 1.25rem; }
+.visit-btn { display: block; padding: 0.55rem 1.25rem; border-radius: 999px; font-size: 0.8rem; font-weight: 500; text-align: center; margin-top: auto; padding-top: 0.55rem; }
 .visit-zoo { background: var(--g1); color: var(--b6); }
 .visit-sanctuary { background: var(--b2); color: var(--b6); }
 .visit-reserve { background: var(--b1); color: var(--b5); }
@@ -279,7 +280,7 @@ footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width:
     </div>
     <div class="hero-stats">
       <div>
-        <div class="hero-stat-num">20+</div>
+        <div class="hero-stat-num">130+</div>
         <div class="hero-stat-lbl">Wildlife locations</div>
       </div>
       <div>
@@ -287,7 +288,7 @@ footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width:
         <div class="hero-stat-lbl">Categories</div>
       </div>
       <div>
-        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-num">30+</div>
         <div class="hero-stat-lbl">Regions covered</div>
       </div>
       <div>
@@ -324,7 +325,7 @@ footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width:
       <div class="region-header">
         <div class="region-header-left">
           <div class="region-selected-name" id="region-display-name">Ontario, Canada</div>
-          <div class="region-selected-count" id="region-display-count">13 wildlife locations</div>
+          <div class="region-selected-count" id="region-display-count">15 wildlife locations</div>
         </div>
         <div class="filter-bar">
           <button class="filter-btn active" data-filter="all">All</button>
@@ -387,61 +388,281 @@ const REGIONS = {
   ON: {
     name: "Ontario", country: "Canada",
     locations: [
-      { name:"Toronto Zoo", type:"zoo", emoji:"🦁", city:"Scarborough", tags:["500+ species","Kids zone","Conservation"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.torontozoo.com" },
-      { name:"African Lion Safari", type:"zoo", emoji:"🦒", city:"Cambridge", tags:["Drive-thru","Boat tour","African wildlife"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.lionsafari.com" },
-      { name:"Elmvale Jungle Zoo", type:"zoo", emoji:"🐆", city:"Elmvale", tags:["Family","Exotic animals","Picnic area"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.elmvalejunglezoo.com" },
-      { name:"Bird Kingdom", type:"zoo", emoji:"🦜", city:"Niagara Falls", tags:["Free-flight","Indoor aviary","Nocturnal"], img:"https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop", url:"https://www.birdkingdom.ca" },
-      { name:"Ontario Wolf Centre", type:"zoo", emoji:"🐺", city:"Haliburton", tags:["Wolves","Howling events"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.ontariowolfcentre.ca" },
-      { name:"Little Ray's Reptile Zoo", type:"zoo", emoji:"🐊", city:"Ottawa", tags:["Reptiles","Interactive","Education"], img:"https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?w=600&auto=format&fit=crop", url:"https://www.littlerayzoo.com" },
-      { name:"Aspen Valley Wildlife Sanctuary", type:"sanctuary", emoji:"🐻", city:"Rosseau", tags:["Bears","Bobcats","Guided tours"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.aspenvalley.ca" },
-      { name:"Bear Creek Exotic Wildlife Sanctuary", type:"sanctuary", emoji:"🐯", city:"Barrie", tags:["Exotic animals","Non-profit","Rescue"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.bearcreeksanctuary.com" },
-      { name:"Story Book Farm Primate Sanctuary", type:"sanctuary", emoji:"🐒", city:"Sunderland", tags:["Primates","Rescue","Tours"], img:"https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=600&auto=format&fit=crop", url:"https://www.storybookfarm.org" },
-      { name:"Salthaven Wildlife Centre", type:"sanctuary", emoji:"🦉", city:"Mount Brydges", tags:["Rehabilitation","Native wildlife"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.salthaven.org" },
-      { name:"Wye Marsh Wildlife Centre", type:"reserve", emoji:"🦢", city:"Midland", tags:["25km trails","Canoe tours","Birds of prey"], img:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&auto=format&fit=crop", url:"https://www.wyemarsh.com" },
-      { name:"Mountsberg Wildlife Centre", type:"reserve", emoji:"🦅", city:"Campbellville", tags:["Raptors","Hiking","Conservation"], img:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&auto=format&fit=crop", url:"https://www.mountsberg.ca" },
-      { name:"Altberg Wildlife Sanctuary Nature Reserve", type:"reserve", emoji:"🌲", city:"Norland", tags:["Free entry","3.3km trails","Old growth"], img:"https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&auto=format&fit=crop", url:"https://ontarionature.org" },
+      { name:"Toronto Zoo", type:"zoo", emoji:"🦁", city:"Scarborough", desc:"One of the largest zoos in the world, spanning 287 hectares with over 5,000 animals. The panda exhibit and African Savanna are must-sees.", tags:["500+ species","Kids zone","Conservation"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.torontozoo.com" },
+      { name:"African Lion Safari", type:"zoo", emoji:"🦒", city:"Cambridge", desc:"North America's original safari park where animals roam free and you drive through them. Baboons will literally climb on your car.", tags:["Drive-thru","Boat tour","African wildlife"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.lionsafari.com" },
+      { name:"Elmvale Jungle Zoo", type:"zoo", emoji:"🐆", city:"Elmvale", desc:"A charming family-run zoo operating since 1964. Known for rare and exotic species in a relaxed, uncrowded setting — a hidden gem north of Barrie.", tags:["Family","Exotic animals","Picnic area"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.elmvalejunglezoo.com" },
+      { name:"Bird Kingdom", type:"zoo", emoji:"🦜", city:"Niagara Falls", desc:"The world's largest indoor free-flying aviary. Hundreds of exotic birds fly freely around you in a lush tropical rainforest environment.", tags:["Free-flight","Indoor aviary","Nocturnal"], img:"https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop", url:"https://www.birdkingdom.ca" },
+      { name:"Ontario Wolf Centre", type:"zoo", emoji:"🐺", city:"Haliburton", desc:"Home to ambassador wolf packs in Muskoka. Seasonal howling events let you hear and respond to wild wolves across the forest — genuinely unforgettable.", tags:["Wolves","Howling events","Sanctuary"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.ontariowolfcentre.ca" },
+      { name:"Little Ray's Reptile Zoo", type:"zoo", emoji:"🐊", city:"Ottawa", desc:"Ontario's premier reptile zoo with over 300 live animals. You can hold snakes, touch lizards, and get up-close with creatures most zoos keep behind glass.", tags:["Reptiles","Interactive","Education"], img:"https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?w=600&auto=format&fit=crop", url:"https://www.littlerayzoo.com" },
+      { name:"Jungle Cat World", type:"zoo", emoji:"🐯", city:"Orono", desc:"A boutique wildlife park east of Toronto focused on big cats. Lions, tigers, cougars and leopards in intimate, close-up settings you won't find at larger zoos.", tags:["Big cats","Tigers","Lions"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.junglecatworld.com" },
+      { name:"Riverview Park and Zoo", type:"zoo", emoji:"🦒", city:"Peterborough", desc:"One of Ontario's best-kept secrets — a free public zoo in the heart of Peterborough with giraffes, lions, and meerkats. Yes, completely free admission.", tags:["Free admission","Family","Native wildlife"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.peterborough.ca" },
+      { name:"Aspen Valley Wildlife Sanctuary", type:"sanctuary", emoji:"🐻", city:"Rosseau", desc:"A Muskoka sanctuary rescuing Ontario's most vulnerable wildlife. Home to black bears, bobcats, and moose that were orphaned or injured in the wild.", tags:["Bears","Bobcats","Guided tours"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.aspenvalley.ca" },
+      { name:"Bear Creek Exotic Wildlife Sanctuary", type:"sanctuary", emoji:"🐯", city:"Barrie", desc:"A non-profit rescue for exotic animals that were kept illegally as pets. Tigers, lions, and bears get a second chance at life here.", tags:["Exotic animals","Non-profit","Rescue"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.bearcreeksanctuary.com" },
+      { name:"Story Book Farm Primate Sanctuary", type:"sanctuary", emoji:"🐒", city:"Sunderland", desc:"Canada's only primate sanctuary, giving retired lab and entertainment chimpanzees and monkeys a peaceful forever home. Guided tours available on weekends.", tags:["Primates","Rescue","Tours"], img:"https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=600&auto=format&fit=crop", url:"https://www.storybookfarm.org" },
+      { name:"Salthaven Wildlife Centre", type:"sanctuary", emoji:"🦉", city:"Mount Brydges", desc:"Southwestern Ontario's leading wildlife rehabilitation centre, treating over 3,000 injured animals annually before releasing them back into the wild.", tags:["Rehabilitation","Native wildlife"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.salthaven.org" },
+      { name:"Wye Marsh Wildlife Centre", type:"reserve", emoji:"🦢", city:"Midland", desc:"25km of trails through a stunning Georgian Bay wetland. Canoe through the marsh, watch trumpeter swans, and catch birds of prey demonstrations.", tags:["25km trails","Canoe tours","Birds of prey"], img:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&auto=format&fit=crop", url:"https://www.wyemarsh.com" },
+      { name:"Mountsberg Wildlife Centre", type:"reserve", emoji:"🦅", city:"Campbellville", desc:"A Conservation Halton gem with live raptor demonstrations, hiking trails, and close encounters with owls, hawks, and eagles in a gorgeous reservoir setting.", tags:["Raptors","Hiking","Conservation"], img:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&auto=format&fit=crop", url:"https://www.mountsberg.ca" },
+      { name:"Altberg Wildlife Sanctuary Nature Reserve", type:"reserve", emoji:"🌲", city:"Norland", desc:"A free, 480-hectare old-growth forest reserve with 3.3km of trails through ancient trees. One of the most peaceful and undervisited natural spaces in Ontario.", tags:["Free entry","3.3km trails","Old growth"], img:"https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&auto=format&fit=crop", url:"https://ontarionature.org" },
     ]
   },
   BC: {
     name: "British Columbia", country: "Canada",
     locations: [
-      { name:"Greater Vancouver Zoo", type:"zoo", emoji:"🦒", city:"Aldergrove", tags:["98 species","Family","Drive-thru"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.gvzoo.com" },
-      { name:"Victoria Butterfly Gardens", type:"zoo", emoji:"🦋", city:"Victoria", tags:["Free-flight","Tropical","Indoor"], img:"https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop", url:"https://www.butterflygardens.com" },
-      { name:"Rescue Ranch", type:"sanctuary", emoji:"🐴", city:"Kamloops", tags:["Farm animals","Rescue","Education"], img:"https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=600&auto=format&fit=crop", url:"https://www.rescueranch.ca" },
+      { name:"Greater Vancouver Zoo", type:"zoo", emoji:"🦒", city:"Aldergrove", desc:"BC's largest zoo on 120 acres, home to nearly 100 species from around the world. One of the few places in Canada to see giraffes and rhinos up close.", tags:["98 species","Family","Drive-thru"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.gvzoo.com" },
+      { name:"Victoria Butterfly Gardens", type:"zoo", emoji:"🦋", city:"Victoria", desc:"Step into a tropical paradise where thousands of free-flying butterflies land on you. Also home to tropical birds, poison dart frogs, and giant fish.", tags:["Free-flight","Tropical","Indoor"], img:"https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop", url:"https://www.butterflygardens.com" },
+      { name:"Reptile World", type:"zoo", emoji:"🐍", city:"Surrey", desc:"Metro Vancouver's reptile specialist with an impressive collection of snakes, lizards, turtles, and crocodilians. Great for hands-on educational experiences.", tags:["Reptiles","Snakes","Education"], img:"https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?w=600&auto=format&fit=crop", url:"https://www.reptileworld.ca" },
+      { name:"OWL Orphaned Wildlife Rehabilitation", type:"sanctuary", emoji:"🦅", city:"Delta", desc:"BC's largest raptor rehabilitation centre, caring for eagles, owls, and hawks. Their resident non-releasable birds serve as wildlife ambassadors year-round.", tags:["Raptors","Rehabilitation","Education"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.owlcanada.org" },
+      { name:"Rescue Ranch", type:"sanctuary", emoji:"🐴", city:"Kamloops", desc:"A heartfelt sanctuary in the BC interior giving a second chance to abused and neglected farm animals. One of BC's most genuine hands-on animal experiences.", tags:["Farm animals","Rescue","Education"], img:"https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=600&auto=format&fit=crop", url:"https://www.rescueranch.ca" },
+      { name:"Reifel Bird Sanctuary", type:"reserve", emoji:"🐦", city:"Ladner", desc:"A birder's paradise in the Fraser River delta with over 300 recorded species. Snow geese, sandhill cranes, and great horned owls fill the sky in migration season.", tags:["300+ species","Wetlands","Photography"], img:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&auto=format&fit=crop", url:"https://www.reifelbirdsanctuary.com" },
+    ]
+  },
+  QC: {
+    name: "Québec", country: "Canada",
+    locations: [
+      { name:"Granby Zoo", type:"zoo", emoji:"🦓", city:"Granby", desc:"One of Canada's top zoos with 1,500 animals and a full water park on site. The African safari section and nocturnal house are standout experiences.", tags:["1,500 animals","Water park","African safari"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.zoodegranby.com" },
+      { name:"Biodôme de Montréal", type:"zoo", emoji:"🐧", city:"Montréal", desc:"Five complete ecosystems — tropical forest, Laurentian forest, St. Lawrence marine, sub-Antarctic islands — all under one roof in the former Olympic velodrome.", tags:["5 ecosystems","Indoor","Penguins"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.espacepourlavie.ca" },
+      { name:"Zoo Sauvage de Saint-Félicien", type:"zoo", emoji:"🐻", city:"Saint-Félicien", desc:"Unique in North America — visitors travel through an enclosed vehicle while animals roam freely around you. Polar bears, bison, and wolves up incredibly close.", tags:["Canadian animals","Drive-thru","Nordic wildlife"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.zoosauvage.org" },
+      { name:"Refuge Pageau", type:"sanctuary", emoji:"🦌", city:"Amos", desc:"A beloved Abitibi sanctuary founded by Michel Pageau, caring for injured Quebec wildlife. Moose, bears, foxes, and wolves all call this peaceful refuge home.", tags:["Moose","Bears","Native rescue"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.refugepageau.ca" },
     ]
   },
   NY: {
     name: "New York", country: "USA",
     locations: [
-      { name:"Bronx Zoo", type:"zoo", emoji:"🦁", city:"New York City", tags:["265 species","World-class","Conservation"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.bronxzoo.com" },
-      { name:"Central Park Zoo", type:"zoo", emoji:"🐧", city:"New York City", tags:["Urban zoo","Penguins","Snow leopards"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://centralparkzoo.com" },
-      { name:"Buffalo Zoo", type:"zoo", emoji:"🦬", city:"Buffalo", tags:["Historic","Polar bears","Family"], img:"https://images.unsplash.com/photo-1612024782955-49fae79e42bb?w=600&auto=format&fit=crop", url:"https://www.buffalozoo.org" },
+      { name:"Bronx Zoo", type:"zoo", emoji:"🦁", city:"New York City", desc:"The largest metropolitan zoo in the world. The Congo Gorilla Forest and Wild Asia monorail make it one of the most immersive zoo experiences anywhere.", tags:["265 species","Congo Gorilla Forest","World-class"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.bronxzoo.com" },
+      { name:"Central Park Zoo", type:"zoo", emoji:"🐧", city:"New York City", desc:"A compact urban gem inside Central Park. Famous for its Rockhopper penguins, snow leopards, and red pandas — all steps from Fifth Avenue.", tags:["Urban zoo","Penguins","Snow leopards"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://centralparkzoo.com" },
+      { name:"Buffalo Zoo", type:"zoo", emoji:"🦬", city:"Buffalo", desc:"America's third-oldest zoo, known for its polar bear exhibit and baby animal program. A beloved anchor of Delaware Park since 1875.", tags:["Historic","Polar bears","Family"], img:"https://images.unsplash.com/photo-1612024782955-49fae79e42bb?w=600&auto=format&fit=crop", url:"https://www.buffalozoo.org" },
+      { name:"Rosamond Gifford Zoo", type:"zoo", emoji:"🐘", city:"Syracuse", desc:"Home to one of the most successful Asian elephant programs in the US. Multiple elephant calves have been born here, making it a national conservation leader.", tags:["Elephants","500+ animals","Conservation"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://rosamondgiffordzoo.org" },
+      { name:"Seneca Park Zoo", type:"zoo", emoji:"🦏", city:"Rochester", desc:"A hidden gem on the Genesee River featuring one of the most naturalistic African black rhino exhibits in North America alongside red pandas and polar bears.", tags:["Rhinos","Red pandas","Naturalistic exhibits"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.senecaparkzoo.org" },
+      { name:"Queens Zoo", type:"zoo", emoji:"🦬", city:"Queens", desc:"A compact zoo dedicated entirely to animals of the Americas. Free-roaming bison, a free-flight aviary, and a working New England farm — all in Flushing Meadows.", tags:["North American animals","Bison","Free-flight aviary"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://queenszoo.com" },
     ]
   },
   CA: {
     name: "California", country: "USA",
     locations: [
-      { name:"San Diego Zoo", type:"zoo", emoji:"🐼", city:"San Diego", tags:["World famous","3,500 animals","Giant pandas"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://zoo.sandiegozoo.org" },
-      { name:"Los Angeles Zoo", type:"zoo", emoji:"🦍", city:"Los Angeles", tags:["270 species","Gorillas","Kids area"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.lazoo.org" },
-      { name:"Oakland Zoo", type:"zoo", emoji:"🦓", city:"Oakland", tags:["Gondola ride","700 animals","California Trail"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.oaklandzoo.org" },
+      { name:"San Diego Zoo", type:"zoo", emoji:"🐼", city:"San Diego", desc:"Consistently ranked the world's best zoo. Home to giant pandas, koalas, and a jaw-dropping canyon setting with over 3,500 animals from 650 species.", tags:["3,500 animals","Giant pandas","World famous"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://zoo.sandiegozoo.org" },
+      { name:"San Diego Safari Park", type:"zoo", emoji:"🦏", city:"Escondido", desc:"A 1,800-acre open savanna where rhinos, giraffes, and cheetahs roam freely. The Africa Tram safari puts you eye-level with animals in a genuinely wild setting.", tags:["1,800 acres","Safari tram","Endangered species"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.sdzsafaripark.org" },
+      { name:"Los Angeles Zoo", type:"zoo", emoji:"🦍", city:"Los Angeles", desc:"Set in Griffith Park, this AZA-accredited zoo is known for its Campo Gorilla Reserve and award-winning LAIR exhibit featuring reptiles and amphibians.", tags:["270 species","Gorillas","Botanical garden"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.lazoo.org" },
+      { name:"Oakland Zoo", type:"zoo", emoji:"🦓", city:"Oakland", desc:"Ride a gondola over the California Trail — 56 acres dedicated entirely to native California wildlife. One of the most innovative zoo concepts in the country.", tags:["Gondola ride","California Trail","700 animals"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.oaklandzoo.org" },
+      { name:"Shambala Preserve", type:"sanctuary", emoji:"🐯", city:"Acton", desc:"Founded by actress Tippi Hedren, this high-desert preserve is home to over 30 lions, tigers, and leopards rescued from private ownership and the entertainment industry.", tags:["Big cats","Tigers","Founded by Tippi Hedren"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.shambala.org" },
+      { name:"Marine Mammal Center", type:"sanctuary", emoji:"🦭", city:"Sausalito", desc:"The world's largest marine mammal hospital, rescuing 21,000+ sea lions and seals since 1975. Watch vets treat real patients from the viewing galleries.", tags:["Sea lions","Hospital","Research"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.marinemammalcenter.org" },
+      { name:"Lions Tigers & Bears", type:"sanctuary", emoji:"🦁", city:"Alpine", desc:"A 93-acre sanctuary east of San Diego housing 60+ big cats, bears, and primates. Two resident tigers were famously rescued from the Tiger King facility.", tags:["Big cats","Bears","Tiger King rescue"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.lionstigersandbears.org" },
+      { name:"California Wolf Center", type:"sanctuary", emoji:"🐺", city:"Julian", desc:"The only wolf conservation facility in California, breeding endangered Mexican gray wolves for rewilding programs. Guided tours let you observe two resident wolf packs.", tags:["Wolves","Rewilding","Guided tours"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.californiawolfcenter.org" },
     ]
   },
   TX: {
     name: "Texas", country: "USA",
     locations: [
-      { name:"San Antonio Zoo", type:"zoo", emoji:"🦏", city:"San Antonio", tags:["750 species","Rhinos","Historic"], img:"https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?w=600&auto=format&fit=crop", url:"https://www.sazoo.org" },
-      { name:"Houston Zoo", type:"zoo", emoji:"🐊", city:"Houston", tags:["6,000 animals","Reptiles","Conservation"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.houstonzoo.org" },
-      { name:"Dallas Zoo", type:"zoo", emoji:"🦒", city:"Dallas", tags:["Largest TX zoo","Giraffes","Kids zone"], img:"https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop", url:"https://www.dallaszoo.com" },
+      { name:"San Antonio Zoo", type:"zoo", emoji:"🦏", city:"San Antonio", desc:"One of America's most visited zoos, set in a stunning limestone quarry. Has one of the deepest animal collections in the US with 750+ species in a compact, walkable layout.", tags:["750 species","Limestone quarry setting","Historic"], img:"https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?w=600&auto=format&fit=crop", url:"https://www.sazoo.org" },
+      { name:"Houston Zoo", type:"zoo", emoji:"🐊", city:"Houston", desc:"A conservation powerhouse caring for 6,000 animals. Their sea turtle rescue program and wild animal reintroduction efforts have become national models.", tags:["6,000 animals","Sea turtle rescue","Conservation"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.houstonzoo.org" },
+      { name:"Dallas Zoo", type:"zoo", emoji:"🦒", city:"Dallas", desc:"Texas's oldest and largest zoo. The Giants of the Savanna exhibit lets giraffes, elephants, and zebras roam a massive open habitat — the first of its kind in the US.", tags:["Largest TX zoo","Giants of the Savanna","Giraffes"], img:"https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=600&auto=format&fit=crop", url:"https://www.dallaszoo.com" },
+      { name:"Fort Worth Zoo", type:"zoo", emoji:"🐘", city:"Fort Worth", desc:"Consistently ranked one of America's top 5 zoos. The World of Primates and Museum of Living Art reptile building are genuinely world-class exhibits.", tags:["Top 5 US zoo","Primates","7,000 animals"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.fortworthzoo.org" },
+      { name:"Gladys Porter Zoo", type:"zoo", emoji:"🦍", city:"Brownsville", desc:"A revolutionary zoo design with no moats or bars — natural waterways separate visitors from animals. A leader in gorilla and rhino breeding programs since 1971.", tags:["No bars or moats","Gorillas","Endangered species"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.gpz.org" },
+      { name:"Natural Bridge Wildlife Ranch", type:"zoo", emoji:"🦬", city:"San Antonio", desc:"Drive your own car through 450 acres of Texas Hill Country while 500 animals from 40 species roam freely around your vehicle. Giraffes at your car window is the norm.", tags:["Drive-thru safari","500 animals","Feeding from your car"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.wildliferanchtexas.com" },
     ]
   },
   FL: {
     name: "Florida", country: "USA",
     locations: [
-      { name:"ZooTampa at Lowry Park", type:"zoo", emoji:"🦛", city:"Tampa", tags:["Manatees","Hippos","Florida wildlife"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.zootampa.org" },
-      { name:"Zoo Miami", type:"zoo", emoji:"🦩", city:"Miami", tags:["Tropical","750 species","Open air"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.zoomiami.org" },
-      { name:"Busch Gardens Tampa", type:"zoo", emoji:"🦁", city:"Tampa", tags:["Thrill rides","African animals","Roller coasters"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://buschgardens.com/tampa" },
+      { name:"ZooTampa at Lowry Park", type:"zoo", emoji:"🦛", city:"Tampa", desc:"Florida's most-visited zoo and a national leader in manatee rescue. One of only a handful of zoos where you can see Florida manatees year-round in a hospital setting.", tags:["Manatee rescue","Hippos","Florida wildlife"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.zootampa.org" },
+      { name:"Zoo Miami", type:"zoo", emoji:"🦩", city:"Miami", desc:"The only tropical zoo in the continental US. Its open-air, cage-free design and South American, Asian, and African habitats feel genuinely wild in the Florida heat.", tags:["Tropical","Cage-free","750 species"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.zoomiami.org" },
+      { name:"Busch Gardens Tampa", type:"zoo", emoji:"🦁", city:"Tampa", desc:"200+ species of African animals alongside world-class roller coasters. The Serengeti Plain houses rhinos, hippos, and giraffes in a massive free-roaming habitat.", tags:["African animals","Roller coasters","Serengeti habitat"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://buschgardens.com/tampa" },
+      { name:"Brevard Zoo", type:"zoo", emoji:"🦒", city:"Melbourne", desc:"Paddle a kayak directly through the Africa and Australia exhibits in this innovative 75-acre zoo. You can hand-feed giraffes, mingle with lemurs, and kayak with rhinos nearby.", tags:["Kayak through exhibits","Giraffe feeding","900 animals"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.brevardzoo.org" },
+      { name:"Naples Zoo", type:"zoo", emoji:"🐆", city:"Naples", desc:"A century-old botanical garden that became a zoo. Winding paths through 1919-planted tropical gardens lead to big cats, bears, and primates in lush natural settings.", tags:["100 year history","Botanical garden","Big cats"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.napleszoo.org" },
+      { name:"Gatorland", type:"zoo", emoji:"🐊", city:"Orlando", desc:"Florida's original roadside attraction since 1949, home to thousands of alligators and crocodiles. The Screamin' Gator Zip Line sends you directly over the gator pen.", tags:["Thousands of gators","Zip line over gators","Since 1949"], img:"https://images.unsplash.com/photo-1504450874802-0ba2bcd9b5ae?w=600&auto=format&fit=crop", url:"https://www.gatorland.com" },
+      { name:"Seaside Seabird Sanctuary", type:"sanctuary", emoji:"🦅", city:"Indian Shores", desc:"The largest wild bird hospital in the US, rehabilitating 2,500-3,000 injured birds annually. Watch real veterinary care in action and see patient birds up close — free admission.", tags:["Free admission","Largest bird hospital","2,500 birds/year"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.seabirdsanctuary.org" },
     ]
-  }
+  },
+  IL: {
+    name: "Illinois", country: "USA",
+    locations: [
+      { name:"Lincoln Park Zoo", type:"zoo", emoji:"🦍", city:"Chicago", desc:"One of America's last free admission zoos, sitting on the shore of Lake Michigan. The Regenstein African Journey and Gorilla habitat are extraordinary — and always free.", tags:["Free admission","Gorillas","Since 1868"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.lpzoo.org" },
+      { name:"Brookfield Zoo", type:"zoo", emoji:"🐬", city:"Brookfield", desc:"A pioneer of barless, naturalistic zoo design since 1934. The 2,300-animal collection includes a world-class dolphin show and the immersive Great Bear Wilderness habitat.", tags:["Dolphins","2,300 animals","Great Bear Wilderness"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.czs.org" },
+      { name:"Cosley Zoo", type:"zoo", emoji:"🦊", city:"Wheaton", desc:"A free, intimate zoo focused entirely on animals native to Illinois. Red foxes, white-tailed deer, bison, and great horned owls in a relaxed community park setting.", tags:["Free admission","Native animals","Family"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.cosleyzoo.org" },
+      { name:"Willowbrook Wildlife Center", type:"sanctuary", emoji:"🦌", city:"Glen Ellyn", desc:"DuPage County's wildlife rehabilitation centre treating thousands of injured native animals each year. Resident non-releasable animals serve as education ambassadors.", tags:["Rehabilitation","Native wildlife","Free"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.dupageforest.org" },
+    ]
+  },
+  WA: {
+    name: "Washington", country: "USA",
+    locations: [
+      { name:"Woodland Park Zoo", type:"zoo", emoji:"🦁", city:"Seattle", desc:"A pioneer of naturalistic habitat design, Woodland Park has won more AZA exhibit awards than any zoo in history. The African savanna and Tropical Asia are landmarks of zoo design.", tags:["Award-winning design","1,000+ animals","African savanna"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.zoo.org" },
+      { name:"Northwest Trek Wildlife Park", type:"zoo", emoji:"🦌", city:"Eatonville", desc:"700 acres of pristine Pacific Northwest wilderness where bison, elk, moose, and caribou roam completely free. Tram tours take you through their territory at eye level.", tags:["Free-roaming herds","Tram tours","Moose & bison"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.nwtrek.org" },
+      { name:"Point Defiance Zoo & Aquarium", type:"zoo", emoji:"🦭", city:"Tacoma", desc:"A combined zoo and aquarium on Puget Sound. The Arctic tundra exhibit with polar bears and walruses is one of the most dramatic in the Pacific Northwest.", tags:["Polar bears","Walrus","Aquarium combo"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.pdza.org" },
+      { name:"Wolf Haven International", type:"sanctuary", emoji:"🐺", city:"Tenino", desc:"Home to over 30 wolves in a forested sanctuary south of Olympia. Howl-Ins let visitors hear the pack respond to human howling as dusk falls over the forest.", tags:["30+ wolves","Howl-In events","Conservation"], img:"https://images.unsplash.com/photo-1612024782955-49fae79e42bb?w=600&auto=format&fit=crop", url:"https://www.wolfhaven.org" },
+      { name:"PAWS Wildlife Center", type:"sanctuary", emoji:"🦝", city:"Lynnwood", desc:"Washington's premier wildlife rehabilitation centre, caring for over 5,000 injured animals annually before releasing them back into the wild. Viewing areas are open to the public.", tags:["5,000 animals/year","Release program","Public viewing"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.paws.org" },
+    ]
+  },
+  CO: {
+    name: "Colorado", country: "USA",
+    locations: [
+      { name:"Denver Zoo", type:"zoo", emoji:"🦁", city:"Denver", desc:"A beautifully designed urban zoo with 3,500 animals in naturalistic habitats. The Electric Safari experience and Toyota Elephant Passage are among the finest exhibits in the US.", tags:["3,500 animals","Elephant Passage","Electric safari"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.denverzoo.org" },
+      { name:"Cheyenne Mountain Zoo", type:"zoo", emoji:"🦒", city:"Colorado Springs", desc:"The only mountain zoo in America, perched at 6,714 feet with views of the Rockies. Hand-feeding the reticulated giraffes on the overlook deck is a bucket-list experience.", tags:["Highest US zoo","Giraffe feeding","Rocky Mountain views"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.cmzoo.org" },
+      { name:"Pueblo Zoo", type:"zoo", emoji:"🐆", city:"Pueblo", desc:"A beloved Southern Colorado zoo known for its rare ocelots and intimate animal encounters. One of the few zoos in the US where you can see this endangered wild cat.", tags:["Ocelots","Family friendly","Rare species"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.pueblozoo.org" },
+      { name:"The Wild Animal Sanctuary", type:"sanctuary", emoji:"🐯", city:"Keenesburg", desc:"The world's largest carnivore sanctuary — 789 acres home to 800+ rescued lions, tigers, bears, and wolves. A mile-long elevated walkway takes you directly above the animals.", tags:["World's largest carnivore sanctuary","800+ animals","Elevated walkway"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.wildanimalsanctuary.org" },
+    ]
+  },
+  AB: {
+    name: "Alberta", country: "Canada",
+    locations: [
+      { name:"Calgary Zoo", type:"zoo", emoji:"🦁", city:"Calgary", desc:"One of Canada's premier zoos, famous for its Gorilla forest and Dorothy Harvie Botanical Garden. A major Canadian Giant Panda breeding and conservation partner.", tags:["Giant pandas","Botanical garden","Conservation"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.calgaryzoo.com" },
+      { name:"Valley Zoo", type:"zoo", emoji:"🐘", city:"Edmonton", desc:"Edmonton's beloved family zoo with over 350 animals. Known for Lucy the Asian elephant, who has lived here for decades and is one of Canada's most famous zoo residents.", tags:["350+ animals","Lucy the elephant","Family"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.valleyzoo.ca" },
+      { name:"Alberta Birds of Prey Centre", type:"sanctuary", emoji:"🦅", city:"Coaldale", desc:"A world-renowned raptor rehabilitation and breeding facility that has released over 40,000 birds of prey back into the wild since 1982.", tags:["Raptors","40,000+ releases","Falconry demos"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.burrowingowl.com" },
+    ]
+  },
+  MB: {
+    name: "Manitoba", country: "Canada",
+    locations: [
+      { name:"Assiniboine Park Zoo", type:"zoo", emoji:"🐻‍❄️", city:"Winnipeg", desc:"Home to the Journey to Churchill exhibit — the world's most naturalistic polar bear habitat. Watch polar bears swim underwater through floor-to-ceiling glass panels.", tags:["Polar bears","Journey to Churchill","World-class exhibit"], img:"https://images.unsplash.com/photo-1612024782955-49fae79e42bb?w=600&auto=format&fit=crop", url:"https://www.assiniboinepark.ca" },
+      { name:"Manitoba Wildlife Rehabilitation Organization", type:"sanctuary", emoji:"🦅", city:"Winnipeg", desc:"Manitoba's primary wildlife rehabilitation centre, caring for hundreds of injured native animals annually and educating the public about prairie and boreal wildlife.", tags:["Native wildlife","Rehabilitation","Education"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.mwro.ca" },
+    ]
+  },
+  NS: {
+    name: "Nova Scotia", country: "Canada",
+    locations: [
+      { name:"Oaklawn Farm Zoo", type:"zoo", emoji:"🦁", city:"Aylesford", desc:"Atlantic Canada's largest zoo, a family-run gem since 1969. Lions, tigers, and primates in a relaxed rural Nova Scotia setting that feels nothing like a typical zoo.", tags:["Atlantic Canada's largest","Lions & tigers","Family-run"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.oaklawnfarmzoo.ca" },
+      { name:"Hope for Wildlife", type:"sanctuary", emoji:"🦦", city:"Seaforth", desc:"Nova Scotia's busiest wildlife rehabilitation centre, treating over 3,000 animals annually. The Hope for Wildlife TV series documented their work and made them famous across Canada.", tags:["3,000 animals/year","TV show featured","Native wildlife"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.hopeforwildlife.net" },
+    ]
+  },
+  OH: {
+    name: "Ohio", country: "USA",
+    locations: [
+      { name:"Columbus Zoo and Aquarium", type:"zoo", emoji:"🦍", city:"Columbus", desc:"Consistently ranked the #1 zoo in America. Jack Hanna built this into a world-class facility with outstanding gorilla, polar bear, and manatee habitats across 580 stunning acres.", tags:["#1 ranked US zoo","580 acres","Jack Hanna's zoo"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.columbuszoo.org" },
+      { name:"Cincinnati Zoo & Botanical Garden", type:"zoo", emoji:"🦏", city:"Cincinnati", desc:"America's second-oldest zoo and home of the famous Fiona the hippo. Their white rhino and cheetah breeding programs are among the most successful in the world.", tags:["2nd oldest US zoo","Fiona the hippo","Rhino breeding"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://cincinnatizoo.org" },
+      { name:"Cleveland Metroparks Zoo", type:"zoo", emoji:"🦁", city:"Cleveland", desc:"One of America's oldest zoos, famous for its RainForest exhibit — a 2-acre indoor tropical rainforest with free-flying birds, exotic reptiles, and cascading waterfalls.", tags:["RainForest exhibit","183 years old","Free-flying birds"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.clevelandmetroparks.com/zoo" },
+      { name:"Akron Zoo", type:"zoo", emoji:"🐆", city:"Akron", desc:"A small but mighty zoo known for its Panda Passage snow leopard habitat and Grizzly Ridge bear exhibit. Perfectly sized for families who want quality over quantity.", tags:["Snow leopards","Grizzly bears","Family sized"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.akronzoo.org" },
+    ]
+  },
+  PA: {
+    name: "Pennsylvania", country: "USA",
+    locations: [
+      { name:"Philadelphia Zoo", type:"zoo", emoji:"🦒", city:"Philadelphia", desc:"America's first zoo, opened in 1874. The Zoo360 trail system lets animals roam freely above visitor pathways — jaguars, orangutans, and gorillas travel overhead through mesh tunnels.", tags:["America's first zoo","Zoo360 overhead trails","Since 1874"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.philadelphiazoo.org" },
+      { name:"Pittsburgh Zoo & Aquarium", type:"zoo", emoji:"🐘", city:"Pittsburgh", desc:"A sprawling hilltop zoo with one of America's most respected elephant programs. The PPG Aquarium and Kids Kingdom make it a full-day destination for families.", tags:["Elephant program","PPG Aquarium","77 acres"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.pittsburghzoo.org" },
+      { name:"ZooAmerica North American Wildlife Park", type:"zoo", emoji:"🦌", city:"Hershey", desc:"Nestled beside Hersheypark, this 11-acre zoo is dedicated entirely to North American wildlife. Black bears, otters, bald eagles, and alligators — all native species.", tags:["All North American animals","Beside Hersheypark","Alligators to eagles"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.zooamerica.com" },
+    ]
+  },
+  GA: {
+    name: "Georgia", country: "USA",
+    locations: [
+      { name:"Zoo Atlanta", type:"zoo", emoji:"🐼", city:"Atlanta", desc:"One of only four US zoos to house giant pandas, Zoo Atlanta is also famous for the largest gorilla population of any zoo in North America. A world leader in great ape research.", tags:["Giant pandas","Largest gorilla pop in US","Great ape research"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.zooatlanta.org" },
+      { name:"Wild Animal Safari", type:"zoo", emoji:"🦒", city:"Pine Mountain", desc:"Drive your own car or take a bus through 500 acres of open range where 300+ animals roam freely. Ostriches will eat from your hand and bison will block the road.", tags:["Drive-through","Animals eat from your car","500 acres"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.animalsafari.com" },
+      { name:"Chattahoochee Nature Center", type:"reserve", emoji:"🦅", city:"Roswell", desc:"A 127-acre riverside nature sanctuary along the Chattahoochee where injured raptors serve as education ambassadors. Otters, turtles, and herons fill the wetland trails.", tags:["Riverside trails","Raptor education","River otters"], img:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&auto=format&fit=crop", url:"https://www.chattnaturecenter.org" },
+    ]
+  },
+  AZ: {
+    name: "Arizona", country: "USA",
+    locations: [
+      { name:"Phoenix Zoo", type:"zoo", emoji:"🦒", city:"Phoenix", desc:"One of America's largest non-profit zoos, known for its Arabian oryx breeding program that saved the species from extinction. The Africa Trail is a stunning 2-mile immersive habitat.", tags:["Saved Arabian oryx","Africa Trail","1,400 animals"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.phoenixzoo.org" },
+      { name:"Reid Park Zoo", type:"zoo", emoji:"🐘", city:"Tucson", desc:"Tucson's compact but exceptional zoo with an extraordinary elephant herd. Multiple calves have been born here in recent years, making it one of America's top elephant programs.", tags:["Elephant calves born here","Compact & walkable","Family favorite"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.reidparkzoo.org" },
+      { name:"Wildlife World Zoo", type:"zoo", emoji:"🦁", city:"Litchfield Park", desc:"Arizona's most visited zoo with North America's largest private collection of exotic animals. The aquarium, water park, and safari experiences make it a full resort destination.", tags:["Largest AZ collection","Aquarium combo","Water park"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.wildlifeworld.com" },
+      { name:"Southwest Wildlife Conservation Center", type:"sanctuary", emoji:"🐺", city:"Scottsdale", desc:"The leading wildlife rescue center in Arizona, famous for rehabilitating Mexican gray wolves, mountain lions, and bears that are injured or orphaned across the Southwest.", tags:["Mexican gray wolves","Mountain lions","Desert wildlife rescue"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.southwestwildlife.org" },
+    ]
+  },
+  OR: {
+    name: "Oregon", country: "USA",
+    locations: [
+      { name:"Oregon Zoo", type:"zoo", emoji:"🐘", city:"Portland", desc:"A Pacific Northwest icon set in Washington Park's forested hills. The elephant program has produced more Asian elephant births than any other zoo in the Western Hemisphere.", tags:["Most elephant births in West","Washington Park forest","Asian elephants"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.oregonzoo.org" },
+      { name:"Wildlife Safari", type:"zoo", emoji:"🦁", city:"Winston", desc:"Oregon's drive-through safari park where cheetahs, lions, and bears roam alongside your car on 600 acres of Southern Oregon valley. One of America's most underrated safari experiences.", tags:["Drive-through","600 acres","Cheetahs alongside your car"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.wildlifesafari.net" },
+      { name:"Cascade Raptor Center", type:"sanctuary", emoji:"🦅", city:"Eugene", desc:"A raptor-only sanctuary and teaching hospital caring for eagles, owls, and falcons that can no longer survive in the wild. Free-flight demonstrations are genuinely breathtaking.", tags:["Raptors only","Free-flight demos","Teaching hospital"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.cascaderaptor.org" },
+    ]
+  },
+  MN: {
+    name: "Minnesota", country: "USA",
+    locations: [
+      { name:"Minnesota Zoo", type:"zoo", emoji:"🐅", city:"Apple Valley", desc:"A spectacular 500-acre zoo built around Minnesota's natural habitats. The monorail ride over the Asian wilderness, Amur tigers in the snow, and dolphin theater are hallmarks.", tags:["500 acres","Monorail safari","Amur tigers"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.mnzoo.org" },
+      { name:"Como Park Zoo & Conservatory", type:"zoo", emoji:"🦁", city:"Saint Paul", desc:"One of America's last completely free zoos, open 365 days a year. Polar bears, gorillas, giraffes, and sea lions — all free, all year, for over a century.", tags:["Completely free","Open 365 days","Since 1897"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://comozooconservatory.org" },
+      { name:"Raptor Center", type:"sanctuary", emoji:"🦅", city:"Minneapolis", desc:"The University of Minnesota's world-renowned raptor rehabilitation facility, treating over 800 birds annually. Their bald eagle recovery program has been critical to the species' comeback.", tags:["800 birds/year","Bald eagle recovery","University research"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.raptor.umn.edu" },
+    ]
+  },
+  NC: {
+    name: "North Carolina", country: "USA",
+    locations: [
+      { name:"North Carolina Zoo", type:"zoo", emoji:"🦏", city:"Asheboro", desc:"The world's largest natural habitat zoo — 2,600 acres where elephants, rhinos, and polar bears roam vast open spaces. The Africa section alone is bigger than most entire zoos.", tags:["World's largest natural habitat zoo","2,600 acres","Rhinos & elephants"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.nczoo.org" },
+      { name:"Carolina Tiger Rescue", type:"sanctuary", emoji:"🐯", city:"Pittsboro", desc:"A Chatham County sanctuary for big cats and kookaburras rescued from private ownership and the exotic pet trade. Night tours under the stars are particularly magical.", tags:["Big cat rescue","Night tours","Pittsboro sanctuary"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.carolinatigerrescue.org" },
+      { name:"Western North Carolina Nature Center", type:"zoo", emoji:"🐺", city:"Asheville", desc:"Focused entirely on Southern Appalachian wildlife, this mountain zoo is home to red wolves — one of the most endangered canids on Earth — in a gorgeous Asheville setting.", tags:["Red wolves","Appalachian animals","Mountain setting"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.wildwnc.org" },
+    ]
+  },
+  TN: {
+    name: "Tennessee", country: "USA",
+    locations: [
+      { name:"Memphis Zoo", type:"zoo", emoji:"🐼", city:"Memphis", desc:"One of America's top-ranked zoos and home to two giant pandas — Le Le and Ya Ya — on long-term loan from China. The China exhibit and hippo habitat are world-class.", tags:["Giant pandas","Top 5 US zoo","China exhibit"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.memphiszoo.org" },
+      { name:"Nashville Zoo at Grassmere", type:"zoo", emoji:"🦁", city:"Nashville", desc:"Set on a 188-acre historic farm, Nashville Zoo has transformed into one of the South's best. The Bamboo Trail clouded leopard exhibit and Lorikeet Landing are fan favorites.", tags:["188 acres","Clouded leopards","Historic farm setting"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.nashvillezoo.org" },
+      { name:"Appalachian Bear Rescue", type:"sanctuary", emoji:"🐻", city:"Townsend", desc:"A Great Smoky Mountain sanctuary dedicated entirely to orphaned black bear cubs. Every bear admitted is rehabilitated with the goal of full release back into the wild.", tags:["Bear cubs only","Release focused","Smoky Mountain location"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.appalachianbearrescue.org" },
+    ]
+  },
+  MI: {
+    name: "Michigan", country: "USA",
+    locations: [
+      { name:"Detroit Zoo", type:"zoo", emoji:"🐧", city:"Royal Oak", desc:"Home to the Arctic Ring of Life — the world's largest polar bear habitat, with an underwater tunnel that puts you face-to-face with swimming bears and Arctic seals.", tags:["World's largest polar bear habitat","Arctic tunnel","Award-winning"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.detroitzoo.org" },
+      { name:"Binder Park Zoo", type:"zoo", emoji:"🦒", city:"Battle Creek", desc:"A 433-acre zoo where the Z&W Giraffe Experience lets you walk across a boardwalk elevated to giraffe-eye level. The wild Africa section uses real topography to create a genuine savanna feel.", tags:["Giraffe boardwalk","433 acres","Wild Africa section"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.binderparkzoo.org" },
+      { name:"Potter Park Zoo", type:"zoo", emoji:"🐅", city:"Lansing", desc:"A beloved mid-Michigan zoo on the Red Cedar River, known for its snow leopards, red pandas, and affordable family pricing. One of Michigan's most accessible wildlife experiences.", tags:["Snow leopards","Red pandas","Riverside location"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.potterparkzoo.org" },
+    ]
+  },
+  WI: {
+    name: "Wisconsin", country: "USA",
+    locations: [
+      { name:"Milwaukee County Zoo", type:"zoo", emoji:"🐘", city:"Milwaukee", desc:"A 200-acre zoo that pioneered mixed-species exhibits in the 1950s. The Apes of Africa building and Sea Lion Show have made it a Wisconsin institution for over a century.", tags:["Pioneered mixed species","Sea lion shows","200 acres"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.milwaukeezoo.org" },
+      { name:"Henry Vilas Zoo", type:"zoo", emoji:"🦒", city:"Madison", desc:"One of America's last completely free zoos, right on the shores of Lake Wingra in Madison. Camels, giraffes, snow leopards, and polar bears — always free.", tags:["Completely free","Lake Wingra location","Since 1911"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.henryvilaszoo.gov" },
+      { name:"Racine Zoo", type:"zoo", emoji:"🦁", city:"Racine", desc:"A compact, walkable Lake Michigan zoo known for its intimate animal encounters and strong education programs. The Mayan adventure playground is one of the best in the Midwest.", tags:["Lake Michigan views","Intimate encounters","Mayan playground"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.racinezoo.org" },
+    ]
+  },
+  IN: {
+    name: "Indiana", country: "USA",
+    locations: [
+      { name:"Indianapolis Zoo", type:"zoo", emoji:"🐬", city:"Indianapolis", desc:"The only combined zoo, aquarium, and botanical garden in the US under one accreditation. The first zoo in America to have a sustainable energy program, running partly on wind and solar.", tags:["Zoo + aquarium + botanical garden","Sustainable energy","Dolphin pavilion"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.indianapoliszoo.com" },
+      { name:"Fort Wayne Children's Zoo", type:"zoo", emoji:"🦁", city:"Fort Wayne", desc:"Consistently voted one of America's best children's zoos, but don't let the name fool you — the Indonesian Rain Forest and African Veldt are genuinely immersive adult experiences too.", tags:["Top US children's zoo","Indonesian rainforest","African veldt"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.kidszoo.org" },
+    ]
+  },
+  MO: {
+    name: "Missouri", country: "USA",
+    locations: [
+      { name:"Saint Louis Zoo", type:"zoo", emoji:"🐧", city:"St. Louis", desc:"Repeatedly voted the #1 free zoo in America. Over 14,000 animals in Forest Park, including the Sea Lion Sound, Penguin & Puffin Coast, and the stunning Polar Bear exhibit — all free, forever.", tags:["Free forever","14,000 animals","#1 free zoo in US"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.stlzoo.org" },
+      { name:"Kansas City Zoo", type:"zoo", emoji:"🐘", city:"Kansas City", desc:"A sprawling 202-acre zoo with one of the Midwest's finest African elephant herds. The Australia section with free-roaming kangaroos and the penguin habitat are standout experiences.", tags:["Elephant herd","202 acres","Free-roaming kangaroos"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://kansascityzoo.org" },
+      { name:"Endangered Wolf Center", type:"sanctuary", emoji:"🐺", city:"Eureka", desc:"A critical conservation facility that has bred over 300 Mexican gray wolves and red wolves for reintroduction into the wild. One of the most important wolf sanctuaries in the world.", tags:["300+ wolves bred","Wild reintroduction","Mexican gray wolves"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.endangeredwolfcenter.org" },
+    ]
+  },
+  NE: {
+    name: "Nebraska", country: "USA",
+    locations: [
+      { name:"Omaha's Henry Doorly Zoo and Aquarium", type:"zoo", emoji:"🦁", city:"Omaha", desc:"Consistently ranked the #1 zoo in the world by TripAdvisor. Home to the world's largest indoor desert, the world's largest indoor rainforest, and a nocturnal exhibit unlike any other.", tags:["#1 zoo in the world","World's largest indoor desert","World's largest indoor rainforest"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://www.omahazoo.com" },
+      { name:"Lincoln Children's Zoo", type:"zoo", emoji:"🐘", city:"Lincoln", desc:"A compact but brilliant zoo famous for its baby elephant Eugenia and innovative immersive exhibits. The new Africa section is dramatically bigger and better than the name 'children's zoo' suggests.", tags:["Baby elephants","Africa section","Innovative exhibits"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.lincolnzoo.org" },
+    ]
+  },
+  MA: {
+    name: "Massachusetts", country: "USA",
+    locations: [
+      { name:"Franklin Park Zoo", type:"zoo", emoji:"🦍", city:"Boston", desc:"Boston's historic zoo in Frederick Law Olmsted's Franklin Park. The Gorilla Grove is one of the finest great ape habitats in the Northeast, with bachelor groups and family troops.", tags:["Gorilla Grove","Historic Olmsted park","Boston landmark"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.zoonewengland.org/franklin-park-zoo" },
+      { name:"Stone Zoo", type:"zoo", emoji:"🐆", city:"Stoneham", desc:"A charming smaller zoo north of Boston known for its Snow Leopard Heights and Canadian Wilderness exhibits. The intimate scale makes every animal encounter feel personal.", tags:["Snow leopards","Canadian wilderness","Intimate scale"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.zoonewengland.org/stone-zoo" },
+      { name:"Buttonwood Park Zoo", type:"zoo", emoji:"🐘", city:"New Bedford", desc:"One of America's oldest free municipal zoos, home to Emily and Ruth, the zoo's famous Asian elephants who have lived together in New Bedford for decades.", tags:["Free admission","Emily & Ruth the elephants","Since 1894"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.bpzoo.org" },
+    ]
+  },
+  UT: {
+    name: "Utah", country: "USA",
+    locations: [
+      { name:"Utah's Hogle Zoo", type:"zoo", emoji:"🦁", city:"Salt Lake City", desc:"Utah's premier zoo set against the stunning backdrop of the Wasatch Mountains. The African Savanna exhibit with open-range giraffes and the elephant encounter are highlights.", tags:["Mountain backdrop","African savanna","Giraffe encounters"], img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&auto=format&fit=crop", url:"https://www.hoglezoo.org" },
+      { name:"Best Friends Animal Sanctuary", type:"sanctuary", emoji:"🐕", city:"Kanab", desc:"The largest no-kill animal sanctuary in the US, set on 3,700 acres in Utah's canyon country. Home to 1,600 animals at any time including dogs, cats, horses, pigs, and wildlife.", tags:["Largest no-kill sanctuary","3,700 acres","Canyon country setting"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://bestfriends.org" },
+    ]
+  },
+  NM: {
+    name: "New Mexico", country: "USA",
+    locations: [
+      { name:"ABQ BioPark Zoo", type:"zoo", emoji:"🦁", city:"Albuquerque", desc:"A beautifully designed Southwestern zoo combined with a botanic garden, aquarium, and beach on the Rio Grande. The polar bear and hippo habitats are genuinely world-class.", tags:["Zoo + aquarium + botanic garden","Rio Grande beach","Polar bears"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.cabq.gov/culturalservices/biopark/zoo" },
+      { name:"Wildlife West Nature Park", type:"sanctuary", emoji:"🐺", city:"Edgewood", desc:"A rescue sanctuary for non-releasable New Mexico wildlife set in the Sandia Mountains. Black bears, mountain lions, wolves, and elk all rescued from injury or orphaning.", tags:["New Mexico native animals","Sandia Mountains","Rescue focused"], img:"https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&auto=format&fit=crop", url:"https://www.wildlifewest.org" },
+    ]
+  },
+  NV: {
+    name: "Nevada", country: "USA",
+    locations: [
+      { name:"Nevada SPCA Wildlife Center", type:"sanctuary", emoji:"🦅", city:"Las Vegas", desc:"Southern Nevada's primary wildlife rehabilitation facility, treating thousands of desert native animals each year. Educational ambassador animals include Gila woodpeckers and raptors.", tags:["Desert wildlife rehab","Educational ambassadors","Las Vegas"], img:"https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&auto=format&fit=crop", url:"https://www.nevadaspca.org" },
+      { name:"Animal Ark Wildlife Sanctuary", type:"sanctuary", emoji:"🐺", city:"Reno", desc:"A Northern Nevada sanctuary for non-releasable native wildlife, housing wolves, cougars, bears, and bobcats on 38 acres of high desert scrubland near Reno.", tags:["Wolves & cougars","38 acres","High desert"], img:"https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=600&auto=format&fit=crop", url:"https://www.animalark.org" },
+    ]
+  },
+  MD: {
+    name: "Maryland", country: "USA",
+    locations: [
+      { name:"Smithsonian's National Zoo", type:"zoo", emoji:"🐼", city:"Washington D.C.", desc:"The Smithsonian's legendary free zoo, home to giant pandas, Asian elephants, and Sumatran tigers in Rock Creek Park. One of America's most visited and scientifically significant institutions.", tags:["Giant pandas","Free admission","Smithsonian research"], img:"https://images.unsplash.com/photo-1559253664-ca249d4608c6?w=600&auto=format&fit=crop", url:"https://nationalzoo.si.edu" },
+      { name:"Maryland Zoo", type:"zoo", emoji:"🐧", city:"Baltimore", desc:"Baltimore's 135-year-old zoo in Druid Hill Park, famous for its African penguin habitat — one of the largest penguin exhibits in the US — and highly-regarded giraffe feeding station.", tags:["African penguins","Giraffe feeding","135 years old"], img:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&auto=format&fit=crop", url:"https://www.marylandzoo.org" },
+      { name:"Catoctin Wildlife Preserve", type:"zoo", emoji:"🐯", city:"Thurmont", desc:"A mountain sanctuary and zoo near Camp David in the Catoctin Mountains, home to big cats, bears, and primates in a remarkably scenic setting unlike any other zoo in the Mid-Atlantic.", tags:["Mountain setting","Near Camp David","Big cats"], img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop", url:"https://www.cwpzoo.com" },
+    ]
+  },
 };
 
 // HC-key → region ID mapping
@@ -538,7 +759,7 @@ function renderGrid(regionId) {
             <div class="back-emoji">${loc.emoji}</div>
             <div class="back-name">${loc.name}</div>
             <div class="back-city">📍 ${loc.city}</div>
-            <div class="back-tags">${loc.tags.map(t => `<span class="${tagClass(loc.type)}">${t}</span>`).join('')}</div>
+            <div class="back-desc">${loc.desc || ''}</div>
           </div>
           <span class="${visitClass(loc.type)}">Visit Website ↗</span>
         </div>

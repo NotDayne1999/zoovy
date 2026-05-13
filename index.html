@@ -218,7 +218,13 @@ nav {
 .btn-light:hover { background: var(--g5); transform: translateY(-2px); }
 
 /* ── FOOTER ── */
-footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; color: rgba(28,28,28,0.4); font-size: 0.82rem; }
+footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; color: rgba(28,28,28,0.4); font-size: 0.82rem; flex-wrap: wrap; gap: 1.5rem; }
+.footer-col { display: flex; flex-direction: column; gap: 0.4rem; }
+.footer-email { color: var(--g3); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+.footer-email:hover { color: var(--g2); }
+.footer-links { display: flex; gap: 1.25rem; }
+.footer-links a { color: rgba(28,28,28,0.4); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--g2); }
 
 /* ── MAP SVG STYLES ── */
 .map-region { stroke: rgba(127,184,150,0.25); stroke-width: 0.5; cursor: pointer; transition: fill 0.15s; }
@@ -372,14 +378,28 @@ footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width:
     <h2>North America's wildlife, all in one place</h2>
     <p>Zoos, sanctuaries, and reserves from coast to coast. Start exploring today.</p>
     <a href="#explore" class="btn-light">Explore now</a>
+    <p style="margin-top:2rem;margin-bottom:0;font-size:0.82rem;color:rgba(245,237,224,0.3);">Want to add your zoo or sanctuary? Know a location we're missing?<br><a href="mailto:daynebusiness99@gmail.com" style="color:var(--g4);text-decoration:none;">daynebusiness99@gmail.com</a></p>
   </div>
 </div>
 
 <!-- ── FOOTER ── -->
 <footer>
-  <a href="#" class="logo" style="font-size:1.05rem;">Zoo<span>vy</span></a>
-  <div>North America wildlife discovery · zoovy.net</div>
-  <div>© 2025 Zoovy</div>
+  <div class="footer-col">
+    <a href="#" class="logo" style="font-size:1.1rem;">Zoo<span>vy</span></a>
+    <div style="font-size:0.78rem;color:rgba(28,28,28,0.35);margin-top:0.1rem;">North America wildlife discovery</div>
+  </div>
+  <div class="footer-col" style="align-items:center;">
+    <div class="footer-links">
+      <a href="#explore">Explore</a>
+      <a href="#map">Map</a>
+      <a href="#about">About</a>
+    </div>
+    <div style="font-size:0.75rem;color:rgba(28,28,28,0.3);">© 2026 Zoovy · zoovy.net</div>
+  </div>
+  <div class="footer-col" style="align-items:flex-end;">
+    <div style="font-size:0.75rem;color:rgba(28,28,28,0.35);">List your zoo or report an issue</div>
+    <a href="mailto:daynebusiness99@gmail.com" class="footer-email">daynebusiness99@gmail.com</a>
+  </div>
 </footer>
 
 <script>
@@ -966,26 +986,18 @@ function renderGrid(regionId) {
 
   grid.innerHTML = filtered.map(loc => `
     <a class="zoo-card" href="${loc.url}" target="_blank" rel="noopener">
-      <div class="zoo-card-inner">
-        <div class="zoo-card-front">
-          <div class="card-img" style="background-image:url('${loc.img}');">
-            <span class="${badgeClass(loc.type)}">${typeLabel(loc.type)}</span>
-          </div>
-          <div class="card-body">
-            <div class="card-name">${loc.name}</div>
-            <div class="card-city">📍 ${loc.city}</div>
-            <div class="card-tags">${loc.tags.map(t => `<span class="${tagClass(loc.type)}">${t}</span>`).join('')}</div>
-          </div>
-        </div>
-        <div class="zoo-card-back">
-          <div>
-            <div class="back-emoji">${loc.emoji}</div>
-            <div class="back-name">${loc.name}</div>
-            <div class="back-city">📍 ${loc.city}</div>
-            <div class="back-desc">${loc.desc || ''}</div>
-          </div>
-          <span class="${visitClass(loc.type)}">Visit Website ↗</span>
-        </div>
+      <div class="card-img" style="background-image:url('${loc.img}');"></div>
+      <span class="${badgeClass(loc.type)}">${typeLabel(loc.type)}</span>
+      <div class="card-always">
+        <div class="card-name">${loc.name}</div>
+        <div class="card-city">📍 ${loc.city}</div>
+      </div>
+      <div class="card-overlay">
+        <div class="overlay-name">${loc.name}</div>
+        <div class="overlay-city">📍 ${loc.city}</div>
+        <div class="overlay-desc">${loc.desc || ''}</div>
+        <div class="overlay-tags">${loc.tags.map(t => `<span class="${tagClass(loc.type)}">${t}</span>`).join('')}</div>
+        <span class="${visitClass(loc.type)}">Visit Website ↗</span>
       </div>
     </a>
   `).join('');

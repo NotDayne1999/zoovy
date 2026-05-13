@@ -157,38 +157,70 @@ nav {
 
 /* Zoo cards grid */
 .zoo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 1.25rem; }
-.zoo-card { height: 380px; perspective: 1000px; text-decoration: none; color: inherit; display: block; }
-.zoo-card.hidden { display: none; }
-.zoo-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1); border-radius: 16px; }
-.zoo-card:hover .zoo-card-inner { transform: rotateY(180deg); }
-.zoo-card-front, .zoo-card-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 16px; overflow: hidden; }
 
-/* Card front */
-.zoo-card-front { background: var(--white); border: 1px solid rgba(74,124,89,0.1); display: flex; flex-direction: column; }
-.card-img { height: 185px; flex-shrink: 0; background-size: cover; background-position: center; position: relative; }
-.card-img::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(transparent, white); }
-.card-type-badge { position: absolute; top: 0.625rem; left: 0.625rem; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.55rem; border-radius: 999px; }
+/* Overlay card */
+.zoo-card {
+  height: 340px; text-decoration: none; color: inherit; display: block;
+  border-radius: 16px; overflow: hidden; position: relative;
+  cursor: pointer; border: 1px solid rgba(74,124,89,0.12);
+}
+.zoo-card.hidden { display: none; }
+
+/* Photo fills full card */
+.card-img {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+}
+.zoo-card:hover .card-img { transform: scale(1.06); }
+
+/* Type badge top left */
+.card-type-badge {
+  position: absolute; top: 0.75rem; left: 0.75rem; z-index: 3;
+  font-size: 0.62rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.06em; padding: 0.22rem 0.6rem; border-radius: 999px;
+}
 .badge-zoo { background: var(--g1); color: var(--g6); }
 .badge-sanctuary { background: var(--b2); color: var(--b6); }
 .badge-reserve { background: var(--b1); color: var(--b5); }
-.card-body { padding: 1rem 1.25rem; flex: 1; }
-.card-name { font-family: 'Syne', sans-serif; font-size: 0.925rem; font-weight: 600; color: var(--g1); margin-bottom: 0.25rem; }
-.card-city { font-size: 0.75rem; color: rgba(28,28,28,0.5); margin-bottom: 0.6rem; }
-.card-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
-.tag { font-size: 0.65rem; padding: 0.18rem 0.5rem; border-radius: 999px; font-weight: 500; background: var(--g6); color: var(--g2); }
-.tag-b { background: var(--b5); color: var(--b2); }
 
-/* Card back */
-.zoo-card-back { transform: rotateY(180deg); background: var(--white); border: 1.5px solid rgba(74,124,89,0.15); display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem 1.5rem 1.25rem; }
-.back-emoji { font-size: 1.75rem; margin-bottom: 0.5rem; }
-.back-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--g1); margin-bottom: 0.2rem; }
-.back-city { font-size: 0.75rem; color: rgba(28,28,28,0.45); margin-bottom: 0.5rem; }
-.back-desc { font-size: 0.82rem; line-height: 1.55; color: rgba(28,28,28,0.7); margin-bottom: 0.875rem; flex: 1; }
-.back-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0; }
-.visit-btn { display: block; padding: 0.55rem 1.25rem; border-radius: 999px; font-size: 0.8rem; font-weight: 500; text-align: center; margin-top: auto; padding-top: 0.55rem; }
-.visit-zoo { background: var(--g1); color: var(--b6); }
-.visit-sanctuary { background: var(--b2); color: var(--b6); }
-.visit-reserve { background: var(--b1); color: var(--b5); }
+/* Name always visible at bottom */
+.card-always {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  padding: 3.5rem 1.1rem 1rem;
+  background: linear-gradient(transparent, rgba(6,14,10,0.92));
+  transition: opacity 0.25s ease;
+}
+.card-tags-row { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.5rem; }
+.zoo-card:hover .card-always { opacity: 0; pointer-events: none; }
+.card-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: #f5ede0; line-height: 1.2; margin-bottom: 0.2rem; }
+.card-city { font-size: 0.73rem; color: rgba(245,237,224,0.55); }
+
+/* Hover overlay slides up */
+.card-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to top, rgba(6,14,10,0.97) 0%, rgba(6,14,10,0.93) 55%, rgba(6,14,10,0.6) 100%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.25rem;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.32s cubic-bezier(0.4,0,0.2,1), transform 0.32s cubic-bezier(0.4,0,0.2,1);
+}
+.zoo-card:hover .card-overlay { opacity: 1; transform: translateY(0); }
+
+.overlay-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: #f5ede0; margin-bottom: 0.15rem; line-height: 1.2; }
+.overlay-city { font-size: 0.7rem; color: rgba(245,237,224,0.45); margin-bottom: 0.6rem; }
+.overlay-desc { font-size: 0.78rem; line-height: 1.55; color: rgba(245,237,224,0.78); margin-bottom: 0.75rem; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.overlay-tags { display: none; }
+.tag { font-size: 0.64rem; padding: 0.18rem 0.5rem; border-radius: 999px; font-weight: 500; background: rgba(127,184,150,0.18); color: var(--g4); }
+.tag-b { background: rgba(196,154,108,0.18); color: var(--b4); }
+.tag-dark { font-size: 0.64rem; padding: 0.18rem 0.5rem; border-radius: 999px; font-weight: 600; color: #f5ede0; }
+.tag-dark-zoo { background: var(--g2); }
+.tag-dark-sanctuary { background: var(--b2); }
+.tag-dark-reserve { background: var(--b1); }
+.visit-btn { display: block; padding: 0.55rem 1.25rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; text-align: center; }
+.visit-zoo { background: var(--g4); color: var(--g0); }
+.visit-sanctuary { background: var(--b3); color: var(--b6); }
+.visit-reserve { background: var(--b4); color: var(--b1); }
 
 /* Empty state */
 .empty-state { text-align: center; padding: 5rem 2rem; }
@@ -989,6 +1021,7 @@ function renderGrid(regionId) {
       <div class="card-img" style="background-image:url('${loc.img}');"></div>
       <span class="${badgeClass(loc.type)}">${typeLabel(loc.type)}</span>
       <div class="card-always">
+        <div class="card-tags-row">${loc.tags.slice(0,3).map(t => `<span class="tag-dark tag-dark-${loc.type}">${t}</span>`).join('')}</div>
         <div class="card-name">${loc.name}</div>
         <div class="card-city">📍 ${loc.city}</div>
       </div>
@@ -996,7 +1029,6 @@ function renderGrid(regionId) {
         <div class="overlay-name">${loc.name}</div>
         <div class="overlay-city">📍 ${loc.city}</div>
         <div class="overlay-desc">${loc.desc || ''}</div>
-        <div class="overlay-tags">${loc.tags.map(t => `<span class="${tagClass(loc.type)}">${t}</span>`).join('')}</div>
         <span class="${visitClass(loc.type)}">Visit Website ↗</span>
       </div>
     </a>

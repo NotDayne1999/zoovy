@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wildlife Watch — Latest Animal Births | Zoovy</title>
+<meta name="description" content="Track newborn and expecting animals at zoos and sanctuaries across North America. From Imara the Toronto Zoo giraffe to gorilla babies expected at Woodland Park Zoo.">
+<meta name="keywords" content="zoo babies, animal births, baby giraffe, baby elephant, zoo pregnancies, newborn animals, zoo conservation">
+<link rel="canonical" href="https://zoovy.net/wildlife-watch.html">
+
+<meta property="og:title" content="Wildlife Watch — Latest Animal Births at North American Zoos">
+<meta property="og:description" content="Track newborn and expecting animals at zoos across North America. Real births, real stories.">
+<meta property="og:url" content="https://zoovy.net/wildlife-watch.html">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --g0: #0a1a10;
+  --g1: #1a3a2a;
+  --g2: #2d5a3d;
+  --g3: #4a7c59;
+  --g4: #7fb896;
+  --g5: #b8d9c4;
+  --g6: #e4f0e8;
+  --b1: #3d2410;
+  --b2: #7a4a28;
+  --b3: #a0622e;
+  --b4: #c49a6c;
+  --b5: #e8d5b8;
+  --b6: #f5ede0;
+  --ink: #1c1c1c;
+  --mist: #f7f4ef;
+  --white: #ffffff;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--mist); color: var(--ink); }
+
+/* ── NAV (shared with index) ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 2.5rem;
+  background: rgba(247,244,239,0.92); backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(74,124,89,0.15);
+}
+.logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.45rem; color: var(--g1); letter-spacing: -0.02em; text-decoration: none; }
+.logo span { color: var(--b3); }
+.nav-links { list-style: none; display: flex; gap: 1.75rem; align-items: center; }
+.nav-links a { font-size: 0.875rem; color: var(--ink); text-decoration: none; opacity: 0.6; transition: opacity 0.2s; }
+.nav-links a:hover, .nav-links a.active { opacity: 1; }
+.nav-links a.active { font-weight: 600; }
+
+/* ── HERO ── */
+.page-hero {
+  padding: 9rem 2.5rem 4rem;
+  background: var(--g0);
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 60%, rgba(74,124,89,0.3) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 30%, rgba(122,74,40,0.2) 0%, transparent 50%);
+}
+.page-hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+.page-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(127,184,150,0.15); color: var(--g4);
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.35rem 0.875rem; border-radius: 999px; margin-bottom: 1.5rem;
+  border: 1px solid rgba(127,184,150,0.2);
+}
+.page-eyebrow::before {
+  content: ''; width: 5px; height: 5px;
+  background: var(--g4); border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--b6);
+  margin-bottom: 1.25rem;
+  max-width: 800px;
+}
+.page-title em { font-style: normal; color: var(--g4); }
+.page-sub {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: rgba(245,237,224,0.55);
+  max-width: 580px;
+  margin-bottom: 2.5rem;
+}
+.page-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+.page-stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--b6);
+}
+.page-stat-lbl {
+  font-size: 0.78rem;
+  color: rgba(245,237,224,0.4);
+  margin-top: 0.1rem;
+}
+
+/* ── CONTENT ── */
+.content-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2.5rem;
+}
+
+.tabs-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+.tabs {
+  display: inline-flex;
+  background: white;
+  border: 1px solid rgba(74,124,89,0.15);
+  border-radius: 999px;
+  padding: 0.3rem;
+  gap: 0.25rem;
+}
+.tab {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.6rem 1.5rem;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: rgba(28,28,28,0.6);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab:hover { color: var(--g1); }
+.tab.active {
+  background: var(--g1);
+  color: var(--b6);
+  font-weight: 600;
+}
+.tab.expecting.active {
+  background: var(--b2);
+}
+
+/* ── CARDS GRID ── */
+.births-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 1.5rem;
+}
+.birth-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(74,124,89,0.1);
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s;
+  position: relative;
+}
+.birth-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(26,58,42,0.12);
+}
+.birth-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+}
+.birth-card.recent::before { background: linear-gradient(90deg, var(--g3), var(--g4)); }
+.birth-card.expecting::before { background: linear-gradient(90deg, var(--b2), var(--b3)); }
+
+.birth-image {
+  height: 200px;
+  background: linear-gradient(135deg, var(--g2), var(--g1));
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.birth-image::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10,20,15,0.45) 100%);
+  transition: opacity 0.3s;
+}
+.birth-card:hover .birth-image {
+  transform: scale(1.08);
+}
+.birth-image.expecting {
+  background-color: var(--b2);
+}
+.birth-emoji-badge {
+  position: absolute;
+  bottom: 0.875rem;
+  left: 0.875rem;
+  width: 44px;
+  height: 44px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  z-index: 2;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.birth-status {
+  position: absolute;
+  top: 0.875rem;
+  right: 0.875rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.9);
+  color: var(--g1);
+}
+.birth-card.expecting .birth-status {
+  color: var(--b1);
+}
+
+.birth-body { padding: 1.25rem 1.5rem 1.5rem; }
+.birth-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--g1);
+  margin-bottom: 0.2rem;
+  letter-spacing: -0.01em;
+}
+.birth-species {
+  font-size: 0.82rem;
+  color: rgba(28,28,28,0.5);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+.birth-meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.875rem;
+  flex-wrap: wrap;
+}
+.birth-meta-pill {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: var(--g6);
+  color: var(--g2);
+  font-weight: 500;
+}
+.birth-meta-pill.b { background: var(--b6); color: var(--b2); }
+.birth-zoo {
+  font-size: 0.85rem;
+  color: var(--g3);
+  font-weight: 500;
+  margin-bottom: 0.15rem;
+}
+.birth-location {
+  font-size: 0.75rem;
+  color: rgba(28,28,28,0.45);
+}
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(10,20,15,0.85);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.modal-overlay.open { display: flex; }
+.modal-card {
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+.modal-header {
+  height: 240px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--g1);
+  position: relative;
+  border-radius: 24px 24px 0 0;
+  overflow: hidden;
+}
+.modal-header::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10,20,15,0.1) 0%, rgba(10,20,15,0.5) 100%);
+}
+.modal-emoji-badge {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 2rem;
+  width: 64px;
+  height: 64px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  z-index: 2;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.modal-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  background: rgba(255,255,255,0.95);
+  border: none;
+  border-radius: 999px;
+  width: 36px; height: 36px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--ink);
+}
+.modal-body { padding: 2rem 2.5rem 2.5rem; }
+.modal-status {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  padding: 0.3rem 0.875rem; border-radius: 999px;
+  margin-bottom: 1.25rem;
+}
+.modal-status.recent { background: var(--g6); color: var(--g2); }
+.modal-status.expecting { background: var(--b6); color: var(--b2); }
+.modal-status::before {
+  content: ''; width: 5px; height: 5px;
+  border-radius: 50%; background: currentColor;
+  animation: pulse 2s infinite;
+}
+.modal-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--g1);
+  margin-bottom: 0.2rem;
+  letter-spacing: -0.02em;
+}
+.modal-species {
+  font-size: 0.95rem;
+  color: rgba(28,28,28,0.55);
+  font-style: italic;
+  margin-bottom: 1.75rem;
+}
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.5rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(74,124,89,0.12);
+}
+.modal-grid-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(28,28,28,0.45);
+  margin-bottom: 0.2rem;
+}
+.modal-grid-value {
+  font-size: 0.95rem;
+  color: var(--g1);
+  font-weight: 500;
+}
+.modal-desc {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(28,28,28,0.75);
+  margin-bottom: 1.75rem;
+}
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+.btn-modal-primary {
+  flex: 1;
+  background: var(--g1);
+  color: var(--b6);
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.2s;
+}
+.btn-modal-primary:hover { background: var(--g2); }
+.btn-modal-secondary {
+  flex: 1;
+  background: transparent;
+  border: 1.5px solid rgba(74,124,89,0.25);
+  color: var(--g1);
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+.btn-modal-secondary:hover { border-color: var(--g1); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid rgba(74,124,89,0.12);
+  padding: 2.5rem;
+  max-width: 1200px;
+  margin: 4rem auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(28,28,28,0.4);
+  font-size: 0.82rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.footer-email { color: var(--g3); text-decoration: none; }
+
+@media(max-width:900px) {
+  .nav-links { display: none; }
+  .page-hero { padding: 7rem 1.5rem 3rem; }
+  .content-section { padding: 3rem 1.5rem; }
+  .modal-grid { grid-template-columns: 1fr; }
+  .modal-body { padding: 1.75rem 1.5rem 2rem; }
+  footer { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" class="logo">Zoo<span>vy</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#explore">Explore</a></li>
+    <li><a href="wildlife-watch.html" class="active">Wildlife Watch</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">🐣 Wildlife Watch</div>
+    <h1 class="page-title">Track the latest <em>births</em> from zoos across North America</h1>
+    <p class="page-sub">Newborn elephants, expecting gorillas, baby pandas. Real animals, real stories, updated as zoos announce new arrivals.</p>
+    <div class="page-stats">
+      <div>
+        <div class="page-stat-num">9</div>
+        <div class="page-stat-lbl">Recent births</div>
+      </div>
+      <div>
+        <div class="page-stat-num">3</div>
+        <div class="page-stat-lbl">Expecting soon</div>
+      </div>
+      <div>
+        <div class="page-stat-num">10</div>
+        <div class="page-stat-lbl">Zoos tracked</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TABS + GRID ── -->
+<section class="content-section">
+  <div class="tabs-wrap">
+    <div class="tabs">
+      <button class="tab active" data-tab="recent" onclick="switchTab('recent')">🐣 Recently Born</button>
+      <button class="tab expecting" data-tab="expecting" onclick="switchTab('expecting')">🤰 Expecting Soon</button>
+    </div>
+  </div>
+
+  <div class="births-grid" id="grid"></div>
+</section>
+
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal-card">
+    <div class="modal-header" id="m-header">
+      <div class="modal-emoji-badge" id="m-emoji">🦒</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-status" id="m-status">Recently Born</div>
+      <div class="modal-name" id="m-name"></div>
+      <div class="modal-species" id="m-species"></div>
+      <div class="modal-grid">
+        <div>
+          <div class="modal-grid-label">Zoo</div>
+          <div class="modal-grid-value" id="m-zoo"></div>
+        </div>
+        <div>
+          <div class="modal-grid-label">Location</div>
+          <div class="modal-grid-value" id="m-loc"></div>
+        </div>
+        <div>
+          <div class="modal-grid-label" id="m-datelabel">Date of Birth</div>
+          <div class="modal-grid-value" id="m-date"></div>
+        </div>
+        <div>
+          <div class="modal-grid-label">Age</div>
+          <div class="modal-grid-value" id="m-age"></div>
+        </div>
+      </div>
+      <div class="modal-desc" id="m-desc"></div>
+      <div class="modal-actions">
+        <a class="btn-modal-primary" id="m-mapbtn" href="#">🗺 See on Map</a>
+        <a class="btn-modal-secondary" id="m-weblink" href="#" target="_blank" rel="noopener">Visit Zoo Website ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <a href="index.html" class="logo" style="font-size:1rem;">Zoo<span>vy</span></a>
+  <div>North America wildlife discovery · zoovy.net</div>
+  <a href="mailto:daynebusiness99@gmail.com" class="footer-email">daynebusiness99@gmail.com</a>
+</footer>
+
+<script>
+const DATA = {
+  recent: [
+    { emoji:"🐘", name:"Linh Mai", species:"Asian Elephant", zoo:"Smithsonian's National Zoo", region:"MD", city:"Washington, D.C.", dob:"2026-02-02",
+      img:"https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=800&auto=format&fit=crop&q=80",
+      desc:"Born February 2, 2026 at 1:15 a.m. — the first Asian elephant calf at the Smithsonian's National Zoo in nearly 25 years. Weighed 308 pounds at birth, now nearly 500 pounds. Her name means 'spirit blossom' in Vietnamese. After mother Nhi Linh showed conflicted maternal behavior, 51-year-old herd-mate 'Auntie' Swarna stepped in as her guardian. Linh Mai made her public debut on Earth Day, April 22, 2026 — a powerful symbol of hope for the endangered species, with fewer than 50,000 left in the wild.",
+      url:"https://nationalzoo.si.edu/elephants" },
+    { emoji:"🦒", name:"Imara", species:"Masai Giraffe", zoo:"Toronto Zoo", region:"ON", city:"Scarborough, Ontario", dob:"2026-02-22",
+      img:"https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=800&auto=format&fit=crop&q=80",
+      desc:"Born at 1:26 a.m. on February 22, 2026 to mother Mstari after a 15-month pregnancy. Standing within an hour of birth and already nearly 7 feet tall. Named Imara — meaning 'strong and resilient' in Swahili — by public vote. Her father Kiko passed away in January, making her birth bittersweet but deeply significant for the species. Fewer than 35,000 Masai giraffes remain in the wild.",
+      url:"https://www.torontozoo.com" },
+    { emoji:"🐘", name:"Unnamed calf", species:"Asian Elephant", zoo:"Columbus Zoo", region:"OH", city:"Columbus, Ohio", dob:"2025-10-21",
+      img:"https://images.unsplash.com/photo-1581852017103-68ac65514cf7?w=800&auto=format&fit=crop&q=80",
+      desc:"Born at 10:41 p.m. on October 21, 2025 to 38-year-old mother Phoebe, weighing 222 pounds. The second elephant calf born at Columbus Zoo in a single year — an extraordinary conservation milestone. Asian elephants are endangered, with populations down at least 50% over the last three generations. Father Sabu resides at Cincinnati Zoo.",
+      url:"https://www.columbuszoo.org" },
+    { emoji:"🐆", name:"Vasilisa & Domovoi", species:"Amur Leopard", zoo:"Saint Louis Zoo", region:"MO", city:"St. Louis, Missouri", dob:"2025-08-14",
+      img:"https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=800&auto=format&fit=crop&q=80",
+      desc:"Twin cubs born to mother Dot and father Samson in August 2025. Named after figures from Russian folklore. Amur leopards are the most endangered big cats on Earth — only around 100 remain in the wild. The cubs began exploring their public habitat in November 2025. Saint Louis Zoo has now recorded nine Amur leopard cubs in six litters since 1991.",
+      url:"https://stlzoo.org" },
+    { emoji:"🐘", name:"Lady Bird", species:"Asian Elephant", zoo:"Fort Worth Zoo", region:"TX", city:"Fort Worth, Texas", dob:"2025-08-18",
+      img:"https://images.unsplash.com/photo-1503066211613-c17ebc9daef0?w=800&auto=format&fit=crop&q=80",
+      desc:"Born August 18, 2025 to mother Bluebonnet, who was herself the first elephant born at Fort Worth Zoo back in 1998. Lady Bird was standing within 6 minutes and nursing within 2 hours — both signs of exceptional health. She joins a four-generation elephant family, making the matriarch Rasha one of the only great-grandmother Asian elephants in North America.",
+      url:"https://www.fortworthzoo.org" },
+    { emoji:"🦁", name:"Kamari & Zawadi", species:"African Lion", zoo:"Woodland Park Zoo", region:"WA", city:"Seattle, Washington", dob:"2026-01-14",
+      img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&auto=format&fit=crop&q=80",
+      desc:"Twin female cubs born January 14, 2026 to first-time parents Ilanga and Tandie. The first lion birth at Woodland Park Zoo since 2014. Named Kamari (meaning 'moonlight') and Zawadi (meaning 'gift') — both names chosen to reflect the significance of this arrival to the zoo and to African lion conservation.",
+      url:"https://www.zoo.org" },
+    { emoji:"🐻", name:"Bowie", species:"Sloth Bear", zoo:"Woodland Park Zoo", region:"WA", city:"Seattle, Washington", dob:"2025-01-08",
+      img:"https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=800&auto=format&fit=crop&q=80",
+      desc:"Born January 8, 2025 to mother Kushali — named after David Bowie as a birthday twin tribute. Bowie recently celebrated her first birthday and continues to explore the outdoor habitat with her mom. Sloth bears are vulnerable in the wild, making every birth a conservation win.",
+      url:"https://www.zoo.org" },
+    { emoji:"🦎", name:"Lemur Triplets", species:"Ring-tailed Lemur", zoo:"Cheyenne Mountain Zoo", region:"CO", city:"Colorado Springs, Colorado", dob:"2025-03-20",
+      img:"https://images.unsplash.com/photo-1582738301361-2a76b30a08c4?w=800&auto=format&fit=crop&q=80",
+      desc:"Three lemur pups born March 20, 2025 on Lemur Island. In a remarkable twist, matriarch Allagash accepted her sister Rogue's offspring as her own alongside her own pup — mirroring wild lemur social behaviour. Ring-tailed lemurs are endangered, with populations declining rapidly in Madagascar.",
+      url:"https://www.cmzoo.org" },
+    { emoji:"🦏", name:"Baby rhino", species:"Rhinoceros", zoo:"Cleveland Metroparks Zoo", region:"OH", city:"Cleveland, Ohio", dob:"2025-06-01",
+      img:"https://images.unsplash.com/photo-1583499871880-de841d1ace2a?w=800&auto=format&fit=crop&q=80",
+      desc:"Part of Cleveland's remarkable 2025 baby boom that also included a red panda, giraffe, tree kangaroo, sloth bear, and howler monkey. The rhino calf can be seen outdoors weather permitting and is already a crowd favourite.",
+      url:"https://www.clevelandmetroparks.com/zoo" },
+  ],
+  expecting: [
+    { emoji:"🦍", name:"Olympia & Jamani", species:"Western Lowland Gorilla", zoo:"Woodland Park Zoo", region:"WA", city:"Seattle, Washington", due:"May 19 & May 24, 2026",
+      img:"https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=800&auto=format&fit=crop&q=80",
+      desc:"Two pregnant gorillas at Woodland Park Zoo are due to give birth just five days apart — Olympia on May 19 and Jamani on May 24, 2026. A first for the zoo. Both mothers (ages 29 and 26) have previous experience — they each gave birth to a son weeks apart in 2012 at North Carolina Zoo and raised them together. Father Nadaya, the 25-year-old silverback, is becoming a dad for the first time. 24-hour birth watch monitoring is underway. Western lowland gorillas are critically endangered, with populations down over 60% in 25 years.",
+      url:"https://www.zoo.org" },
+    { emoji:"🦛", name:"Kindia", species:"Pygmy Hippo", zoo:"Toronto Zoo", region:"ON", city:"Scarborough, Ontario", due:"Late July 2026",
+      img:"https://images.unsplash.com/photo-1620662831631-3ed09a3e1f01?w=800&auto=format&fit=crop&q=80",
+      desc:"20-year-old pygmy hippo Kindia is expecting her second calf in late July 2026, with father Harvey (31). The calf will weigh just 10-14 pounds at birth. Pygmy hippos are native to the forests and swamps of West Africa and are critically endangered — fewer than 3,000 remain in the wild. Kindia previously gave birth to Penelope in 2018, who now lives at John Ball Zoo in Michigan. She is reportedly 'doing well' through her halfway-point ultrasound and willingly participates in cooperative care.",
+      url:"https://www.torontozoo.com" },
+    { emoji:"🐜", name:"Winnie", species:"Southern Tamandua", zoo:"Denver Zoo", region:"CO", city:"Denver, Colorado", due:"Spring 2026",
+      img:"https://images.unsplash.com/photo-1611250282006-4484dd3fba6b?w=800&auto=format&fit=crop&q=80",
+      desc:"7-year-old southern tamandua Winnie is pregnant — the first tamandua birth at Denver Zoo in over a decade. Tamanduas are tree-dwelling anteaters native to South America. Winnie's pregnancy was confirmed during a voluntary ultrasound in October 2025. Father Santiago was brought from Nashville Zoo as part of an AZA breeding program. Tamandua gestation is around 150 days, so the baby could arrive any time this spring.",
+      url:"https://denverzoo.org" },
+  ],
+};
+
+let activeTab = 'recent';
+let selected = null;
+
+function formatAge(dob) {
+  const days = Math.floor((Date.now() - new Date(dob).getTime()) / 86400000);
+  if (days < 7) return `${days} days old`;
+  if (days < 30) return `${Math.floor(days/7)} weeks old`;
+  if (days < 365) return `${Math.floor(days/30)} months old`;
+  const y = Math.floor(days/365);
+  return `${y} year${y > 1 ? 's' : ''} old`;
+}
+
+function render() {
+  const grid = document.getElementById('grid');
+  const data = DATA[activeTab];
+
+  grid.innerHTML = data.map((d, i) => {
+    const dateStr = activeTab === 'recent' ? formatAge(d.dob) : `Due ${d.due}`;
+    return `
+      <div class="birth-card ${activeTab}" onclick="openModal(${i})">
+        <div class="birth-image ${activeTab}" style="background-image: url('${d.img}');">
+          <div class="birth-emoji-badge">${d.emoji}</div>
+          <div class="birth-status">${activeTab === 'recent' ? '🐣 Born' : '🤰 Expecting'}</div>
+        </div>
+        <div class="birth-body">
+          <div class="birth-name">${d.name}</div>
+          <div class="birth-species">${d.species}</div>
+          <div class="birth-meta">
+            <span class="birth-meta-pill">${dateStr}</span>
+          </div>
+          <div class="birth-zoo">${d.zoo}</div>
+          <div class="birth-location">📍 ${d.city}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === tab);
+  });
+  render();
+}
+
+function openModal(i) {
+  const d = DATA[activeTab][i];
+  selected = d;
+
+  document.getElementById('m-emoji').textContent = d.emoji;
+  document.getElementById('m-header').style.backgroundImage = `url('${d.img}')`;
+  document.getElementById('m-name').textContent = d.name;
+  document.getElementById('m-species').textContent = d.species;
+  document.getElementById('m-zoo').textContent = d.zoo;
+  document.getElementById('m-loc').textContent = d.city;
+  document.getElementById('m-desc').textContent = d.desc;
+  document.getElementById('m-weblink').href = d.url;
+
+  const header = document.getElementById('m-header');
+  const status = document.getElementById('m-status');
+  if (activeTab === 'recent') {
+    header.classList.remove('expecting');
+    status.className = 'modal-status recent';
+    status.textContent = '🐣 Recently Born';
+    document.getElementById('m-datelabel').textContent = 'Date of Birth';
+    document.getElementById('m-date').textContent = new Date(d.dob).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
+    document.getElementById('m-age').textContent = formatAge(d.dob);
+  } else {
+    header.classList.add('expecting');
+    status.className = 'modal-status expecting';
+    status.textContent = '🤰 Expecting Soon';
+    document.getElementById('m-datelabel').textContent = 'Expected';
+    document.getElementById('m-date').textContent = d.due;
+    document.getElementById('m-age').textContent = 'Awaiting birth';
+  }
+
+  // Link "See on Map" to index page with region preselected via URL hash
+  document.getElementById('m-mapbtn').href = `index.html#region=${d.region}`;
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  selected = null;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+render();
+</script>
+
+</body>
+</html>

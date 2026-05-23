@@ -234,7 +234,7 @@ nav {
   font-weight: 600;
   position: relative;
 }
-.nav-links a.active::after {
+.nav-links a.active:not(.nav-cta)::after {
   content: '';
   position: absolute;
   bottom: -6px; left: 0; right: 0;
@@ -325,6 +325,102 @@ nav {
 .legend-dot::before { content: ''; width: 10px; height: 10px; border-radius: 2px; background: currentColor; }
 .legend-dot.has { color: var(--g2); }
 .legend-dot.soon { color: var(--g4); }
+
+/* ── MAP BACK BUTTON ── */
+.map-back-btn {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+  background: white;
+  border: 1px solid rgba(74,124,89,0.2);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--g1);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: background 0.15s, transform 0.15s;
+}
+.map-back-btn:hover {
+  background: var(--mist);
+  transform: translateX(-2px);
+}
+
+.map-globe-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  background: white;
+  border: 1px solid rgba(74,124,89,0.2);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--g1);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: background 0.15s, transform 0.15s;
+}
+.map-globe-btn:hover {
+  background: var(--mist);
+  transform: scale(1.04);
+}
+
+.map-region.clickable-other { cursor: pointer; transition: stroke 0.2s, fill 0.2s; }
+.map-region.clickable-other:hover { stroke: var(--g3); stroke-width: 1; }
+.map-region.target-country { fill: var(--b3) !important; stroke: var(--b1); }
+
+/* ── COMING SOON OVERLAY ── */
+.map-comingsoon-overlay {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 1px solid rgba(74,124,89,0.2);
+  border-radius: 16px;
+  padding: 1.25rem 1.75rem;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  max-width: 320px;
+  z-index: 10;
+}
+.map-comingsoon-overlay .badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: var(--b5);
+  color: var(--b1);
+  margin-bottom: 0.5rem;
+}
+.map-comingsoon-overlay .country-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--g1);
+  margin-bottom: 0.3rem;
+}
+.map-comingsoon-overlay .msg {
+  font-size: 0.82rem;
+  color: rgba(28,28,28,0.55);
+  line-height: 1.5;
+}
+
+/* World map sphere background */
+.map-sphere {
+  fill: rgba(127,184,150,0.08);
+  stroke: rgba(127,184,150,0.2);
+  stroke-width: 0.5;
+}
 
 /* ── REGION PANEL ── */
 .region-section {
@@ -644,8 +740,8 @@ footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width:
   </div>
   <ul class="nav-links">
     <li><a href="#explore" class="active">Explore</a></li>
-    <li><a href="wildlife-watch.html">Wildlife Watch</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="wildlife-watch.html" class="nav-cta">🐣 Wildlife Watch</a></li>
   </ul>
 </nav>
 
@@ -686,10 +782,16 @@ footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width:
   <!-- MAP -->
   <section class="map-section">
     <div class="map-section-inner">
-      <div class="map-eyebrow">🌎 Interactive Map</div>
-      <div class="map-title">Click a region to explore</div>
-      <div class="map-sub">Darker regions have wildlife listings. More regions coming soon.</div>
+      <div class="map-eyebrow" id="map-eyebrow">🌍 Global Map</div>
+      <div class="map-title" id="map-title">Click a country to explore</div>
+      <div class="map-sub" id="map-sub">North America has live data. Other continents coming soon.</div>
       <div class="map-container">
+        <button id="map-back-btn" class="map-back-btn" onclick="renderView('world')" style="display:none;">
+          ← Back to World
+        </button>
+        <button id="map-globe-btn" class="map-globe-btn" onclick="renderView('world')">
+          🌍 View Globe
+        </button>
         <div id="map-loading">Loading map…</div>
         <svg id="na-map" style="display:none;"></svg>
         <div class="map-legend">
@@ -758,12 +860,12 @@ footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width:
       </a>
       <a href="wildlife-watch.html" class="ww-preview-card">
         <div class="ww-preview-card-img" style="background-image:url('https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=800&auto=format&fit=crop&q=80');">
-          <div class="ww-preview-badge expecting">🤰 Expecting</div>
+          <div class="ww-preview-badge">🐣 Just born</div>
         </div>
         <div class="ww-preview-card-body">
-          <div class="ww-preview-card-name">Olympia &amp; Jamani</div>
-          <div class="ww-preview-card-species">Western Lowland Gorillas · Woodland Park Zoo</div>
-          <div class="ww-preview-card-meta">Due May 19 &amp; May 24, 2026</div>
+          <div class="ww-preview-card-name">Jamani's baby gorilla</div>
+          <div class="ww-preview-card-species">Western Lowland Gorilla · Woodland Park Zoo</div>
+          <div class="ww-preview-card-meta">Born May 18, 2026 · First of two due</div>
         </div>
       </a>
     </div>
@@ -1541,14 +1643,18 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 
 // ── SELECT REGION ──
-function selectRegion(id) {
+async function selectRegion(id) {
+  // If we're not in NA view (we're in world or coming-soon), switch to NA first
+  if (mapView !== 'NA') {
+    await renderView('NA');
+  }
+
   selectedRegion = id;
 
   // Update map highlight
   document.querySelectorAll('.map-region').forEach(p => p.classList.remove('selected'));
   document.querySelectorAll(`[data-id="${id}"]`).forEach(p => {
     p.classList.add('selected');
-    // Update label color
     const lbl = document.querySelector(`.map-label[data-id="${id}"]`);
     if (lbl) lbl.classList.add('selected');
   });
@@ -1560,133 +1666,441 @@ function selectRegion(id) {
 }
 
 // ── MAP ──
+// ════════════════════════════════════════════════
+// MAP SYSTEM — Multi-view (World → Country → Drill-in)
+// ════════════════════════════════════════════════
+
+let mapView = 'world'; // 'world' | 'NA' | country_id
+let worldData = null;
+let naData = null;
+let currentMercator = null;    // active Mercator projection (for country views)
+let cachedCountries = null;    // cached features array
+
+
+// Animated slide from one country to another (same Mercator projection)
+async function slideToCountry(svg, W, H, countryId, countryName) {
+  if (!cachedCountries) {
+    cachedCountries = topojson.feature(worldData, worldData.objects.countries).features;
+  }
+  const target = cachedCountries.find(c => String(c.id) === String(countryId));
+  if (!target || !currentMercator) return;
+
+  // Compute target projection parameters
+  const newProj = d3.geoMercator();
+  newProj.fitSize([W * 0.9, H * 0.9], target);
+  const [[lon0, lat0], [lon1, lat1]] = d3.geoBounds(target);
+  const maxSpan = Math.max(lon1 - lon0, lat1 - lat0);
+  let scaleFactor = 1.0;
+  if (maxSpan > 35) scaleFactor = 0.95;
+  else if (maxSpan > 18) scaleFactor = 0.75;
+  else if (maxSpan > 8) scaleFactor = 0.55;
+  else if (maxSpan > 3) scaleFactor = 0.35;
+  else scaleFactor = 0.25;
+  newProj.scale(newProj.scale() * scaleFactor);
+  const centroid = d3.geoCentroid(target);
+  const [cx, cy] = newProj(centroid);
+  const [tx, ty] = newProj.translate();
+  newProj.translate([tx + W / 2 - cx, ty + H / 2 - cy]);
+
+  // Interpolate from current to target
+  const startScale = currentMercator.scale();
+  const endScale = newProj.scale();
+  const startT = currentMercator.translate();
+  const endT = newProj.translate();
+
+  // Update highlight class
+  svg.selectAll('path.map-region').classed('selected', false);
+  svg.select(`path[data-cid="${countryId}"]`).classed('selected', true);
+
+  // Update coming-soon overlay text
+  const overlay = document.querySelector('.map-comingsoon-overlay');
+  if (overlay) {
+    const nameEl = overlay.querySelector('.country-name');
+    if (nameEl) nameEl.textContent = countryName;
+  }
+
+  const duration = 750;
+  const startTime = performance.now();
+
+  return new Promise(resolve => {
+    function frame(now) {
+      const t = Math.min((now - startTime) / duration, 1);
+      // Cubic-in-out easing
+      const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+      currentMercator.scale(startScale + (endScale - startScale) * e);
+      currentMercator.translate([
+        startT[0] + (endT[0] - startT[0]) * e,
+        startT[1] + (endT[1] - startT[1]) * e
+      ]);
+
+      const pathGen = d3.geoPath().projection(currentMercator);
+      svg.selectAll('path.map-region').attr('d', pathGen);
+
+      if (t < 1) requestAnimationFrame(frame);
+      else resolve();
+    }
+    requestAnimationFrame(frame);
+  });
+}
+
 async function initMap() {
+  // Default to North America view (world view available via "← Back to World" → wait, only when zoomed in)
+  await renderView('NA');
+  // If URL hash specifies a region, also select it
+  if (typeof hashMatch !== 'undefined' && hashMatch) {
+    setTimeout(() => selectRegion(initialRegion), 300);
+  }
+}
+
+async function renderView(view, countryName) {
+  const svg = d3.select('#na-map');
   const wrap = document.getElementById('na-map').parentElement;
   const W = wrap.offsetWidth;
   const H = Math.round(W * 0.6);
+  const svgNode = document.getElementById('na-map');
 
-  const svg = d3.select('#na-map')
-    .attr('viewBox', `0 0 ${W} ${H}`)
-    .attr('width', W)
-    .attr('height', H);
+  // ── COUNTRY-TO-COUNTRY: smooth slide (no fade, no redraw) ──
+  const prevView = mapView;
+  const isCountryToCountry =
+    prevView !== 'world' && prevView !== 'NA' && view !== 'world' && view !== 'NA' && currentMercator !== null;
 
-  // SINGLE projection for both US and Canada
-  // Both Highcharts datasets use geographic (lon/lat) coordinates
-  // Lambert Conformal Conic — standard for North America
+  if (isCountryToCountry) {
+    mapView = view;
+    updateMapHeader(view, countryName);
+    await slideToCountry(svg, W, H, view, countryName);
+    return;
+  }
+
+  // ── Otherwise: fade transition ──
+  if (svgNode.children.length > 0) {
+    svgNode.style.transition = 'opacity 0.25s ease';
+    svgNode.style.opacity = '0';
+    await new Promise(r => setTimeout(r, 250));
+  }
+
+  // Reset state when leaving a country view
+  currentMercator = null;
+
+  svg.attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H);
+  svg.selectAll('*').remove();
+
+  // Remove any coming-soon overlay
+  const existingOverlay = document.querySelector('.map-comingsoon-overlay');
+  if (existingOverlay) existingOverlay.remove();
+
+  mapView = view;
+  updateMapHeader(view, countryName);
+
+  // Show/hide back button (visible in country & coming-soon views)
+  document.getElementById('map-back-btn').style.display = view === 'world' ? 'none' : 'block';
+  // Show/hide globe button (visible only in NA view)
+  const globeBtn = document.getElementById('map-globe-btn');
+  if (globeBtn) globeBtn.style.display = view === 'NA' ? 'block' : 'none';
+
+  document.getElementById('map-loading').style.display = 'block';
+  document.getElementById('na-map').style.display = 'none';
+
+  try {
+    if (view === 'world') {
+      await renderWorld(svg, W, H);
+    } else if (view === 'NA') {
+      await renderNorthAmerica(svg, W, H);
+    } else {
+      await renderComingSoon(svg, W, H, view, countryName);
+    }
+    document.getElementById('map-loading').style.display = 'none';
+    document.getElementById('na-map').style.display = 'block';
+    // Fade in new view
+    requestAnimationFrame(() => {
+      svgNode.style.transition = 'opacity 0.3s ease';
+      svgNode.style.opacity = '1';
+    });
+  } catch (err) {
+    console.error('Map error:', err, 'View:', view);
+    document.getElementById('map-loading').innerHTML = 'Map failed to load (' + (err.message || 'unknown error') + '). <a href="#" onclick="renderView(\'NA\');return false;" style="color:var(--g3);text-decoration:underline;">Try North America view</a>';
+  }
+}
+
+function updateMapHeader(view, countryName) {
+  const eyebrow = document.getElementById('map-eyebrow');
+  const title = document.getElementById('map-title');
+  const sub = document.getElementById('map-sub');
+
+  if (view === 'world') {
+    eyebrow.textContent = '🌍 Global Map';
+    title.textContent = 'Click a country to explore';
+    sub.textContent = 'North America has live data. Other continents coming soon — click any country to see its status.';
+  } else if (view === 'NA') {
+    eyebrow.textContent = '🌎 North America';
+    title.textContent = 'Click a state or province';
+    sub.textContent = 'Darker regions have wildlife listings — over 260 zoos, sanctuaries, and reserves.';
+  } else {
+    eyebrow.textContent = '🔍 Coming Soon';
+    title.textContent = countryName || 'This region';
+    sub.textContent = 'Wildlife listings for this country are not yet available. Help us expand — email us if you know places worth featuring.';
+  }
+}
+
+// ════════════════════════════════════════════════
+// WORLD VIEW
+// ════════════════════════════════════════════════
+async function renderWorld(svg, W, H) {
+  if (!worldData) {
+    worldData = await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+  }
+
+  const countries = topojson.feature(worldData, worldData.objects.countries).features;
+
+  // Natural Earth projection — standard world map setup
+  const proj = d3.geoNaturalEarth1()
+    .scale(W / 6.3)
+    .translate([W / 2, H / 2]);
+  const pathGen = d3.geoPath().projection(proj);
+
+  // Sphere background
+  svg.append('path')
+    .datum({ type: 'Sphere' })
+    .attr('class', 'map-sphere')
+    .attr('d', pathGen);
+
+  // Country IDs that have data — USA: 840, Canada: 124
+  const HAS_DATA_COUNTRIES = new Set(['840', '124']);
+
+  svg.append('g').selectAll('path')
+    .data(countries)
+    .join('path')
+    .attr('class', d => {
+      const id = String(d.id);
+      return 'map-region ' + (HAS_DATA_COUNTRIES.has(id) ? 'has-data' : 'no-data');
+    })
+    .attr('d', pathGen)
+    .on('click', (e, d) => {
+      const id = String(d.id);
+      const name = d.properties.name;
+      if (HAS_DATA_COUNTRIES.has(id)) {
+        renderView('NA');
+      } else {
+        renderView(id, name);
+      }
+    });
+
+  // Country borders
+  svg.append('path')
+    .datum(topojson.mesh(worldData, worldData.objects.countries, (a, b) => a !== b))
+    .attr('fill', 'none')
+    .attr('stroke', 'rgba(255,255,255,0.5)')
+    .attr('stroke-width', 0.4)
+    .attr('d', pathGen);
+
+  // Label only the two has-data countries
+  countries.forEach(d => {
+    const id = String(d.id);
+    if (!HAS_DATA_COUNTRIES.has(id)) return;
+    const c = pathGen.centroid(d);
+    if (!c || isNaN(c[0])) return;
+    svg.append('text')
+      .attr('class', 'map-label has-data')
+      .attr('x', c[0]).attr('y', c[1])
+      .attr('font-size', 8)
+      .attr('pointer-events', 'none')
+      .text(d.properties.name);
+  });
+}
+
+// ════════════════════════════════════════════════
+// NORTH AMERICA VIEW (existing US + Canada logic)
+// ════════════════════════════════════════════════
+async function renderNorthAmerica(svg, W, H) {
+  if (!naData) {
+    const [usData, caData] = await Promise.all([
+      d3.json('https://cdn.jsdelivr.net/npm/@highcharts/map-collection@2.0.1/countries/us/us-all.topo.json'),
+      d3.json('https://cdn.jsdelivr.net/npm/@highcharts/map-collection@2.0.1/countries/ca/ca-all.topo.json'),
+    ]);
+    naData = { usData, caData };
+  }
+
+  const { usData, caData } = naData;
+
   const proj = d3.geoConicConformal()
     .parallels([33, 45])
     .rotate([98, 0])
     .center([5, 53])
     .scale(W * 0.58)
     .translate([W * 0.505, H * 0.5]);
+  const pathGen = d3.geoPath().projection(proj);
+
+  const usKey = Object.keys(usData.objects)[0];
+  const caKey = Object.keys(caData.objects)[0];
+
+  const usFeatures = topojson.feature(usData, usData.objects[usKey]).features;
+  const caFeatures = topojson.feature(caData, caData.objects[caKey]).features;
+
+  const mainUS = usFeatures.filter(d => !['us-ak','us-hi'].includes(d.properties['hc-key']));
+  const ak = usFeatures.find(d => d.properties['hc-key'] === 'us-ak');
+  const hi = usFeatures.find(d => d.properties['hc-key'] === 'us-hi');
+  const allMain = [...caFeatures, ...mainUS];
+
+  svg.append('g').selectAll('path')
+    .data(allMain).join('path')
+    .attr('class', d => {
+      const id = HC_TO_ID[d.properties['hc-key']];
+      return 'map-region ' + (id && REGIONS[id] ? 'has-data' : 'no-data') + (id === selectedRegion ? ' selected' : '');
+    })
+    .attr('data-id', d => HC_TO_ID[d.properties['hc-key']] || '')
+    .attr('d', pathGen)
+    .on('click', (e, d) => {
+      const id = HC_TO_ID[d.properties['hc-key']];
+      if (id) selectRegion(id);
+    });
+
+  svg.append('path')
+    .datum(topojson.mesh(usData, usData.objects[usKey], (a,b) => a !== b && !['us-ak','us-hi'].includes(a.properties['hc-key']) && !['us-ak','us-hi'].includes(b.properties['hc-key'])))
+    .attr('fill','none').attr('stroke','rgba(184,217,196,0.3)').attr('stroke-width',0.4)
+    .attr('d', pathGen);
+
+  svg.append('path')
+    .datum(topojson.mesh(caData, caData.objects[caKey], (a,b) => a !== b))
+    .attr('fill','none').attr('stroke','rgba(184,217,196,0.3)').attr('stroke-width',0.4)
+    .attr('d', pathGen);
+
+  allMain.forEach(d => {
+    const hcKey = d.properties['hc-key'];
+    const lbl = REGION_LABELS[hcKey];
+    if (!lbl) return;
+    const id = HC_TO_ID[hcKey];
+    const c = pathGen.centroid(d);
+    if (!c || isNaN(c[0]) || c[0] < 2 || c[0] > W-2 || c[1] < 2 || c[1] > H-2) return;
+    svg.append('text')
+      .attr('class', `map-label ${id && REGIONS[id] ? 'has-data' : ''} ${id === selectedRegion ? 'selected' : ''}`)
+      .attr('data-id', id || '')
+      .attr('x', c[0]).attr('y', c[1])
+      .attr('pointer-events','none')
+      .text(lbl);
+  });
+
+  // Alaska inset
+  if (ak) {
+    const akProj = d3.geoMercator().center([-153,64]).scale(W*0.115).translate([W*0.098, H*0.875]);
+    const akPath = d3.geoPath().projection(akProj);
+    svg.append('rect').attr('class','inset-bg').attr('x',W*0.01).attr('y',H*0.75).attr('width',W*0.175).attr('height',H*0.24).attr('rx',4);
+    svg.append('path').datum(ak)
+      .attr('class','map-region no-data')
+      .attr('data-id','AK')
+      .attr('d', akPath)
+      .on('click', () => selectRegion('AK'));
+    const akC = akPath.centroid(ak);
+    if (akC && !isNaN(akC[0])) {
+      svg.append('text').attr('class','map-label').attr('x',akC[0]).attr('y',akC[1]).attr('pointer-events','none').text('AK');
+    }
+  }
+
+  // Hawaii inset
+  if (hi) {
+    const hiProj = d3.geoMercator().center([-156.5,20.5]).scale(W*0.38).translate([W*0.285, H*0.9]);
+    const hiPath = d3.geoPath().projection(hiProj);
+    svg.append('rect').attr('class','inset-bg').attr('x',W*0.19).attr('y',H*0.81).attr('width',W*0.19).attr('height',H*0.17).attr('rx',4);
+    svg.append('path').datum(hi)
+      .attr('class','map-region no-data')
+      .attr('data-id','HI')
+      .attr('d', hiPath)
+      .on('click', () => selectRegion('HI'));
+    svg.append('text').attr('class','map-label').attr('x',W*0.285).attr('y',H*0.955).attr('text-anchor','middle').attr('pointer-events','none').text('HI');
+  }
+}
+
+// ════════════════════════════════════════════════
+// COMING SOON VIEW (any other country)
+// ════════════════════════════════════════════════
+async function renderComingSoon(svg, W, H, countryId, countryName) {
+  if (!worldData) {
+    worldData = await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+  }
+
+  const countries = topojson.feature(worldData, worldData.objects.countries).features;
+  const targetCountry = countries.find(c => String(c.id) === String(countryId));
+  if (!targetCountry) {
+    document.getElementById('map-loading').textContent = 'Country not found.';
+    return;
+  }
+
+  // ── SMART ZOOM based on country size ──
+  const proj = d3.geoMercator();
+  proj.fitSize([W * 0.9, H * 0.9], targetCountry);
+
+  const [[lon0, lat0], [lon1, lat1]] = d3.geoBounds(targetCountry);
+  const maxSpan = Math.max(lon1 - lon0, lat1 - lat0);
+
+  let scaleFactor = 1.0;
+  if (maxSpan > 35) {
+    scaleFactor = 0.95;
+  } else if (maxSpan > 18) {
+    scaleFactor = 0.75;
+  } else if (maxSpan > 8) {
+    scaleFactor = 0.55;
+  } else if (maxSpan > 3) {
+    scaleFactor = 0.35;
+  } else {
+    scaleFactor = 0.25;
+  }
+
+  proj.scale(proj.scale() * scaleFactor);
+
+  // ── RE-CENTER on country centroid after scale change ──
+  const centroid = d3.geoCentroid(targetCountry);
+  const [cx, cy] = proj(centroid);
+  const [tx, ty] = proj.translate();
+  proj.translate([tx + W / 2 - cx, ty + H / 2 - cy]);
+
+  // Store as the active Mercator for smooth country-to-country transitions
+  currentMercator = proj;
 
   const pathGen = d3.geoPath().projection(proj);
 
-  try {
-    // Both sources use geographic coordinates — single projection works for both
-    const [usData, caData] = await Promise.all([
-      d3.json('https://cdn.jsdelivr.net/npm/@highcharts/map-collection@2.0.1/countries/us/us-all.topo.json'),
-      d3.json('https://cdn.jsdelivr.net/npm/@highcharts/map-collection@2.0.1/countries/ca/ca-all.topo.json'),
-    ]);
+  // Sphere/background
+  svg.append('rect')
+    .attr('width', W).attr('height', H)
+    .attr('fill', 'rgba(127,184,150,0.05)');
 
-    const usKey = Object.keys(usData.objects)[0];
-    const caKey = Object.keys(caData.objects)[0];
-
-    const usFeatures = topojson.feature(usData, usData.objects[usKey]).features;
-    const caFeatures = topojson.feature(caData, caData.objects[caKey]).features;
-
-    // Exclude AK and HI from main map — they get insets
-    const mainUS = usFeatures.filter(d => !['us-ak','us-hi'].includes(d.properties['hc-key']));
-    const ak = usFeatures.find(d => d.properties['hc-key'] === 'us-ak');
-    const hi = usFeatures.find(d => d.properties['hc-key'] === 'us-hi');
-
-    const allMain = [...caFeatures, ...mainUS];
-
-    // Draw all main regions
-    svg.append('g').selectAll('path')
-      .data(allMain).join('path')
-      .attr('class', d => {
-        const id = HC_TO_ID[d.properties['hc-key']];
-        return 'map-region ' + (id && REGIONS[id] ? 'has-data' : 'no-data') + (id === selectedRegion ? ' selected' : '');
-      })
-      .attr('data-id', d => HC_TO_ID[d.properties['hc-key']] || '')
-      .attr('d', pathGen)
-      .on('click', (e, d) => {
-        const id = HC_TO_ID[d.properties['hc-key']];
-        if (id) selectRegion(id);
-      });
-
-    // Border mesh — US internal borders
-    svg.append('path')
-      .datum(topojson.mesh(usData, usData.objects[usKey], (a,b) => a !== b && !['us-ak','us-hi'].includes(a.properties['hc-key']) && !['us-ak','us-hi'].includes(b.properties['hc-key'])))
-      .attr('fill','none').attr('stroke','rgba(184,217,196,0.3)').attr('stroke-width',0.4)
-      .attr('d', pathGen);
-
-    // CA internal borders
-    svg.append('path')
-      .datum(topojson.mesh(caData, caData.objects[caKey], (a,b) => a !== b))
-      .attr('fill','none').attr('stroke','rgba(184,217,196,0.3)').attr('stroke-width',0.4)
-      .attr('d', pathGen);
-
-    // Region labels
-    allMain.forEach(d => {
-      const hcKey = d.properties['hc-key'];
-      const lbl = REGION_LABELS[hcKey];
-      if (!lbl) return;
-      const id = HC_TO_ID[hcKey];
-      const c = pathGen.centroid(d);
-      if (!c || isNaN(c[0]) || c[0] < 2 || c[0] > W-2 || c[1] < 2 || c[1] > H-2) return;
-      svg.append('text')
-        .attr('class', `map-label ${id && REGIONS[id] ? 'has-data' : ''} ${id === selectedRegion ? 'selected' : ''}`)
-        .attr('data-id', id || '')
-        .attr('x', c[0]).attr('y', c[1])
-        .attr('pointer-events','none')
-        .text(lbl);
+  // Show neighboring countries — CLICKABLE
+  const HAS_DATA = new Set(['840', '124']);
+  svg.append('g').selectAll('path')
+    .data(countries.filter(c => String(c.id) !== String(countryId)))
+    .join('path')
+    .attr('class', d => {
+      const id = String(d.id);
+      return 'map-region ' + (HAS_DATA.has(id) ? 'has-data' : 'no-data') + ' clickable-other';
+    })
+    .attr('data-cid', d => String(d.id))
+    .attr('stroke', 'rgba(255,255,255,0.3)')
+    .attr('stroke-width', 0.3)
+    .attr('d', pathGen)
+    .on('click', (e, d) => {
+      const id = String(d.id);
+      if (HAS_DATA.has(id)) {
+        renderView('NA');
+      } else {
+        renderView(id, d.properties.name);
+      }
     });
 
-    // ── ALASKA INSET ──
-    if (ak) {
-      const akProj = d3.geoMercator().center([-153,64]).scale(W*0.115).translate([W*0.098, H*0.875]);
-      const akPath = d3.geoPath().projection(akProj);
-      const akId = 'AK';
-      svg.append('rect').attr('class','inset-bg').attr('x',W*0.01).attr('y',H*0.75).attr('width',W*0.175).attr('height',H*0.24).attr('rx',4);
-      svg.append('path').datum(ak)
-        .attr('class', `map-region no-data`)
-        .attr('data-id', akId)
-        .attr('d', akPath)
-        .on('click', () => selectRegion(akId));
-      const akC = akPath.centroid(ak);
-      if (akC && !isNaN(akC[0])) {
-        svg.append('text').attr('class','map-label').attr('x',akC[0]).attr('y',akC[1]).attr('pointer-events','none').text('AK');
-      }
-    }
+  // Highlighted target country (also has map-region class so it transitions with siblings)
+  svg.append('path')
+    .datum(targetCountry)
+    .attr('class', 'map-region selected target-country')
+    .attr('data-cid', String(targetCountry.id))
+    .attr('stroke-width', 1.5)
+    .attr('d', pathGen);
 
-    // ── HAWAII INSET ──
-    if (hi) {
-      const hiProj = d3.geoMercator().center([-156.5,20.5]).scale(W*0.38).translate([W*0.285, H*0.9]);
-      const hiPath = d3.geoPath().projection(hiProj);
-      const hiId = 'HI';
-      svg.append('rect').attr('class','inset-bg').attr('x',W*0.19).attr('y',H*0.81).attr('width',W*0.19).attr('height',H*0.17).attr('rx',4);
-      svg.append('path').datum(hi)
-        .attr('class', `map-region no-data`)
-        .attr('data-id', hiId)
-        .attr('d', hiPath)
-        .on('click', () => selectRegion(hiId));
-      svg.append('text').attr('class','map-label').attr('x',W*0.285).attr('y',H*0.955).attr('text-anchor','middle').attr('pointer-events','none').text('HI');
-    }
-
-    document.getElementById('map-loading').style.display = 'none';
-    document.getElementById('na-map').style.display = 'block';
-
-    // If URL hash specifies a region, select it on the map
-    if (hashMatch) {
-      setTimeout(() => selectRegion(initialRegion), 200);
-    }
-
-  } catch(err) {
-    document.getElementById('map-loading').textContent = 'Map failed to load. Please refresh.';
-    console.error('Map error:', err);
-  }
+  // Add coming soon overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'map-comingsoon-overlay';
+  overlay.innerHTML = `
+    <div class="badge">Coming Soon</div>
+    <div class="country-name">${countryName}</div>
+    <div class="msg">No wildlife listings yet. Know a great zoo here? <a href="mailto:daynebusiness99@gmail.com" style="color:var(--g3);font-weight:500;">Email us</a> and help us grow.</div>
+  `;
+  document.querySelector('.map-container').appendChild(overlay);
 }
 
 // ── INIT ──

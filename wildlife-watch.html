@@ -73,6 +73,10 @@ nav {
   margin-right: 0.6rem;
   opacity: 0.5;
 }
+.nav-cta { background: var(--g1) !important; color: var(--b6) !important; opacity: 1 !important; padding: 0.45rem 1.1rem; border-radius: 999px; font-weight: 500 !important; transition: background 0.2s !important; }
+.nav-cta:hover { background: var(--g2) !important; }
+.nav-cta.active { background: var(--g2) !important; }
+.nav-links a.active:not(.nav-cta)::after { display: none !important; }
 .nav-links a.active {
   opacity: 1 !important;
   color: var(--g1);
@@ -94,7 +98,15 @@ nav {
 .logo span { color: var(--b3); }
 .nav-links { list-style: none; display: flex; gap: 1.75rem; align-items: center; }
 .nav-links a { font-size: 0.875rem; color: var(--ink); text-decoration: none; opacity: 0.6; transition: opacity 0.2s; }
-.nav-links a:hover, .nav-links a.active { opacity: 1; }
+.nav-links a:hover, .nav-cta { background: var(--g1) !important; color: var(--b6) !important; opacity: 1 !important; padding: 0.45rem 1.1rem; border-radius: 999px; font-weight: 500 !important; transition: background 0.2s !important; }
+.nav-cta:hover { background: var(--g2) !important; }
+.nav-cta.active { background: var(--g2) !important; }
+.nav-links a.active:not(.nav-cta)::after { display: none !important; }
+.nav-links a.active { opacity: 1; }
+.nav-cta { background: var(--g1) !important; color: var(--b6) !important; opacity: 1 !important; padding: 0.45rem 1.1rem; border-radius: 999px; font-weight: 500 !important; transition: background 0.2s !important; }
+.nav-cta:hover { background: var(--g2) !important; }
+.nav-cta.active { background: var(--g2) !important; }
+.nav-links a.active:not(.nav-cta)::after { display: none !important; }
 .nav-links a.active { font-weight: 600; }
 
 /* ── HERO ── */
@@ -517,8 +529,8 @@ footer {
   </a>
   <ul class="nav-links">
     <li><a href="index.html#explore">Explore</a></li>
-    <li><a href="wildlife-watch.html" class="active">Wildlife Watch</a></li>
     <li><a href="index.html#about">About</a></li>
+    <li><a href="wildlife-watch.html" class="nav-cta active">🐣 Wildlife Watch</a></li>
   </ul>
 </nav>
 
@@ -530,15 +542,15 @@ footer {
     <p class="page-sub">Newborn elephants, expecting gorillas, baby pandas. Real animals, real stories, updated as zoos announce new arrivals.</p>
     <div class="page-stats">
       <div>
-        <div class="page-stat-num">9</div>
+        <div class="page-stat-num">13</div>
         <div class="page-stat-lbl">Recent births</div>
       </div>
       <div>
-        <div class="page-stat-num">3</div>
+        <div class="page-stat-num">2</div>
         <div class="page-stat-lbl">Expecting soon</div>
       </div>
       <div>
-        <div class="page-stat-num">10</div>
+        <div class="page-stat-num">13</div>
         <div class="page-stat-lbl">Zoos tracked</div>
       </div>
     </div>
@@ -618,6 +630,22 @@ footer {
 <script>
 const DATA = {
   recent: [
+    { emoji:"🦍", name:"Jamani's baby", species:"Western Lowland Gorilla", zoo:"Woodland Park Zoo", region:"WA", city:"Seattle, Washington", dob:"2026-05-18",
+      img:"https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=800&auto=format&fit=crop&q=80",
+      desc:"Born on May 18, 2026 at 5:50 a.m. PDT after an 8.5-month gestation. The first of two expected gorilla babies at Woodland Park Zoo this spring — Olympia's baby is expected any day now. Mother Jamani is showing excellent maternal skills, holding the baby close and nursing well. The sex hasn't been determined yet. This is Jamani's second baby — she gave birth to a son in 2012 at North Carolina Zoo. First-time father Nadaya is the 25-year-old silverback. Western lowland gorillas are critically endangered.",
+      url:"https://www.zoo.org" },
+    { emoji:"🦒", name:"Chrissy's calf", species:"Reticulated Giraffe", zoo:"Metro Richmond Zoo", region:"VA", city:"Richmond, Virginia", dob:"2026-05-09",
+      img:"https://images.unsplash.com/photo-1547721064-da6cfb341d50?w=800&auto=format&fit=crop&q=80",
+      desc:"Born May 9, 2026 — just one day before Mother's Day. The calf was born outside in front of zoo guests rather than in the private birthing stall, and stood within an hour of birth at nearly 6 feet tall, weighing 150-175 pounds. Mother Chrissy (14) and father Bogey (9) welcome their 24th giraffe at the zoo since 2000. Chrissy's previous calf Clover watched and stayed close to comfort her mother. Reticulated giraffes are endangered — populations have declined 56% in the last 30 years in East Africa. The calf is unnamed and the public can submit suggestions via the zoo's social media.",
+      url:"https://metrorichmondzoo.com" },
+    { emoji:"🦁", name:"Pittsburgh lion cub", species:"African Lion", zoo:"Pittsburgh Zoo & Aquarium", region:"PA", city:"Pittsburgh, Pennsylvania", dob:"2026-04-05",
+      img:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&auto=format&fit=crop&q=80",
+      desc:"Born April 5, 2026 to nine-year-old parents Scarlett and Hondo. The first cub for both lions, and the result of a successful breeding plan since Hondo arrived from another zoo less than a year ago. The cub is exceeding milestones and Scarlett is reportedly an 'excellent mother' caring for her baby in a quiet maternity den. She is expected to make her public debut in late summer 2026.",
+      url:"https://www.pittsburghzoo.org" },
+    { emoji:"🦛", name:"Zuri", species:"Pygmy Hippo", zoo:"Louisville Zoo", region:"KY", city:"Louisville, Kentucky", dob:"2026-03-30",
+      img:"https://images.unsplash.com/photo-1620662831631-3ed09a3e1f01?w=800&auto=format&fit=crop&q=80",
+      desc:"Born just after sunrise on March 30, 2026 to longtime resident Zemora in the Gorilla Forest exhibit. A healthy female pygmy hippo — only the second pygmy hippo birth in North America in 2026. With fewer than 3,000 pygmy hippos remaining in West African forests, every birth is a major conservation milestone. Father Maji has lived at the Louisville Zoo since 2002.",
+      url:"https://louisvillezoo.org" },
     { emoji:"🐘", name:"Linh Mai", species:"Asian Elephant", zoo:"Smithsonian's National Zoo", region:"MD", city:"Washington, D.C.", dob:"2026-02-02",
       img:"https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=800&auto=format&fit=crop&q=80",
       desc:"Born February 2, 2026 at 1:15 a.m. — the first Asian elephant calf at the Smithsonian's National Zoo in nearly 25 years. Weighed 308 pounds at birth, now nearly 500 pounds. Her name means 'spirit blossom' in Vietnamese. After mother Nhi Linh showed conflicted maternal behavior, 51-year-old herd-mate 'Auntie' Swarna stepped in as her guardian. Linh Mai made her public debut on Earth Day, April 22, 2026 — a powerful symbol of hope for the endangered species, with fewer than 50,000 left in the wild.",
@@ -656,18 +684,14 @@ const DATA = {
       url:"https://www.clevelandmetroparks.com/zoo" },
   ],
   expecting: [
-    { emoji:"🦍", name:"Olympia & Jamani", species:"Western Lowland Gorilla", zoo:"Woodland Park Zoo", region:"WA", city:"Seattle, Washington", due:"May 19 & May 24, 2026",
+    { emoji:"🦍", name:"Olympia", species:"Western Lowland Gorilla", zoo:"Woodland Park Zoo", region:"WA", city:"Seattle, Washington", due:"Any day now (late May 2026)",
       img:"https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=800&auto=format&fit=crop&q=80",
-      desc:"Two pregnant gorillas at Woodland Park Zoo are due to give birth just five days apart — Olympia on May 19 and Jamani on May 24, 2026. A first for the zoo. Both mothers (ages 29 and 26) have previous experience — they each gave birth to a son weeks apart in 2012 at North Carolina Zoo and raised them together. Father Nadaya, the 25-year-old silverback, is becoming a dad for the first time. 24-hour birth watch monitoring is underway. Western lowland gorillas are critically endangered, with populations down over 60% in 25 years.",
+      desc:"Olympia is the second of two pregnant gorillas at Woodland Park Zoo — her best friend Jamani just gave birth on May 18, 2026. Olympia is now expected to give birth any day, just days behind. Both mothers raised sons together at the North Carolina Zoo in 2012 and arrived in Seattle in 2022. Father Nadaya, the 25-year-old silverback, is becoming a dad for the second time in two weeks. The zoo's birth watch team is monitoring 24/7. Western lowland gorillas are critically endangered, with populations down over 60% in 25 years.",
       url:"https://www.zoo.org" },
     { emoji:"🦛", name:"Kindia", species:"Pygmy Hippo", zoo:"Toronto Zoo", region:"ON", city:"Scarborough, Ontario", due:"Late July 2026",
       img:"https://images.unsplash.com/photo-1620662831631-3ed09a3e1f01?w=800&auto=format&fit=crop&q=80",
       desc:"20-year-old pygmy hippo Kindia is expecting her second calf in late July 2026, with father Harvey (31). The calf will weigh just 10-14 pounds at birth. Pygmy hippos are native to the forests and swamps of West Africa and are critically endangered — fewer than 3,000 remain in the wild. Kindia previously gave birth to Penelope in 2018, who now lives at John Ball Zoo in Michigan. She is reportedly 'doing well' through her halfway-point ultrasound and willingly participates in cooperative care.",
       url:"https://www.torontozoo.com" },
-    { emoji:"🐜", name:"Winnie", species:"Southern Tamandua", zoo:"Denver Zoo", region:"CO", city:"Denver, Colorado", due:"Spring 2026",
-      img:"https://images.unsplash.com/photo-1611250282006-4484dd3fba6b?w=800&auto=format&fit=crop&q=80",
-      desc:"7-year-old southern tamandua Winnie is pregnant — the first tamandua birth at Denver Zoo in over a decade. Tamanduas are tree-dwelling anteaters native to South America. Winnie's pregnancy was confirmed during a voluntary ultrasound in October 2025. Father Santiago was brought from Nashville Zoo as part of an AZA breeding program. Tamandua gestation is around 150 days, so the baby could arrive any time this spring.",
-      url:"https://denverzoo.org" },
   ],
 };
 

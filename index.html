@@ -716,6 +716,38 @@ footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width:
   .map-section-inner, .region-section-inner, .features-section { padding: 0 1.25rem; }
 }
 </style>
+
+<!-- Identity / trust schema — declares who runs this site -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Zoovy",
+  "url": "https://zoovy.net",
+  "description": "A free wildlife discovery platform featuring 262 zoos, safaris, sanctuaries, and nature reserves across North America.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Zoovy",
+    "url": "https://zoovy.net",
+    "email": "daynebusiness99@gmail.com",
+    "founder": {
+      "@type": "Person",
+      "name": "Dayne",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Mississauga",
+        "addressRegion": "Ontario",
+        "addressCountry": "Canada"
+      }
+    }
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://zoovy.net/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -740,7 +772,7 @@ footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width:
   </div>
   <ul class="nav-links">
     <li><a href="#explore" class="active">Explore</a></li>
-    <li><a href="#about">About</a></li>
+    <li><a href="about.html">About</a></li>
     <li><a href="wildlife-watch.html" class="nav-cta">🐣 Wildlife Watch</a></li>
   </ul>
 </nav>
@@ -916,7 +948,7 @@ footer { border-top: 1px solid rgba(74,124,89,0.12); padding: 2.5rem; max-width:
     <div class="footer-links">
       <a href="#explore">Explore</a>
       <a href="#map">Map</a>
-      <a href="#about">About</a>
+      <a href="about.html">About</a>
     </div>
     <div style="font-size:0.75rem;color:rgba(28,28,28,0.3);">© 2026 Zoovy · zoovy.net</div>
   </div>

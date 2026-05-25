@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Zoovy — A Wildlife Discovery Project Built in Mississauga</title>
+<meta name="description" content="Zoovy is an independent wildlife discovery project built by Dayne, a tech grad in Mississauga, Ontario. Real curated listings, real maintainer, no ads, no tricks.">
+<link rel="canonical" href="https://zoovy.net/about.html">
+
+<meta property="og:title" content="About Zoovy">
+<meta property="og:description" content="An independent wildlife discovery project built in Mississauga, Ontario. Real curated listings, no ads, no tricks.">
+<meta property="og:url" content="https://zoovy.net/about.html">
+
+<!-- Structured data: organization + person identity (helps search engines and trust scanners verify legitimacy) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Zoovy",
+  "url": "https://zoovy.net",
+  "logo": "https://zoovy.net/favicon.ico",
+  "email": "daynebusiness99@gmail.com",
+  "founder": {
+    "@type": "Person",
+    "name": "Dayne",
+    "jobTitle": "Founder",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Mississauga",
+      "addressRegion": "Ontario",
+      "addressCountry": "Canada"
+    }
+  },
+  "description": "A free wildlife discovery platform featuring zoos, sanctuaries, safaris, and nature reserves across North America. Independently maintained, not affiliated with any zoo or organization.",
+  "sameAs": []
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --g0: #0a1a10; --g1: #1a3a2a; --g2: #2d5a3d; --g3: #4a7c59;
+  --g4: #7fb896; --g5: #b8d9c4; --g6: #e4f0e8;
+  --b1: #3d2410; --b2: #7a4a28; --b3: #a0622e; --b4: #c49a6c;
+  --b5: #e8d5b8; --b6: #f5ede0;
+  --ink: #1c1c1c; --mist: #f7f4ef; --white: #ffffff;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--mist); color: var(--ink); }
+
+/* ── NAV (matches other pages) ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 2rem;
+  background: rgba(247,244,239,0.95); backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(74,124,89,0.15);
+}
+.logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.45rem; color: var(--g1); letter-spacing: -0.02em; text-decoration: none; }
+.logo span { color: var(--b3); }
+.nav-search-link {
+  flex: 1; max-width: 460px; margin: 0 2rem;
+  display: flex; align-items: center;
+  background: white; border: 1px solid rgba(74,124,89,0.18);
+  border-radius: 999px; padding: 0.55rem 1rem;
+  font-size: 0.875rem; color: rgba(28,28,28,0.4);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.15s;
+}
+.nav-search-link:hover { border-color: var(--g3); background: var(--mist); }
+.nav-search-link .search-icon { font-size: 0.9rem; margin-right: 0.6rem; opacity: 0.5; }
+.nav-links { list-style: none; display: flex; gap: 1.75rem; align-items: center; }
+.nav-links a { font-size: 0.875rem; color: var(--ink); text-decoration: none; opacity: 0.6; transition: opacity 0.2s; }
+.nav-links a:hover { opacity: 1; }
+.nav-cta {
+  background: var(--g1) !important; color: var(--b6) !important; opacity: 1 !important;
+  padding: 0.45rem 1.1rem; border-radius: 999px; font-weight: 500 !important;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--g2) !important; }
+.nav-links a.active {
+  opacity: 1 !important; color: var(--g1); font-weight: 600;
+  position: relative;
+}
+.nav-links a.active:not(.nav-cta)::after {
+  content: ''; position: absolute; bottom: -6px; left: 0; right: 0;
+  height: 2px; background: var(--g3); border-radius: 2px;
+}
+
+/* ── HERO ── */
+.page-hero {
+  padding: 9rem 2.5rem 4rem;
+  background: var(--g0);
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 60%, rgba(74,124,89,0.3) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 30%, rgba(122,74,40,0.2) 0%, transparent 50%);
+}
+.page-hero-inner { max-width: 800px; margin: 0 auto; position: relative; }
+.page-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(127,184,150,0.15); color: var(--g4);
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.35rem 0.875rem; border-radius: 999px; margin-bottom: 1.5rem;
+  border: 1px solid rgba(127,184,150,0.2);
+}
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 800; line-height: 1.1; letter-spacing: -0.025em;
+  color: var(--b6); margin-bottom: 1.25rem;
+}
+.page-title em { font-style: normal; color: var(--g4); }
+.page-sub {
+  font-size: 1.05rem; line-height: 1.65;
+  color: rgba(245,237,224,0.6); max-width: 580px;
+}
+
+/* ── CONTENT ── */
+.content {
+  max-width: 760px; margin: 0 auto; padding: 4rem 2rem 2rem;
+  font-size: 1.02rem; line-height: 1.75; color: rgba(28,28,28,0.85);
+}
+.content h2 {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 1.5rem; color: var(--g1); margin-top: 3rem;
+  margin-bottom: 0.875rem; letter-spacing: -0.015em;
+}
+.content h2:first-of-type { margin-top: 0; }
+.content p { margin-bottom: 1.15rem; }
+.content a {
+  color: var(--g2); text-decoration: underline;
+  text-decoration-color: rgba(45,90,61,0.3);
+  text-underline-offset: 3px; transition: text-decoration-color 0.15s;
+}
+.content a:hover { text-decoration-color: var(--g2); }
+.content ul {
+  list-style: none; margin: 0.5rem 0 1.5rem; padding: 0;
+}
+.content li {
+  padding: 0.4rem 0 0.4rem 1.5rem; position: relative;
+}
+.content li::before {
+  content: '•'; position: absolute; left: 0.4rem;
+  color: var(--g4); font-weight: 700;
+}
+
+/* ── INFO CARD ── */
+.info-card {
+  background: white;
+  border: 1px solid rgba(74,124,89,0.12);
+  border-radius: 18px;
+  padding: 1.75rem 2rem;
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+}
+.info-item .info-label {
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: rgba(28,28,28,0.4); margin-bottom: 0.25rem;
+}
+.info-item .info-value {
+  font-size: 0.95rem; color: var(--g1); font-weight: 500;
+}
+.info-item .info-value a {
+  color: var(--g2); text-decoration: none;
+}
+.info-item .info-value a:hover {
+  text-decoration: underline;
+}
+
+/* ── CTA ── */
+.about-cta {
+  background: var(--g1); color: var(--b6);
+  border-radius: 20px;
+  padding: 2.25rem 2.5rem;
+  margin: 3rem 0 2rem;
+  text-align: center;
+}
+.about-cta h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem; font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.about-cta p {
+  font-size: 0.95rem; opacity: 0.7;
+  margin-bottom: 1.5rem; line-height: 1.6;
+}
+.about-cta-btn {
+  display: inline-block;
+  background: var(--g4); color: var(--g0);
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.about-cta-btn:hover { background: var(--g5); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid rgba(74,124,89,0.12);
+  padding: 2.5rem;
+  max-width: 1200px;
+  margin: 4rem auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(28,28,28,0.4);
+  font-size: 0.82rem;
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.footer-col { display: flex; flex-direction: column; gap: 0.4rem; }
+.footer-email { color: var(--g3); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+.footer-email:hover { color: var(--g2); }
+.footer-links { display: flex; gap: 1.25rem; }
+.footer-links a { color: rgba(28,28,28,0.4); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--g2); }
+
+@media(max-width:900px) {
+  .nav-search-link { display: none; }
+  .page-hero { padding: 7rem 1.5rem 3rem; }
+  .content { padding: 3rem 1.5rem 2rem; font-size: 0.96rem; }
+  .info-card { grid-template-columns: 1fr; padding: 1.25rem 1.5rem; }
+  footer { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" class="logo">Zoo<span>vy</span></a>
+  <a href="index.html" class="nav-search-link">
+    <span class="search-icon">🔍</span>
+    Search animals, zoos, or regions...
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#explore">Explore</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="wildlife-watch.html" class="nav-cta">🐣 Wildlife Watch</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">👋 About this project</div>
+    <h1 class="page-title">A wildlife discovery site, <em>built by one person</em> in Ontario.</h1>
+    <p class="page-sub">Zoovy is an independent project I started to help people find real places to see wildlife across North America. No ads, no affiliate tricks, no corporate backers.</p>
+  </div>
+</section>
+
+<!-- ── CONTENT ── -->
+<main class="content">
+
+  <h2>Who made this</h2>
+  <p>Hi, I'm Dayne. I'm based in Mississauga, Ontario, and I built Zoovy in early 2026 as a personal project. I have a background in computer systems engineering (Carleton University) and previously worked in IT at the Dufferin-Peel Catholic School Board. I have no formal affiliation with any zoo, sanctuary, or wildlife organization.</p>
+  <p>I built this site because I genuinely couldn't find a decent, modern resource for discovering zoos and sanctuaries to visit in Canada and the United States. Most of what's out there is either an outdated directory, a single-zoo website, or a paywalled travel platform. So I made the thing I wanted to exist.</p>
+
+  <h2>What Zoovy is</h2>
+  <p>A free, ad-free directory of <strong>262 zoos, safaris, sanctuaries, and nature reserves</strong> across North America — currently the United States and Canada, with more regions in active development. Every listing is curated by hand: location, species, descriptions, and links.</p>
+  <p>It also includes a <a href="wildlife-watch.html">Wildlife Watch</a> page that tracks real recent and expected animal births at zoos across the continent — updated regularly.</p>
+
+  <h2>What Zoovy is not</h2>
+  <ul>
+    <li>I do not sell anything. There are no products, tickets, memberships, or services for sale on this site.</li>
+    <li>I do not collect your data. There is no signup, no email list, no tracking pixels.</li>
+    <li>I am not affiliated with any zoo, sanctuary, government, or business. Every listing is independent.</li>
+    <li>I do not run ads. No banners, no popups, no sponsored content, no affiliate links.</li>
+  </ul>
+
+  <h2>How it's funded</h2>
+  <p>It isn't. The site runs on minimal infrastructure (Cloudflare Pages, which is free for static sites), and the only ongoing cost is the domain renewal. I built it in my own time. If the site grows enough that zoos eventually want to partner with it for verified listings or promotion, that's a future I'd be open to — but right now there's no revenue stream and no plans to introduce one without disclosure.</p>
+
+  <h2>Get in touch</h2>
+  <div class="info-card">
+    <div class="info-item">
+      <div class="info-label">Owner</div>
+      <div class="info-value">Dayne (Founder)</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">Location</div>
+      <div class="info-value">Mississauga, Ontario, Canada 🇨🇦</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">Email</div>
+      <div class="info-value"><a href="mailto:daynebusiness99@gmail.com">daynebusiness99@gmail.com</a></div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">Started</div>
+      <div class="info-value">Early 2026</div>
+    </div>
+  </div>
+
+  <h2>Reporting issues</h2>
+  <p>If you spot a zoo that's closed, a wrong description, a broken link, or a sanctuary I'm missing — please tell me. Every correction makes the site better. I respond to every email personally, usually within a day or two.</p>
+
+  <div class="about-cta">
+    <h3>Want to be featured?</h3>
+    <p>If you run a zoo, sanctuary, or wildlife reserve and want to ensure your listing is accurate (or get added to the site), I'd love to hear from you.</p>
+    <a href="mailto:daynebusiness99@gmail.com" class="about-cta-btn">Get in touch ↗</a>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-col">
+    <a href="index.html" class="logo" style="font-size:1.1rem;">Zoo<span>vy</span></a>
+    <div style="font-size:0.78rem;color:rgba(28,28,28,0.35);margin-top:0.1rem;">North America wildlife discovery</div>
+  </div>
+  <div class="footer-col" style="align-items:center;">
+    <div class="footer-links">
+      <a href="index.html#explore">Explore</a>
+      <a href="wildlife-watch.html">Wildlife Watch</a>
+      <a href="about.html">About</a>
+    </div>
+    <div style="font-size:0.75rem;color:rgba(28,28,28,0.3);">© 2026 Zoovy · zoovy.net</div>
+  </div>
+  <div class="footer-col" style="align-items:flex-end;">
+    <div style="font-size:0.75rem;color:rgba(28,28,28,0.35);">List your zoo or report an issue</div>
+    <a href="mailto:daynebusiness99@gmail.com" class="footer-email">daynebusiness99@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
